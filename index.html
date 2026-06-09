@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>株式会社ハシゴロジ | 物流DX・AI活用支援</title>
+<meta name="description" content="倉庫業・運送業の現場課題に向き合い、安全・品質・生産性・働きやすさを両立するDXを支援します。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@300;400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#hero" class="nav-logo"><img src="logo.png" alt="ハシゴロジ"></a>
+  <ul class="nav-links">
+    <li><a href="#issue">課題</a></li>
+    <li><a href="#services">支援領域</a></li>
+    <li><a href="#ai">AI活用</a></li>
+    <li><a href="#contact">相談</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">相談する</a>
+  <button class="nav-toggle" aria-label="メニューを開く">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-photo"></div>  <!-- bg via CSS -->
+  <canvas id="cv"></canvas>
+  <div class="hero-body">
+    <p class="hero-eye">Logistics × AI-Native DX</p>
+    <h1 class="hero-h1">物流現場に、<br><em>AIネイティブ</em>なDXを。</h1>
+    <p class="hero-lead">
+      倉庫業・運送業の現場課題に向き合い、<br>
+      安全・品質・生産性・働きやすさを両立するDXを、<br>
+      実装・定着まで支援します。
+    </p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn btn-primary">まずは相談する</a>
+      <a href="#services" class="btn btn-ghost">支援領域を見る</a>
+    </div>
+  </div>
+  <div class="scroll-ind"><span class="scroll-bar"></span>Scroll</div>
+</section>
+
+<!-- ISSUE -->
+<section id="issue">
+  <div class="issue-split">
+    <div class="issue-img">
+      <img src="logistics.png" alt="物流センターに並ぶトラックと夕景">
+    </div>
+    <div class="issue-text">
+      <p class="label label--w">Current Issues</p>
+      <h2 style="color:var(--white);">物流現場には、まだ<br>改善できる余地が多く残されています。</h2>
+      <p class="issue-body-p">
+        倉庫・運送の現場では、人手不足・教育負荷・安全管理・品質のばらつき・
+        紙やExcelによる管理・ベテラン依存の判断など、複数の課題が同時に発生しています。
+      </p>
+      <p class="issue-body-p">
+        単にシステムを導入するだけでは、現場の業務は変わりません。
+        現場の流れを理解し、業務設計から見直すことで、はじめてDXは成果につながります。
+      </p>
+      <p class="issue-body-p">
+        私たちは、倉庫・運送の現場実態をベースに、課題の整理から実装・定着まで、
+        使われるDXをつくることを重視しています。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- VALUE -->
+<section id="value">
+  <div class="wrap">
+    <p class="label fi">What We Realize</p>
+    <h2 class="fi">実現するのは、安全・品質・<br>生産性・続けたい職場。</h2>
+    <p class="desc fi">現場で働く人にとっても、経営・管理側にとっても、意味のある変化を目指します。</p>
+    <div class="vgrid">
+      <div class="vcard fi">
+        <div class="vicon">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3>安全</h3>
+        <p>ヒヤリハット・点呼・作業ルール・現場報告をデータとして活用し、安全管理を日々の改善につなげる仕組みづくりを支援します。</p>
+      </div>
+      <div class="vcard fi">
+        <div class="vicon">
+          <svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        </div>
+        <h3>品質</h3>
+        <p>作業手順・検品・報告・教育を仕組み化し、人によるばらつきを減らして、再現性のある業務品質の実現を支援します。</p>
+      </div>
+      <div class="vcard fi">
+        <div class="vicon">
+          <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <h3>生産性</h3>
+        <p>紙・Excel・手作業を削減し、現場と管理部門の負荷を軽減。AIとデータ連携を活用した業務効率化を支援します。</p>
+      </div>
+      <div class="vcard fi">
+        <div class="vicon">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h3>続けたい職場</h3>
+        <p>属人化を減らし、誰でも迷わず動けるオペレーションへ。教育しやすく・働きやすく・改善が続く現場づくりを支援します。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="wrap">
+    <p class="label fi">Service Areas</p>
+    <h2 class="fi">倉庫・運送業の現場改善から<br>AI活用まで、幅広く支援します。</h2>
+    <p class="desc fi">事業フェーズや現場の状況に合わせて、必要な支援から着手できます。</p>
+    <div class="sgrid fi">
+      <div class="scard"><span class="snum">01</span><h3>業務可視化・課題整理</h3><p>現場ヒアリング、業務フロー整理、ボトルネック特定、改善テーマの優先順位づけ。まず「何から手をつけるか」を整理します。</p></div>
+      <div class="scard"><span class="snum">02</span><h3>倉庫DX</h3><p>入出荷・在庫管理・検品・作業指示・品質管理・日報・教育業務の改善を、現場の実態に合わせて設計・実装します。</p></div>
+      <div class="scard"><span class="snum">03</span><h3>運送DX</h3><p>配車・点呼・日報・動態管理・安全管理・請求業務・協力会社管理の改善を、業務フローから見直します。</p></div>
+      <div class="scard"><span class="snum">04</span><h3>AI活用</h3><p>AIチャットボット・文書読取・作業支援・レポート自動化・社内ナレッジ検索など、現場に定着する形でAIを導入します。</p></div>
+      <div class="scard"><span class="snum">05</span><h3>データ活用</h3><p>KPI設計・ダッシュボード・現場データの可視化。データを「見えるだけ」でなく、改善につながる形に整えます。</p></div>
+      <div class="scard"><span class="snum">06</span><h3>システム導入・連携</h3><p>既存SaaSの選定、ツール導入、スプレッドシート・基幹システム・外部サービスとの連携設計・実装。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- AI -->
+<section id="ai">
+  <div class="wrap">
+    <div class="ai-grid">
+      <div class="fi">
+        <p class="label label--w">AI-Native Approach</p>
+        <h2 style="color:var(--white);">既存業務をデジタル化するだけでなく、AIを前提に業務を組み直す。</h2>
+        <p class="ai-body">従来のDXは、紙やExcelの業務をシステムに置き換えることが中心でした。しかし、生成AI・画像認識・音声入力・データ連携が実用化された現在では、業務そのものをAI前提で再設計することが可能になっています。</p>
+        <p class="ai-body">私たちは、現場の業務フローを理解したうえで「人がやるべき判断」と「AIに任せられる処理」を切り分け、無理なく現場に定着するDXを支援します。</p>
+      </div>
+      <div class="fi">
+        <span class="ai-eg-label">活用例</span>
+        <div class="aegs">
+          <div class="aeg"><span class="adot"></span>紙帳票・請求書・納品書・日報の読み取りと自動整理</div>
+          <div class="aeg"><span class="adot"></span>社内マニュアル検索、現場向けAIチャットボット</div>
+          <div class="aeg"><span class="adot"></span>新人向け手順案内・注意点の自動提示</div>
+          <div class="aeg"><span class="adot"></span>ヒヤリハット・事故報告の自動分類と傾向分析</div>
+          <div class="aeg"><span class="adot"></span>KPIレポート・改善提案・会議資料の自動作成</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="wrap">
+    <p class="label label--w fi" style="justify-content:center;">Contact</p>
+    <h2 class="fi" style="color:var(--white);"><span style="white-space:nowrap;">物流現場のDX・AI活用について、</span><br>まずはご相談ください。</h2>
+    <p class="desc desc--w fi">
+      具体的なシステム導入が決まっていなくても問題ありません。<br>
+      現場課題の整理、AI活用の可能性、DXテーマの優先順位づけからご相談いただけます。
+    </p>
+    <form class="cform fi" id="cform" novalidate>
+      <div class="frow">
+        <div><label class="flabel" for="co">会社名</label><input type="text" id="co" placeholder="株式会社〇〇"></div>
+        <div><label class="flabel" for="nm">お名前</label><input type="text" id="nm" placeholder="山田 太郎"></div>
+      </div>
+      <div><label class="flabel" for="em">メールアドレス</label><input type="email" id="em" placeholder="yourname@example.com"></div>
+      <div><label class="flabel" for="msg">相談内容</label><textarea id="msg" rows="5" placeholder="現場の課題や状況、ご相談内容をお気軽にご記載ください。"></textarea></div>
+      <button type="submit" class="fsub">無料で相談する</button>
+      <p class="fnote">通常2営業日以内にご返信します。課題が整理されていなくても歓迎です。</p>
+    </form>
+    <div class="fsuccess" id="fsuccess">
+      お問い合わせありがとうございます。<br>
+      ※ フォーム送信機能は現在準備中です。直接メールにてご連絡ください。
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="flogo"><img src="logo.png" alt="ハシゴロジ"><span>株式会社ハシゴロジ</span></div>
+  <small>© 2025 Hashigologi Inc. All rights reserved.</small>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
