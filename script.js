@@ -53,7 +53,7 @@ if(reduce || !('IntersectionObserver' in window)){
    空のままの場合は「準備中」の案内だけを表示します。
    ========================================================== */
 var FORM_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwCpNkAScTmRC7dt12FPsYJV5GHjl8hHf79odBZk_8ig0gvTX92zV5mi5M5GXpL4EtZ/exec';
-var FALLBACK_MAIL = '';   // 送信失敗時に案内するメールアドレス（任意）
+var FALLBACK_MAIL = 'takayuda@hashigo-logi.com';   // 送信失敗時に案内するメールアドレス
 
 (function(){
   var form = document.getElementById('cform');

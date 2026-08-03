@@ -234,6 +234,7 @@ body.nav-open{overflow:hidden;}
 .bizcard-b .txtlink{margin-top:18px;}
 
 /* ---------- 課題セクション ---------- */
+.issue-sec{padding-top:104px;}
 .issue{display:grid;grid-template-columns:1fr 1fr;gap:0;align-items:stretch;}
 .issue-img{background-image:var(--img-issue);background-size:cover;background-position:center;min-height:420px;}
 .issue-txt{background:var(--navy);color:#fff;padding:66px 56px;display:flex;flex-direction:column;justify-content:center;}
@@ -284,7 +285,7 @@ body.nav-open{overflow:hidden;}
 .note{margin-top:26px;font-size:13px;color:var(--gray-l);line-height:1.95;}
 
 /* ---------- 代表紹介 ---------- */
-.founder{display:grid;grid-template-columns:.85fr 1.15fr;gap:56px;align-items:start;}
+.founder{display:grid;grid-template-columns:230px 1fr;gap:56px;align-items:start;}
 .f-photo{
   position:relative;width:100%;aspect-ratio:4/5;background:#e7ebf1;overflow:hidden;
   display:flex;align-items:center;justify-content:center;
@@ -293,15 +294,16 @@ body.nav-open{overflow:hidden;}
 .f-photo .ph{font-family:"Barlow",sans-serif;font-size:11px;letter-spacing:.2em;color:#a7b0bd;z-index:1;text-align:center;line-height:2.2;}
 .f-name{margin-top:22px;}
 .f-name .role{font-size:12.5px;color:var(--gray-l);letter-spacing:.08em;}
-.f-name .nm{font-size:24px;font-weight:900;margin-top:6px;letter-spacing:.06em;}
+.f-name .nm{font-size:21px;font-weight:900;margin-top:6px;letter-spacing:.06em;}
 .f-name .nm-en{font-family:"Barlow",sans-serif;font-size:11px;letter-spacing:.16em;color:var(--gray-l);margin-top:5px;}
 .f-msg{font-size:clamp(18px,2.2vw,23px);font-weight:700;line-height:1.85;color:var(--navy);}
-.career{margin-top:38px;}
-.career li{display:grid;grid-template-columns:150px 1fr;gap:24px;padding:24px 0;border-top:1px solid var(--line);}
-.career li:last-child{border-bottom:1px solid var(--line);}
-.career .yr{font-family:"Barlow",sans-serif;font-size:13px;font-weight:600;letter-spacing:.1em;color:var(--blue);padding-top:3px;}
-.career h4{font-size:16px;}
-.career p{margin-top:8px;font-size:14px;color:var(--gray);line-height:2;}
+
+/* 経歴（文章＋スキルタグ） */
+.bio{margin-top:38px;padding-top:34px;border-top:1px solid var(--line);}
+.bio p{font-size:14.5px;color:var(--gray);line-height:2.15;}
+.bio p + p{margin-top:22px;}
+.skills{display:flex;flex-wrap:wrap;gap:9px;margin-top:30px;}
+.skills li{background:#fff;border:1px solid var(--line);padding:7px 15px;font-size:12.5px;color:var(--gray);letter-spacing:.02em;}
 
 /* ---------- 会社概要 ---------- */
 .spec{width:100%;border-collapse:collapse;}
@@ -388,8 +390,7 @@ body.nav-open{overflow:hidden;}
   .svc{grid-template-columns:1fr;gap:0;}
   .flow,.ba{grid-template-columns:1fr;}
   .founder{grid-template-columns:1fr;gap:36px;}
-  .f-photo{max-width:340px;}
-  .career li{grid-template-columns:1fr;gap:6px;}
+  .f-photo{max-width:200px;}
   .ft-top{grid-template-columns:1fr;}
 }
 @media(max-width:760px){
@@ -406,6 +407,7 @@ body.nav-open{overflow:hidden;}
   .ovl-in{padding:110px 20px 50px;}
   .ovl-menu a{padding:18px 0;gap:14px;}
   .sec,.biz{padding:66px 0;}
+  .issue-sec{padding-top:66px;}
   .cta{padding:76px 0;}
   .mv{height:auto;min-height:0;padding:130px 0 70px;}
   .mv-scroll{display:none;}
