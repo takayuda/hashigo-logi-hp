@@ -3,187 +3,524 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>株式会社ハシゴロジ | 物流DX・AI活用支援</title>
-<meta name="description" content="倉庫業・運送業の現場課題に向き合い、安全・品質・生産性・働きやすさを両立するDXを支援します。">
+<title>株式会社ハシゴロジ | 3PL・産廃業者向けDX・物流コンサルティング</title>
+<meta name="description" content="株式会社ハシゴロジは、3PL（倉庫運営受託）、産業廃棄物業者向けDX、物流コンサルティング・受託システム開発を通じて、倉庫業・運送業の現場課題の解決を支援します。">
+
+<link rel="icon" href="favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="favicon.png">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="株式会社ハシゴロジ">
+<meta property="og:title" content="株式会社ハシゴロジ | 3PL・産廃業者向けDX・物流コンサルティング">
+<meta property="og:description" content="現場を運営し、仕組みをつくる。倉庫や運送の現場実態をベースに、業務設計からシステムの実装、運用の定着までを一貫して支援します。">
+<meta property="og:image" content="ogp.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@300;400;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- NAV -->
-<nav id="nav">
-  <a href="#hero" class="nav-logo"><img src="logo.png" alt="ハシゴロジ"></a>
-  <ul class="nav-links">
-    <li><a href="#issue">課題</a></li>
-    <li><a href="#services">支援領域</a></li>
-    <li><a href="#ai">AI活用</a></li>
-    <li><a href="#contact">相談</a></li>
-  </ul>
-  <a href="#contact" class="nav-cta">相談する</a>
-  <button class="nav-toggle" aria-label="メニューを開く">
-    <span></span><span></span><span></span>
-  </button>
-</nav>
+<!-- ========== ヘッダー ========== -->
+<header class="hd" id="hd">
+  <div class="hd-in">
+    <a href="#top" class="logo">
+      <span class="logo-img">
+        <img class="l-white" src="logo-white.png" alt="株式会社ハシゴロジ" width="1255" height="227">
+        <img class="l-navy" src="logo-navy.png" alt="" aria-hidden="true" width="1255" height="227">
+      </span>
+      <span class="logo-en">HASHIGOLOGI</span>
+    </a>
+    <nav class="gnav" id="gnav">
+      <a href="#issue">私たちについて</a>
+      <a href="#service">事業内容</a>
+      <a href="#founder">代表紹介</a>
+      <a href="#company">会社概要</a>
+      <a href="#contact" class="hd-cta"><span>お問い合わせ</span></a>
+    </nav>
+    <button class="mnav-btn" id="navBtn" aria-label="メニューを開く" aria-expanded="false" aria-controls="ovl">
+      <i></i><i></i>
+    </button>
+  </div>
+</header>
 
-<!-- HERO -->
-<section id="hero">
-  <div class="hero-photo"></div>  <!-- bg via CSS -->
-  <canvas id="cv"></canvas>
-  <div class="hero-body">
-    <p class="hero-eye">Logistics × AI-Native DX</p>
-    <h1 class="hero-h1">物流現場に、<br><em>AIネイティブ</em>なDXを。</h1>
-    <p class="hero-lead">
-      倉庫業・運送業の現場課題に向き合い、<br>
-      安全・品質・生産性・働きやすさを両立するDXを、<br>
-      実装・定着まで支援します。
+<!-- ========== フルスクリーンメニュー ========== -->
+<div class="ovl" id="ovl" aria-hidden="true">
+  <div class="ovl-bg"></div>
+  <div class="ovl-in">
+    <div class="ovl-grid">
+      <nav>
+        <ul class="ovl-menu">
+          <li class="ovl-it"><a href="#issue"><span class="no">01</span><span class="ja">私たちについて</span><span class="en">About</span></a></li>
+          <li class="ovl-it"><a href="#service"><span class="no">02</span><span class="ja">事業内容</span><span class="en">Service</span></a></li>
+          <li class="ovl-it"><a href="#founder"><span class="no">03</span><span class="ja">代表紹介</span><span class="en">Founder</span></a></li>
+          <li class="ovl-it"><a href="#company"><span class="no">04</span><span class="ja">会社概要</span><span class="en">Company</span></a></li>
+          <li class="ovl-it"><a href="#contact"><span class="no">05</span><span class="ja">お問い合わせ</span><span class="en">Contact</span></a></li>
+        </ul>
+        <div class="ovl-sub ovl-it">
+          <a href="#3pl">3PL事業</a>
+          <a href="#sanpai">産廃業者向けDX事業</a>
+          <a href="#consulting">物流コンサルティング事業</a>
+        </div>
+      </nav>
+
+      <div class="ovl-side">
+        <h5>COMPANY</h5>
+        <p class="nm">株式会社ハシゴロジ</p>
+        <p>東京都目黒区<br>3PL事業／産業廃棄物業者向けDX事業／<br>物流コンサルティング・受託システム開発</p>
+        <a href="#contact" class="ovl-cta">お問い合わせはこちら</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== メインビジュアル ========== -->
+<section class="mv" id="top">
+  <div class="mv-bg"></div>
+  <div class="mv-ov"></div>
+  <div class="mv-in">
+    <div class="wrap">
+      <h1>
+        <span class="thin">Logistics Operations &amp; Technology</span>
+        現場を運営し、<br>仕組みをつくる。
+      </h1>
+      <p>3PL・産業廃棄物業者向けDX・物流コンサルティング。<br>
+        倉庫や運送の現場実態をベースに、業務設計からシステムの実装、運用の定着までを一貫して支援します。</p>
+      <div class="mv-btns">
+        <a href="#contact" class="btn btn-w">まずは相談する</a>
+        <a href="#service" class="btn btn-o">事業内容を見る</a>
+      </div>
+    </div>
+  </div>
+  <div class="mv-scroll">SCROLL</div>
+</section>
+
+<!-- ========== 課題 ========== -->
+<section class="sec" id="issue" style="padding-bottom:0;">
+  <div class="wrap sec-head rv" style="margin-bottom:44px;">
+    <span class="eyebrow">Our Approach</span>
+    <h2 class="h2">物流の現場には、まだ改善できる余地が<br>多く残されています。</h2>
+  </div>
+</section>
+<div class="issue rv">
+  <div class="issue-img" role="img" aria-label="物流センターの庫内。高層ラックの通路を作業者が行き交う様子"></div>
+  <div class="issue-txt">
+    <span class="eyebrow eyebrow-w">Issue</span>
+    <h3 class="h2" style="font-size:clamp(20px,2.6vw,27px);">システムを導入するだけでは、<br>現場の業務は変わりません。</h3>
+    <p>倉庫・運送の現場では、人手不足、教育負荷、安全管理、品質のばらつき、紙やExcelによる管理、ベテラン依存の判断といった課題が同時に発生しています。</p>
+    <p>私たちは、現場の流れを理解したうえで業務設計から見直し、課題の整理から実装・定着までを一貫して支援します。実際に現場を運営する立場と、システムをつくる立場の両方から、使われる仕組みをつくることを重視しています。</p>
+    <ul class="issue-list">
+      <li>人手不足・教育負荷</li>
+      <li>属人化した判断</li>
+      <li>紙・Excelによる管理</li>
+      <li>安全・品質のばらつき</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ========== 事業一覧 ========== -->
+<section class="sec sec-g" id="service">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="eyebrow">Service</span>
+      <h2 class="h2">3つの事業で、物流の現場を支援します。</h2>
+      <p class="lead" style="max-width:780px;">運ぶ・保管する・処理するという実務と、それを支える仕組みづくりの両方に取り組んでいます。事業フェーズや現場の状況に合わせて、必要な支援から着手いただけます。</p>
+    </div>
+
+    <div class="bizcards">
+      <a href="#3pl" class="bizcard rv">
+        <div class="bizcard-img">
+          <span class="bizcard-no">01</span>
+          <i style="background-image:var(--img-3pl);"></i>
+        </div>
+        <div class="bizcard-b">
+          <h3>3PL事業</h3>
+          <p>荷主企業の物流業務を、庫内オペレーションごと受託します。作業設計からWMSの整備、立ち上げ、運用改善までを一貫してご支援します。</p>
+          <span class="txtlink">詳しく見る</span>
+        </div>
+      </a>
+      <a href="#sanpai" class="bizcard rv">
+        <div class="bizcard-img">
+          <span class="bizcard-no">02</span>
+          <i style="background-image:var(--img-sanpai);"></i>
+        </div>
+        <div class="bizcard-b">
+          <h3>産廃業者向けDX事業</h3>
+          <p>産業廃棄物中間処理業の搬入予約・受入キャパシティ管理をシステム化します。電話やFAXに依存した受入業務の効率化を支援します。</p>
+          <span class="txtlink">詳しく見る</span>
+        </div>
+      </a>
+      <a href="#consulting" class="bizcard rv">
+        <div class="bizcard-img">
+          <span class="bizcard-no">03</span>
+          <i style="background-image:var(--img-consul);"></i>
+        </div>
+        <div class="bizcard-b">
+          <h3>物流コンサルティング事業</h3>
+          <p>業務可視化・課題整理から、要件定義、システム導入、受託開発、AI活用まで。現場に定着する形での改善をご支援します。</p>
+          <span class="txtlink">詳しく見る</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 01 3PL ========== -->
+<section class="biz" id="3pl">
+  <div class="wrap">
+    <div class="biz-head">
+      <div class="biz-photo rv">
+        <i style="background-image:var(--img-3pl-sub);"></i>
+        <span class="tag">01 &nbsp;3PL</span>
+      </div>
+      <div class="rv">
+        <span class="eyebrow">Third Party Logistics</span>
+        <h2 class="h2">荷主企業の物流業務を、<br>庫内オペレーションごと受託します。</h2>
+        <p class="lead">保管・入出荷・流通加工・配送手配まで、必要な範囲を切り出してご依頼いただけます。作業手順の設計と倉庫管理システムの整備をセットで行うことで、誰が担当しても同じ品質で回る現場づくりを支援します。</p>
+      </div>
+    </div>
+
+    <div class="biz-body rv">
+      <ul class="svc">
+        <li>
+          <span class="no">01</span>
+          <div>
+            <h4>庫内オペレーション設計</h4>
+            <p>レイアウト、動線、人員配置、標準作業手順を設計します。作業のばらつきを減らし、教育しやすい現場づくりを支援します。</p>
+          </div>
+        </li>
+        <li>
+          <span class="no">02</span>
+          <div>
+            <h4>入出荷・在庫管理の受託</h4>
+            <p>入荷検品、保管、ピッキング、流通加工、出荷、返品処理までを担います。在庫精度と出荷リードタイムを指標に運用します。</p>
+          </div>
+        </li>
+        <li>
+          <span class="no">03</span>
+          <div>
+            <h4>WMS導入とデータ整備</h4>
+            <p>倉庫管理システムの選定・導入・カスタマイズに内製で対応します。マスタ整備やEC・基幹システムとの連携までを含めて整えます。</p>
+          </div>
+        </li>
+        <li>
+          <span class="no">04</span>
+          <div>
+            <h4>立ち上げ・移管支援</h4>
+            <p>他社倉庫からの移管、新拠点の立ち上げ、繁忙期のスポット対応に対応します。切り替え計画から現場教育までを支援します。</p>
+          </div>
+        </li>
+      </ul>
+
+      <ul class="flow">
+        <li>
+          <span class="st">STEP 01</span>
+          <h4>ヒアリング・現地確認</h4>
+          <p>物量、SKU数、出荷波動、作業内容を確認し、対応可否と課題を整理します。</p>
+        </li>
+        <li>
+          <span class="st">STEP 02</span>
+          <h4>オペレーション設計・お見積</h4>
+          <p>作業手順と人員計画を設計し、保管料・作業料の内訳を明示してご提示します。</p>
+        </li>
+        <li>
+          <span class="st">STEP 03</span>
+          <h4>立ち上げ・運用改善</h4>
+          <p>移管計画に沿って稼働します。稼働後もKPIをもとに継続的な改善を行います。</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 02 産廃DX ========== -->
+<section class="biz sec-g" id="sanpai">
+  <div class="wrap">
+    <div class="biz-head rev">
+      <div class="biz-photo rv">
+        <i style="background-image:var(--img-sanpai-sub);"></i>
+        <span class="tag">02 &nbsp;SANPAI DX</span>
+      </div>
+      <div class="rv">
+        <span class="eyebrow">Digital Transformation</span>
+        <h2 class="h2">産業廃棄物処理業の受入業務を、<br>システムで支えます。</h2>
+        <p class="lead">搬入の予約受付、受入可能量の判断、計量と実績の記録。中間処理業の受入業務は、いまも電話・FAX・紙台帳と担当者の記憶に支えられています。私たちは、この業務に特化したソフトウェアの開発に取り組んでいます。</p>
+      </div>
+    </div>
+
+    <div class="ba rv">
+      <div class="ba-col ba-b">
+        <span class="ba-lb">BEFORE ─ これまでの受入業務</span>
+        <ul>
+          <li>
+            <h4>搬入予約を電話・FAXで受付</h4>
+            <p>その都度、担当者が空き状況を確認して回答するため、担当者が不在だと対応が止まります。</p>
+          </li>
+          <li>
+            <h4>受入可能量が共有されない</h4>
+            <p>品目ごとの残キャパシティが担当者の頭の中にあり、当日になって受けきれないことがあります。</p>
+          </li>
+          <li>
+            <h4>計量記録と実績の二重入力</h4>
+            <p>紙の伝票を後から転記し、実績の集計は月末にまとめて手作業で行っています。</p>
+          </li>
+        </ul>
+      </div>
+      <div class="ba-col ba-a">
+        <span class="ba-lb">AFTER ─ システム化後</span>
+        <ul>
+          <li>
+            <h4>Web予約を受け付け、一覧で管理</h4>
+            <p>排出事業者・収集運搬業者からの申込みをWebで受け付け、受付状況を社内で共有できます。</p>
+          </li>
+          <li>
+            <h4>品目別の受入枠をシステムで管理</h4>
+            <p>処理能力と許可量にもとづいて受入可能量を判定し、無理な予約の発生を防ぎます。</p>
+          </li>
+          <li>
+            <h4>予約から計量・実績まで一気通貫</h4>
+            <p>受付データがそのまま計量・実績につながり、集計や報告にかかる手作業を削減します。</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="note rv">
+      許可品目・処理能力・車両・計量といった業界固有の前提を、実務者の方々とともに仕様へ落とし込んでいます。<br>
+      ※ 本サービスは現在開発を進めている段階です。導入のご相談、パイロット導入のご要望はお問い合わせよりご連絡ください。
     </p>
-    <div class="hero-btns">
-      <a href="#contact" class="btn btn-primary">まずは相談する</a>
-      <a href="#services" class="btn btn-ghost">支援領域を見る</a>
-    </div>
-  </div>
-  <div class="scroll-ind"><span class="scroll-bar"></span>Scroll</div>
-</section>
-
-<!-- ISSUE -->
-<section id="issue">
-  <div class="issue-split">
-    <div class="issue-img">
-      <img src="logistics.png" alt="物流センターに並ぶトラックと夕景">
-    </div>
-    <div class="issue-text">
-      <p class="label label--w">Current Issues</p>
-      <h2 style="color:var(--white);">物流現場には、まだ<br>改善できる余地が多く残されています。</h2>
-      <p class="issue-body-p">
-        倉庫・運送の現場では、人手不足・教育負荷・安全管理・品質のばらつき・
-        紙やExcelによる管理・ベテラン依存の判断など、複数の課題が同時に発生しています。
-      </p>
-      <p class="issue-body-p">
-        単にシステムを導入するだけでは、現場の業務は変わりません。
-        現場の流れを理解し、業務設計から見直すことで、はじめてDXは成果につながります。
-      </p>
-      <p class="issue-body-p">
-        私たちは、倉庫・運送の現場実態をベースに、課題の整理から実装・定着まで、
-        使われるDXをつくることを重視しています。
-      </p>
-    </div>
   </div>
 </section>
 
-<!-- VALUE -->
-<section id="value">
+<!-- ========== 03 物流コンサル ========== -->
+<section class="biz" id="consulting">
   <div class="wrap">
-    <p class="label fi">What We Realize</p>
-    <h2 class="fi">実現するのは、安全・品質・<br>生産性・続けたい職場。</h2>
-    <p class="desc fi">現場で働く人にとっても、経営・管理側にとっても、意味のある変化を目指します。</p>
-    <div class="vgrid">
-      <div class="vcard fi">
-        <div class="vicon">
-          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        </div>
-        <h3>安全</h3>
-        <p>ヒヤリハット・点呼・作業ルール・現場報告をデータとして活用し、安全管理を日々の改善につなげる仕組みづくりを支援します。</p>
+    <div class="biz-head">
+      <div class="biz-photo rv">
+        <i style="background-image:var(--img-consul-sub);"></i>
+        <span class="tag">03 &nbsp;CONSULTING</span>
       </div>
-      <div class="vcard fi">
-        <div class="vicon">
-          <svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-        </div>
-        <h3>品質</h3>
-        <p>作業手順・検品・報告・教育を仕組み化し、人によるばらつきを減らして、再現性のある業務品質の実現を支援します。</p>
+      <div class="rv">
+        <span class="eyebrow">Consulting &amp; Development</span>
+        <h2 class="h2">課題の整理から実装・定着まで、<br>一貫して支援します。</h2>
+        <p class="lead">「何から手をつけるか」の整理からご相談いただけます。既存業務をそのままシステムに置き換えるのではなく、人が判断すべき業務とシステム・AIに任せられる処理を切り分けたうえで、現場に定着する形での改善を設計します。</p>
       </div>
-      <div class="vcard fi">
-        <div class="vicon">
-          <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-        </div>
-        <h3>生産性</h3>
-        <p>紙・Excel・手作業を削減し、現場と管理部門の負荷を軽減。AIとデータ連携を活用した業務効率化を支援します。</p>
-      </div>
-      <div class="vcard fi">
-        <div class="vicon">
-          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        </div>
-        <h3>続けたい職場</h3>
-        <p>属人化を減らし、誰でも迷わず動けるオペレーションへ。教育しやすく・働きやすく・改善が続く現場づくりを支援します。</p>
-      </div>
+    </div>
+
+    <div class="biz-body rv">
+      <ul class="svc">
+        <li>
+          <span class="no">01</span>
+          <div>
+            <h4>業務可視化・課題整理</h4>
+            <p>現場ヒアリング、業務フロー整理、ボトルネックの特定、改善テーマの優先順位づけを行います。</p>
+          </div>
+        </li>
+        <li>
+          <span class="no">02</span>
+          <div>
+            <h4>要件定義</h4>
+            <p>WMS・TMS・基幹システムの要件定義を担当します。現場で運用できる粒度まで業務要件を整理します。</p>
+          </div>
+        </li>
+        <li>
+          <span class="no">03</span>
+          <div>
+            <h4>システム選定・導入支援</h4>
+            <p>SaaSの比較検討、ベンダー選定、導入プロジェクトの推進、既存システムとの連携設計を支援します。</p>
+          </div>
+        </li>
+        <li>
+          <span class="no">04</span>
+          <div>
+            <h4>受託システム開発</h4>
+            <p>既製品では合わない領域は自社で開発します。小さく開発し、現場で検証しながら段階的に広げます。</p>
+          </div>
+        </li>
+        <li>
+          <span class="no">05</span>
+          <div>
+            <h4>AI活用</h4>
+            <p>帳票・請求書の読み取り、社内ナレッジ検索、報告書の分類・傾向分析などを、現場に定着する形で導入します。</p>
+          </div>
+        </li>
+        <li>
+          <span class="no">06</span>
+          <div>
+            <h4>データ活用・KPI設計</h4>
+            <p>KPI設計とダッシュボード構築を行い、日々の意思決定と改善につながる形にデータを整えます。</p>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>
 
-<!-- SERVICES -->
-<section id="services">
+<!-- ========== 代表紹介 ========== -->
+<section class="sec sec-g" id="founder">
   <div class="wrap">
-    <p class="label fi">Service Areas</p>
-    <h2 class="fi">倉庫・運送業の現場改善から<br>AI活用まで、幅広く支援します。</h2>
-    <p class="desc fi">事業フェーズや現場の状況に合わせて、必要な支援から着手できます。</p>
-    <div class="sgrid fi">
-      <div class="scard"><span class="snum">01</span><h3>業務可視化・課題整理</h3><p>現場ヒアリング、業務フロー整理、ボトルネック特定、改善テーマの優先順位づけ。まず「何から手をつけるか」を整理します。</p></div>
-      <div class="scard"><span class="snum">02</span><h3>倉庫DX</h3><p>入出荷・在庫管理・検品・作業指示・品質管理・日報・教育業務の改善を、現場の実態に合わせて設計・実装します。</p></div>
-      <div class="scard"><span class="snum">03</span><h3>運送DX</h3><p>配車・点呼・日報・動態管理・安全管理・請求業務・協力会社管理の改善を、業務フローから見直します。</p></div>
-      <div class="scard"><span class="snum">04</span><h3>AI活用</h3><p>AIチャットボット・文書読取・作業支援・レポート自動化・社内ナレッジ検索など、現場に定着する形でAIを導入します。</p></div>
-      <div class="scard"><span class="snum">05</span><h3>データ活用</h3><p>KPI設計・ダッシュボード・現場データの可視化。データを「見えるだけ」でなく、改善につながる形に整えます。</p></div>
-      <div class="scard"><span class="snum">06</span><h3>システム導入・連携</h3><p>既存SaaSの選定、ツール導入、スプレッドシート・基幹システム・外部サービスとの連携設計・実装。</p></div>
+    <div class="sec-head rv">
+      <span class="eyebrow">Founder</span>
+      <h2 class="h2">代表紹介</h2>
+    </div>
+
+    <div class="founder">
+      <div class="rv">
+        <!-- ▼ 代表写真：下の <img> のコメントを外し、src を差し替えてください -->
+        <div class="f-photo">
+          <!-- <img src="founder.jpg" alt="代表取締役 髙橋 優大"> -->
+          <span class="ph">PHOTO<br>準備中</span>
+        </div>
+        <div class="f-name">
+          <div class="role">代表取締役</div>
+          <div class="nm">髙橋 優大</div>
+          <div class="nm-en">YUDAI TAKAHASHI</div>
+        </div>
+      </div>
+
+      <div class="rv">
+        <p class="f-msg">大規模物流センターの運営と、<br>その裏側のシステム開発。<br>その両方を現場で経験してきました。</p>
+        <p class="lead">物流の現場では、システムを導入すること自体が目的になり、結果として使われないまま終わってしまうことが少なくありません。現場のオペレーションを理解している人間が設計と実装まで担うことで、実際に使われ、成果につながる仕組みをつくれると考えています。</p>
+
+        <ul class="career">
+          <li>
+            <span class="yr">Amazon Japan</span>
+            <div>
+              <h4>フルフィルメントセンター オペレーション管理／サプライチェーン・WMS開発</h4>
+              <p>約5年間、庫内オペレーションのマネジメントと、倉庫管理システム・サプライチェーン領域の開発に従事。現場の標準化とシステム設計の両方に携わる。</p>
+            </div>
+          </li>
+          <li>
+            <span class="yr">TRiCERA</span>
+            <div>
+              <h4>部門長として物流・オペレーション部門を統括</h4>
+              <p>越境ECにおける物流オペレーションの構築と改善、業務プロセスの整備を担当。</p>
+            </div>
+          </li>
+          <li>
+            <span class="yr">Xincere</span>
+            <div>
+              <h4>株式会社シンシア 共同創業</h4>
+              <p>AI見積エージェント「Dandori AI」の事業企画・GTMを担当。イベント制作・ディスプレイ業界の見積業務の効率化に取り組む。</p>
+            </div>
+          </li>
+          <li>
+            <span class="yr">2026.06</span>
+            <div>
+              <h4>株式会社ハシゴロジ 設立</h4>
+              <p>3PL・産廃業者向けDX・物流コンサルティングの3事業を立ち上げ、代表取締役に就任。</p>
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- AI -->
-<section id="ai">
+<!-- ========== 会社概要 ========== -->
+<section class="sec" id="company">
   <div class="wrap">
-    <div class="ai-grid">
-      <div class="fi">
-        <p class="label label--w">AI-Native Approach</p>
-        <h2 style="color:var(--white);">既存業務をデジタル化するだけでなく、AIを前提に業務を組み直す。</h2>
-        <p class="ai-body">従来のDXは、紙やExcelの業務をシステムに置き換えることが中心でした。しかし、生成AI・画像認識・音声入力・データ連携が実用化された現在では、業務そのものをAI前提で再設計することが可能になっています。</p>
-        <p class="ai-body">私たちは、現場の業務フローを理解したうえで「人がやるべき判断」と「AIに任せられる処理」を切り分け、無理なく現場に定着するDXを支援します。</p>
+    <div class="sec-head rv">
+      <span class="eyebrow">Company</span>
+      <h2 class="h2">会社概要</h2>
+    </div>
+    <table class="spec rv">
+      <tbody>
+        <tr><th>会社名</th><td>株式会社ハシゴロジ（Hashigologi Inc.）</td></tr>
+        <tr><th>代表者</th><td>代表取締役　髙橋 優大</td></tr>
+        <tr><th>設立</th><td>2026年6月16日</td></tr>
+        <tr><th>所在地</th><td>東京都目黒区</td></tr>
+        <tr><th>事業内容</th><td>3PL事業<br>産業廃棄物業者向けDX事業<br>物流コンサルティング・受託システム開発</td></tr>
+        <tr><th>Webサイト</th><td>hashigologi.co.jp</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ========== CTA ========== -->
+<section class="cta">
+  <div class="cta-bg"></div>
+  <div class="cta-ov"></div>
+  <div class="cta-in wrap">
+    <span class="eyebrow eyebrow-w">Contact</span>
+    <h2 class="h2">物流現場の課題について、<br>まずはご相談ください。</h2>
+    <p>具体的な依頼内容が決まっていなくても問題ありません。<br>倉庫業務の委託可否、システム化の進め方、改善テーマの優先順位づけからご相談いただけます。</p>
+    <div class="cta-btns">
+      <a href="#contact" class="btn btn-w">お問い合わせフォームへ</a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== フォーム ========== -->
+<section class="sec" id="contact">
+  <div class="wrap">
+    <div class="sec-head rv" style="text-align:center;margin-bottom:44px;">
+      <span class="eyebrow">Inquiry</span>
+      <h2 class="h2" style="margin:0 auto;">お問い合わせ</h2>
+    </div>
+    <div class="form rv">
+      <form id="cform">
+        <div class="fld">
+          <label for="f1">会社名<span class="rq">必須</span></label>
+          <input type="text" id="f1" name="company" required autocomplete="organization">
+        </div>
+        <div class="fld">
+          <label for="f2">お名前<span class="rq">必須</span></label>
+          <input type="text" id="f2" name="name" required autocomplete="name">
+        </div>
+        <div class="fld">
+          <label for="f3">メールアドレス<span class="rq">必須</span></label>
+          <input type="email" id="f3" name="email" required autocomplete="email">
+        </div>
+        <div class="fld">
+          <label for="f4">お問い合わせ内容</label>
+          <textarea id="f4" name="body" placeholder="現在の状況やお困りごとをご記入ください。"></textarea>
+        </div>
+        <button type="submit" class="btn btn-blue">送信する</button>
+        <p class="form-note" id="fnote" role="status">通常2営業日以内にご返信いたします。課題が整理されていない段階でのご相談も歓迎しております。</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ========== フッター ========== -->
+<footer class="ft">
+  <div class="wrap">
+    <div class="ft-top">
+      <div>
+        <img class="ft-logo" src="logo-white.png" alt="株式会社ハシゴロジ" width="1255" height="227">
+        <p class="ft-adr">
+          HASHIGOLOGI INC.<br>
+          東京都目黒区<br>
+          3PL事業／産業廃棄物業者向けDX事業／<br>物流コンサルティング・受託システム開発
+        </p>
       </div>
-      <div class="fi">
-        <span class="ai-eg-label">活用例</span>
-        <div class="aegs">
-          <div class="aeg"><span class="adot"></span>紙帳票・請求書・納品書・日報の読み取りと自動整理</div>
-          <div class="aeg"><span class="adot"></span>社内マニュアル検索、現場向けAIチャットボット</div>
-          <div class="aeg"><span class="adot"></span>新人向け手順案内・注意点の自動提示</div>
-          <div class="aeg"><span class="adot"></span>ヒヤリハット・事故報告の自動分類と傾向分析</div>
-          <div class="aeg"><span class="adot"></span>KPIレポート・改善提案・会議資料の自動作成</div>
+      <div class="ft-nav">
+        <div>
+          <h5>SERVICE</h5>
+          <a href="#3pl">3PL事業</a>
+          <a href="#sanpai">産廃業者向けDX事業</a>
+          <a href="#consulting">物流コンサルティング事業</a>
+        </div>
+        <div>
+          <h5>COMPANY</h5>
+          <a href="#issue">私たちについて</a>
+          <a href="#founder">代表紹介</a>
+          <a href="#company">会社概要</a>
+        </div>
+        <div>
+          <h5>CONTACT</h5>
+          <a href="#contact">お問い合わせ</a>
         </div>
       </div>
     </div>
-  </div>
-</section>
-
-
-
-<!-- CONTACT -->
-<section id="contact">
-  <div class="wrap">
-    <p class="label label--w fi" style="justify-content:center;">Contact</p>
-    <h2 class="fi" style="color:var(--white);"><span style="white-space:nowrap;">物流現場のDX・AI活用について、</span><br>まずはご相談ください。</h2>
-    <p class="desc desc--w fi">
-      具体的なシステム導入が決まっていなくても問題ありません。<br>
-      現場課題の整理、AI活用の可能性、DXテーマの優先順位づけからご相談いただけます。
-    </p>
-    <form class="cform fi" id="cform" novalidate>
-      <div class="frow">
-        <div><label class="flabel" for="co">会社名</label><input type="text" id="co" placeholder="株式会社〇〇"></div>
-        <div><label class="flabel" for="nm">お名前</label><input type="text" id="nm" placeholder="山田 太郎"></div>
-      </div>
-      <div><label class="flabel" for="em">メールアドレス</label><input type="email" id="em" placeholder="yourname@example.com"></div>
-      <div><label class="flabel" for="msg">相談内容</label><textarea id="msg" rows="5" placeholder="現場の課題や状況、ご相談内容をお気軽にご記載ください。"></textarea></div>
-      <button type="submit" class="fsub">無料で相談する</button>
-      <p class="fnote">通常2営業日以内にご返信します。課題が整理されていなくても歓迎です。</p>
-    </form>
-    <div class="fsuccess" id="fsuccess">
-      お問い合わせありがとうございます。<br>
-      ※ フォーム送信機能は現在準備中です。直接メールにてご連絡ください。
+    <div class="ft-bt">
+      <span>© 2026 Hashigologi Inc. All rights reserved.</span>
+      <span>掲載内容は2026年8月時点のものです。</span>
     </div>
   </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="flogo"><img src="logo.png" alt="ハシゴロジ"><span>株式会社ハシゴロジ</span></div>
-  <small>© 2025 Hashigologi Inc. All rights reserved.</small>
 </footer>
 
 <script src="script.js"></script>
