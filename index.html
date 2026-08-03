@@ -27,10 +27,7 @@
 <header class="hd" id="hd">
   <div class="hd-in">
     <a href="#top" class="logo">
-      <span class="logo-img">
-        <img class="l-white" src="logo-white.png" alt="株式会社ハシゴロジ" width="1255" height="227">
-        <img class="l-navy" src="logo-navy.png" alt="" aria-hidden="true" width="1255" height="227">
-      </span>
+      <span class="logo-mk">株式会社ハシゴロジ</span>
       <span class="logo-en">HASHIGOLOGI</span>
     </a>
     <nav class="gnav" id="gnav">
@@ -299,7 +296,7 @@
   <div class="wrap">
     <div class="biz-head">
       <div class="biz-photo rv">
-        <i style="background-image:var(--img-consul-sub);"></i>
+        <i style="background-image:var(--img-consul);"></i>
         <span class="tag">03 &nbsp;CONSULTING</span>
       </div>
       <div class="rv">
@@ -461,25 +458,48 @@
       <h2 class="h2" style="margin:0 auto;">お問い合わせ</h2>
     </div>
     <div class="form rv">
-      <form id="cform">
-        <div class="fld">
-          <label for="f1">会社名<span class="rq">必須</span></label>
-          <input type="text" id="f1" name="company" required autocomplete="organization">
+      <form id="cform" novalidate>
+        <div class="fld-row">
+          <div class="fld">
+            <label for="f1">会社名<span class="rq">必須</span></label>
+            <input type="text" id="f1" name="company" required autocomplete="organization">
+            <p class="err">会社名をご入力ください。</p>
+          </div>
+          <div class="fld">
+            <label for="f2">部署・役職<span class="opt">任意</span></label>
+            <input type="text" id="f2" name="department" autocomplete="organization-title">
+          </div>
+        </div>
+        <div class="fld-row">
+          <div class="fld">
+            <label for="f3">お名前<span class="rq">必須</span></label>
+            <input type="text" id="f3" name="name" required autocomplete="name">
+            <p class="err">お名前をご入力ください。</p>
+          </div>
+          <div class="fld">
+            <label for="f4">電話番号<span class="opt">任意</span></label>
+            <input type="tel" id="f4" name="phone" autocomplete="tel" inputmode="tel">
+          </div>
         </div>
         <div class="fld">
-          <label for="f2">お名前<span class="rq">必須</span></label>
-          <input type="text" id="f2" name="name" required autocomplete="name">
+          <label for="f5">メールアドレス<span class="rq">必須</span></label>
+          <input type="email" id="f5" name="email" required autocomplete="email">
+          <p class="err">メールアドレスをご確認ください。</p>
         </div>
         <div class="fld">
-          <label for="f3">メールアドレス<span class="rq">必須</span></label>
-          <input type="email" id="f3" name="email" required autocomplete="email">
+          <label for="f6">お問い合わせ内容<span class="opt">任意</span></label>
+          <textarea id="f6" name="body" placeholder="現在の状況やお困りごとをご記入ください。"></textarea>
         </div>
-        <div class="fld">
-          <label for="f4">お問い合わせ内容</label>
-          <textarea id="f4" name="body" placeholder="現在の状況やお困りごとをご記入ください。"></textarea>
+
+        <!-- ボット除け。人には見えません -->
+        <div class="hp" aria-hidden="true">
+          <label for="f7">ご住所</label>
+          <input type="text" id="f7" name="address" tabindex="-1" autocomplete="off">
         </div>
-        <button type="submit" class="btn btn-blue">送信する</button>
-        <p class="form-note" id="fnote" role="status">通常2営業日以内にご返信いたします。課題が整理されていない段階でのご相談も歓迎しております。</p>
+
+        <button type="submit" class="btn btn-blue" id="fsubmit">送信する</button>
+        <p class="form-note" id="fnote">通常2営業日以内にご返信いたします。課題が整理されていない段階でのご相談も歓迎しております。</p>
+        <p class="form-msg" id="fmsg" role="status" aria-live="polite"></p>
       </form>
     </div>
   </div>
@@ -490,7 +510,9 @@
   <div class="wrap">
     <div class="ft-top">
       <div>
-        <img class="ft-logo" src="logo-white.png" alt="株式会社ハシゴロジ" width="1255" height="227">
+        <div class="logo">
+          <span class="logo-mk">株式会社ハシゴロジ</span>
+        </div>
         <p class="ft-adr">
           HASHIGOLOGI INC.<br>
           東京都目黒区<br>

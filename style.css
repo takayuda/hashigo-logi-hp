@@ -13,7 +13,6 @@
   --img-sanpai:url('IMG-05.webp');
   --img-sanpai-sub:url('IMG-06.webp');
   --img-consul:url('IMG-07.webp');
-  --img-consul-sub:url('https://images.unsplash.com/photo-1664382953403-fc1ac77073a0?auto=format&fit=crop&w=1200&q=80');
   --img-cta:url('https://images.unsplash.com/photo-1684695749267-233af13276d0?auto=format&fit=crop&w=1920&q=80');
 
   /* 色 */
@@ -93,14 +92,10 @@ h1,h2,h3,h4{margin:0;font-weight:700;line-height:1.6;letter-spacing:.01em;
 .hd.hide{transform:translateY(-100%);}
 .hd-in{position:relative;z-index:2;max-width:1320px;margin:0 auto;padding:0 32px;height:100%;display:flex;align-items:center;justify-content:space-between;gap:20px;}
 
-/* ロゴ：透過ヘッダーでは白版、白背景では紺版をクロスフェード */
-.logo{display:flex;align-items:center;gap:12px;}
-.logo-img{position:relative;display:block;height:24px;aspect-ratio:1255/227;flex:none;}
-.logo-img img{position:absolute;inset:0;width:100%;height:100%;transition:opacity .45s var(--ease);}
-.logo-img .l-navy{opacity:0;}
-.hd.solid .logo-img .l-white{opacity:0;}
-.hd.solid .logo-img .l-navy{opacity:1;}
+.logo{display:flex;align-items:baseline;gap:11px;}
+.logo-mk{font-size:19px;font-weight:900;letter-spacing:.03em;color:#fff;transition:color .45s var(--ease);}
 .logo-en{font-family:"Barlow",sans-serif;font-size:10px;letter-spacing:.22em;color:rgba(255,255,255,.55);font-weight:600;transition:color .45s var(--ease);}
+.hd.solid .logo-mk{color:var(--navy);}
 .hd.solid .logo-en{color:var(--gray-l);}
 
 .gnav{display:flex;align-items:center;gap:30px;}
@@ -151,8 +146,7 @@ h1,h2,h3,h4{margin:0;font-weight:700;line-height:1.6;letter-spacing:.01em;
 /* メニュー展開中はヘッダーを透明のまま保つ */
 body.nav-open .hd::before{opacity:0;}
 body.nav-open .hd{box-shadow:none;transform:none;}
-body.nav-open .hd .logo-img .l-white{opacity:1;}
-body.nav-open .hd .logo-img .l-navy{opacity:0;}
+body.nav-open .hd .logo-mk{color:#fff;}
 body.nav-open .hd .logo-en{color:rgba(255,255,255,.55);}
 body.nav-open .hd .mnav-btn{border-color:rgba(255,255,255,.4);}
 body.nav-open .hd .mnav-btn i{background:#fff;width:20px;}
@@ -329,8 +323,10 @@ body.nav-open{overflow:hidden;}
 
 /* ---------- フォーム ---------- */
 .form{max-width:680px;margin:0 auto;}
+.fld-row{display:grid;grid-template-columns:1fr 1fr;gap:0 20px;}
 .fld{margin-bottom:22px;}
 .fld label{display:block;font-size:13px;font-weight:700;margin-bottom:9px;}
+.fld .opt{color:var(--gray-l);font-size:11px;font-weight:500;margin-left:9px;letter-spacing:.06em;}
 .fld label .rq{background:var(--blue);color:#fff;font-size:10px;padding:2px 7px;margin-left:9px;letter-spacing:.06em;font-weight:500;vertical-align:2px;}
 .fld input,.fld textarea{
   width:100%;padding:15px 16px;border:1px solid var(--line);background:#fff;
@@ -338,13 +334,28 @@ body.nav-open{overflow:hidden;}
 }
 .fld textarea{min-height:140px;resize:vertical;line-height:1.9;}
 .fld input:focus,.fld textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(11,99,197,.12);}
+.fld input[aria-invalid="true"],.fld textarea[aria-invalid="true"]{border-color:#c0392b;background:#fffafa;}
+.fld .err{display:none;margin-top:7px;font-size:12px;color:#c0392b;line-height:1.7;}
+.fld.bad .err{display:block;}
 .form .btn{width:100%;}
+.form .btn[disabled]{opacity:.55;cursor:default;}
+.form .btn[disabled]:hover::after{width:18px;}
 .form-note{margin-top:16px;font-size:12.5px;color:var(--gray-l);line-height:1.9;text-align:center;}
+
+/* ハニーポット（人には見えない。ボット除け） */
+.hp{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;}
+
+/* 送信結果 */
+.form-msg{display:none;margin-top:20px;padding:20px 22px;font-size:13.5px;line-height:1.95;}
+.form-msg.show{display:block;}
+.form-msg.ok{background:#eef4ee;border-left:3px solid #2e7d32;color:#1e4620;}
+.form-msg.ng{background:#fdefed;border-left:3px solid #c0392b;color:#7a2018;}
+.form-msg a{color:inherit;font-weight:700;border-bottom:1px solid currentColor;}
 
 /* ---------- フッター ---------- */
 .ft{background:var(--navy-d);color:#fff;padding:70px 0 30px;}
 .ft-top{display:grid;grid-template-columns:1.1fr 2fr;gap:44px;padding-bottom:44px;border-bottom:1px solid rgba(255,255,255,.14);}
-.ft-logo{height:26px;width:auto;}
+.ft .logo-mk{color:#fff;}
 .ft-adr{margin-top:18px;font-size:13px;color:rgba(255,255,255,.6);line-height:2;}
 .ft-nav{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;}
 .ft-nav h5{font-family:"Barlow",sans-serif;font-size:11px;letter-spacing:.18em;color:rgba(255,255,255,.45);margin:0 0 14px;font-weight:600;}
@@ -385,8 +396,9 @@ body.nav-open{overflow:hidden;}
   .hd{height:72px;}
   .hd.solid{height:62px;}
   .hd-in{padding:0 20px;}
-  .logo-img{height:20px;}
+  .logo-mk{font-size:16px;}
   .logo-en{display:none;}
+  .fld-row{grid-template-columns:1fr;}
   .mnav-btn{width:46px;height:46px;}
   .mnav-btn i{left:13px;}
   .mnav-btn i:nth-child(1){top:19px;}

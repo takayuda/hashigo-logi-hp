@@ -44,9 +44,111 @@ if(reduce || !('IntersectionObserver' in window)){
   items.forEach(function(el,i){ el.style.transitionDelay = (Math.min(i%3,2)*90)+'ms'; io.observe(el); });
 }
 
-// お問い合わせフォーム（送信先未設定のため、現状は案内のみ）
-document.getElementById('cform').addEventListener('submit', function(e){
-  e.preventDefault();
-  document.getElementById('fnote').textContent =
-    'フォームの送信機能は現在準備中です。お手数ですが、直接メールにてご連絡ください。';
-});
+/* ==========================================================
+   お問い合わせフォーム
+   ---------------------------------------------------------
+   FORM_ENDPOINT に Google Apps Script のウェブアプリURL
+   （https://script.google.com/macros/s/.../exec）を設定すると
+   送信が有効になります。設定手順は FORM-SETUP.md を参照。
+   空のままの場合は「準備中」の案内だけを表示します。
+   ========================================================== */
+var FORM_ENDPOINT = '';
+var FALLBACK_MAIL = '';   // 送信失敗時に案内するメールアドレス（任意）
+
+(function(){
+  var form = document.getElementById('cform');
+  if(!form) return;
+  var btn  = document.getElementById('fsubmit');
+  var note = document.getElementById('fnote');
+  var msg  = document.getElementById('fmsg');
+
+  function showMsg(kind, html){
+    msg.className = 'form-msg show ' + kind;
+    msg.innerHTML = html;
+  }
+  function fieldEl(name){ return form.elements[name]; }
+  function markBad(el, bad){
+    el.setAttribute('aria-invalid', bad ? 'true' : 'false');
+    var box = el.closest('.fld');
+    if(box) box.classList.toggle('bad', bad);
+  }
+
+  function validate(){
+    var bad = null;
+    [['company', function(v){ return v.length > 0; }],
+     ['name',    function(v){ return v.length > 0; }],
+     ['email',   function(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }]
+    ].forEach(function(rule){
+      var el = fieldEl(rule[0]);
+      var ok = rule[1](el.value.trim());
+      markBad(el, !ok);
+      if(!ok && !bad) bad = el;
+    });
+    return bad;
+  }
+
+  ['company','name','email'].forEach(function(n){
+    fieldEl(n).addEventListener('input', function(){
+      if(this.getAttribute('aria-invalid') === 'true') validate();
+    });
+  });
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+
+    var bad = validate();
+    if(bad){
+      showMsg('ng', '未入力の必須項目があります。ご確認のうえ、もう一度お試しください。');
+      bad.focus();
+      return;
+    }
+
+    if(!FORM_ENDPOINT){
+      note.textContent = '';
+      showMsg('ng', 'フォームの送信機能は現在準備中です。お手数ですが、直接メールにてご連絡ください。');
+      return;
+    }
+
+    var payload = {
+      company:    fieldEl('company').value.trim(),
+      department: fieldEl('department').value.trim(),
+      name:       fieldEl('name').value.trim(),
+      phone:      fieldEl('phone').value.trim(),
+      email:      fieldEl('email').value.trim(),
+      body:       fieldEl('body').value.trim(),
+      address:    fieldEl('address').value.trim(),   // ハニーポット
+      page:       location.href,
+      referrer:   document.referrer
+    };
+
+    btn.disabled = true;
+    btn.textContent = '送信中…';
+    msg.className = 'form-msg';
+
+    // text/plain で送ることでプリフライトを避ける（Apps Script 側で JSON として解釈）
+    fetch(FORM_ENDPOINT, {
+      method: 'POST',
+      headers: {'Content-Type': 'text/plain;charset=utf-8'},
+      body: JSON.stringify(payload)
+    })
+    .then(function(res){ return res.json(); })
+    .then(function(data){
+      if(!data || !data.ok) throw new Error((data && data.error) || 'unknown');
+      // 入力欄・ボタン・注記を消し、完了メッセージだけを残す
+      Array.prototype.forEach.call(form.children, function(el){
+        if(el !== msg) el.style.display = 'none';
+      });
+      showMsg('ok',
+        'お問い合わせありがとうございます。<br>' +
+        '内容を確認のうえ、通常2営業日以内にご返信いたします。');
+    })
+    .catch(function(){
+      btn.disabled = false;
+      btn.textContent = '送信する';
+      var mail = FALLBACK_MAIL
+        ? '<a href="mailto:' + FALLBACK_MAIL + '">' + FALLBACK_MAIL + '</a> 宛にご連絡ください。'
+        : '直接メールにてご連絡ください。';
+      showMsg('ng', '送信に失敗しました。時間をおいて再度お試しいただくか、' + mail);
+    });
+  });
+})();
