@@ -4,14 +4,14 @@
  * サイトから送信された内容をスプレッドシートに1行追記し、
  * 担当者へメールで通知します。
  *
+ * 方針：受信した内容は必ず記録します。ボットの疑いがあるものも
+ * 捨てずに「判定」列へ印をつけるだけに留めます。誤判定で
+ * 問い合わせを失うほうが損失が大きいためです。
+ *
  * セットアップ手順は FORM-SETUP.md を参照してください。
- * 要点だけ：
- *   1. 記録先のスプレッドシートを開く
- *   2. 拡張機能 → Apps Script でこのファイルの内容を貼り付ける
- *   3. 下の NOTIFY_TO を設定する
- *   4. デプロイ → 新しいデプロイ → 種類「ウェブアプリ」
- *      実行ユーザー：自分／アクセスできるユーザー：全員
- *   5. 発行された /exec URL を script.js の FORM_ENDPOINT に貼る
+ * コードを書き換えたら、必ず
+ *   デプロイ → デプロイを管理 → 鉛筆 → バージョン「新バージョン」→ デプロイ
+ * を実行してください。保存しただけでは反映されません。
  */
 
 // ---------- 設定 ----------
@@ -19,14 +19,16 @@
 /** 通知先メールアドレス。カンマ区切りで複数指定できます。 */
 var NOTIFY_TO = '';
 
+/** ボットの疑いがある送信でもメール通知するか（falseにすると記録のみ） */
+var NOTIFY_ON_SUSPECT = true;
+
 /** 記録先シート名。存在しない場合は自動で作成します。 */
 var SHEET_NAME = 'お問い合わせ';
 
 /**
  * スプレッドシートID。
- * このスクリプトをスプレッドシートに紐づけて作成した場合は空のままでOK
- * （紐づいたシートに書き込みます）。
- * 独立したスクリプトとして作る場合のみ、URL中の /d/ と /edit の間の文字列を指定。
+ * このスクリプトをスプレッドシートに紐づけて作成した場合は空のままでOK。
+ * 独立したスクリプトとして作った場合のみ、URL中の /d/ と /edit の間の文字列を指定。
  */
 var SPREADSHEET_ID = '';
 
@@ -40,8 +42,11 @@ var AUTOREPLY_NAME = '株式会社ハシゴロジ';
 
 var HEADERS = [
   '受信日時', '会社名', '部署・役職', 'お名前',
-  '電話番号', 'メールアドレス', 'お問い合わせ内容', '送信元ページ', '参照元'
+  '電話番号', 'メールアドレス', 'お問い合わせ内容', '送信元ページ', '参照元',
+  '判定', 'メール通知'
 ];
+var COL_JUDGE = 10;   // 判定
+var COL_MAIL  = 11;   // メール通知
 
 function doPost(e) {
   try {
@@ -51,47 +56,82 @@ function doPost(e) {
 
     var d = JSON.parse(e.postData.contents);
 
-    // ハニーポット：人が触らない項目に値が入っていたらボットとみなし、
-    // 記録も通知もせず正常応答だけ返す
-    if (String(d.address || '').trim() !== '') {
-      return json({ ok: true });
-    }
-
     var company = trim(d.company);
     var name    = trim(d.name);
     var email   = trim(d.email);
 
     if (!company || !name || !isEmail(email)) {
+      console.warn('validation_failed', JSON.stringify(d));
       return json({ ok: false, error: 'validation_failed' });
     }
 
+    // ハニーポット：人には見えない項目に値が入っていたらボットの疑い。
+    // ただし記録は必ず行う（ブラウザの自動入力による誤判定を捨てないため）
+    var suspect = String(d.address || '').trim() !== '';
+
     var row = [
-      new Date(),
-      company,
-      trim(d.department),
-      name,
-      trim(d.phone),
-      email,
-      trim(d.body),
-      trim(d.page),
-      trim(d.referrer)
+      new Date(), company, trim(d.department), name,
+      trim(d.phone), email, trim(d.body), trim(d.page), trim(d.referrer),
+      suspect ? '自動入力の疑い' : '通常',
+      ''
     ];
 
-    appendRow(row);
-    notify(row);
-    if (SEND_AUTOREPLY) autoReply(email, name, company);
+    // 1. まず記録する。何があってもデータを失わない
+    var pos = appendRow(row);
+
+    // 2. 次に通知する。失敗しても記録は残る
+    var mailStatus;
+    try {
+      if (suspect && !NOTIFY_ON_SUSPECT) {
+        mailStatus = '送信せず（疑いあり）';
+      } else if (!NOTIFY_TO) {
+        mailStatus = '送信先が未設定';
+      } else {
+        notify(row, suspect);
+        mailStatus = '送信済み → ' + NOTIFY_TO;
+      }
+    } catch (mailErr) {
+      mailStatus = '送信失敗: ' + mailErr.message;
+      console.error('mail failed', mailErr);
+    }
+    pos.sheet.getRange(pos.rowIndex, COL_MAIL).setValue(mailStatus);
+
+    if (SEND_AUTOREPLY && !suspect) {
+      try { autoReply(email, name, company); } catch (err) { console.error('autoreply failed', err); }
+    }
 
     return json({ ok: true });
 
   } catch (err) {
-    console.error(err);
+    console.error('doPost failed', err);
     return json({ ok: false, error: 'server_error' });
   }
 }
 
 /** デプロイ確認用。ブラウザで /exec を開くと表示されます。 */
 function doGet() {
-  return json({ ok: true, service: 'hashigologi-contact', ready: !!NOTIFY_TO });
+  return json({
+    ok: true,
+    service: 'hashigologi-contact',
+    ready: !!NOTIFY_TO,
+    notifyTo: NOTIFY_TO || '(未設定)'
+  });
+}
+
+/**
+ * 設定確認用。エディタ上部の関数選択で selfTest を選んで実行すると、
+ * 通知先の設定とメール送信を実際に試します。実行ログに結果が出ます。
+ */
+function selfTest() {
+  console.log('NOTIFY_TO = ' + (NOTIFY_TO || '(未設定)'));
+  console.log('残りのメール送信可能数 = ' + MailApp.getRemainingDailyQuota());
+  if (!NOTIFY_TO) { console.error('NOTIFY_TO が空です'); return; }
+  MailApp.sendEmail({
+    to: NOTIFY_TO,
+    subject: '【テスト】ハシゴロジ お問い合わせフォーム',
+    body: 'この文面が届いていれば、メール通知の設定は正常です。'
+  });
+  console.log('テストメールを送信しました → ' + NOTIFY_TO);
 }
 
 function appendRow(row) {
@@ -102,68 +142,60 @@ function appendRow(row) {
   if (!ss) throw new Error('spreadsheet_not_found');
 
   var sheet = ss.getSheetByName(SHEET_NAME);
-  if (!sheet) {
-    sheet = ss.insertSheet(SHEET_NAME);
-  }
+  if (!sheet) sheet = ss.insertSheet(SHEET_NAME);
 
-  // 見出し行がなければ作る
-  if (sheet.getLastRow() === 0) {
-    sheet.appendRow(HEADERS);
+  // 見出し行が無い、または列が足りない場合は書き直す
+  if (sheet.getLastRow() === 0 || sheet.getLastColumn() < HEADERS.length) {
     var head = sheet.getRange(1, 1, 1, HEADERS.length);
-    head.setFontWeight('bold').setBackground('#0b2b4d').setFontColor('#ffffff');
+    head.setValues([HEADERS]).setFontWeight('bold')
+        .setBackground('#0b2b4d').setFontColor('#ffffff');
     sheet.setFrozenRows(1);
-    sheet.setColumnWidth(1, 150);   // 受信日時
-    sheet.setColumnWidth(7, 420);   // お問い合わせ内容
+    sheet.setColumnWidth(1, 150);
+    sheet.setColumnWidth(7, 420);
+    sheet.setColumnWidth(COL_MAIL, 240);
   }
 
   sheet.appendRow(row);
-  sheet.getRange(sheet.getLastRow(), 1).setNumberFormat('yyyy/MM/dd HH:mm:ss');
+  var rowIndex = sheet.getLastRow();
+  sheet.getRange(rowIndex, 1).setNumberFormat('yyyy/MM/dd HH:mm:ss');
+  return { sheet: sheet, rowIndex: rowIndex };
 }
 
-function notify(row) {
-  if (!NOTIFY_TO) return;
-
-  var subject = '【お問い合わせ】' + row[1] + '　' + row[3] + ' 様';
+function notify(row, suspect) {
+  var subject = (suspect ? '【要確認】' : '【お問い合わせ】') + row[1] + '　' + row[3] + ' 様';
 
   var lines = [];
-  for (var i = 1; i < HEADERS.length; i++) {
+  for (var i = 1; i <= 8; i++) {
     lines.push(HEADERS[i] + '：' + (row[i] || '（未入力）'));
   }
 
+  var head = suspect
+    ? 'サイトのお問い合わせフォームから送信がありました。\n'
+      + '※ 自動入力の可能性がある項目に値が入っていました。内容をご確認ください。'
+    : 'サイトのお問い合わせフォームから送信がありました。';
+
   var body = [
-    'サイトのお問い合わせフォームから送信がありました。',
-    '',
+    head, '',
     '受信日時：' + Utilities.formatDate(row[0], 'Asia/Tokyo', 'yyyy/MM/dd HH:mm:ss'),
     '',
     lines.join('\n'),
-    '',
-    '---',
+    '', '---',
     '返信は下記アドレス宛に直接お送りいただけます。',
     row[5]
   ].join('\n');
 
-  MailApp.sendEmail({
-    to: NOTIFY_TO,
-    subject: subject,
-    body: body,
-    replyTo: row[5]
-  });
+  MailApp.sendEmail({ to: NOTIFY_TO, subject: subject, body: body, replyTo: row[5] });
 }
 
 function autoReply(email, name, company) {
   var body = [
-    company,
-    name + ' 様',
-    '',
+    company, name + ' 様', '',
     'この度は株式会社ハシゴロジへお問い合わせいただき、誠にありがとうございます。',
     '下記の内容で受け付けいたしました。',
     '内容を確認のうえ、通常2営業日以内に担当者よりご返信いたします。',
-    '',
-    '※ 本メールは自動送信です。',
-    '',
-    '---',
+    '', '※ 本メールは自動送信です。', '', '---',
     '株式会社ハシゴロジ',
-    '東京都目黒区',
+    '東京都目黒区八雲２−２０−１２',
     '3PL事業／産業廃棄物業者向けDX事業／物流コンサルティング・受託システム開発'
   ].join('\n');
 
@@ -177,16 +209,9 @@ function autoReply(email, name, company) {
 
 // ---------- ユーティリティ ----------
 
-function trim(v) {
-  return String(v == null ? '' : v).trim();
-}
-
-function isEmail(v) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
-}
-
+function trim(v) { return String(v == null ? '' : v).trim(); }
+function isEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
 function json(obj) {
-  return ContentService
-    .createTextOutput(JSON.stringify(obj))
+  return ContentService.createTextOutput(JSON.stringify(obj))
     .setMimeType(ContentService.MimeType.JSON);
 }
