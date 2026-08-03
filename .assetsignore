@@ -5,6 +5,17 @@
 # まるごと配信対象になる。マスター画像だけで 9MB 以上あり、
 # ビルド時間の増大と不要なファイルの公開につながる。
 
+# Git履歴とローカル作業ファイル。
+# 配信すると .git/config やコミット履歴が外部から取得できてしまう
+.git
+.git/**
+.wrangler
+.wrangler/**
+node_modules
+node_modules/**
+.DS_Store
+**/.DS_Store
+
 # WebP化前のマスター画像（配信には .webp を使用）
 IMG-02.jpg
 IMG-05.jpg
