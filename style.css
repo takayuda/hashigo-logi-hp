@@ -289,7 +289,7 @@ body.nav-open{overflow:hidden;}
 .note{margin-top:26px;font-size:13px;color:var(--gray-l);line-height:1.95;}
 
 /* ---------- 代表紹介 ---------- */
-.founder{display:grid;grid-template-columns:230px 1fr;gap:56px;align-items:start;}
+.founder{display:grid;grid-template-columns:290px 1fr;gap:56px;align-items:start;}
 .f-photo{
   position:relative;width:100%;aspect-ratio:4/5;background:#e7ebf1;overflow:hidden;
   display:flex;align-items:center;justify-content:center;
@@ -300,11 +300,16 @@ body.nav-open{overflow:hidden;}
 .f-name .role{font-size:12.5px;color:var(--gray-l);letter-spacing:.08em;}
 .f-name .nm{font-size:21px;font-weight:900;margin-top:6px;letter-spacing:.06em;}
 .f-name .nm-en{font-family:"Barlow",sans-serif;font-size:11px;letter-spacing:.16em;color:var(--gray-l);margin-top:5px;}
-.founder .lead:first-child{margin-top:0;}
+/* 代表コメント：本人の言葉であることが伝わるよう、
+   紺・やや大きめ・青の縦罫で経歴と区別する */
+.f-comment{margin:0;padding-left:22px;border-left:2px solid var(--blue);}
+.f-comment p{font-size:16px;line-height:2.05;color:var(--navy);font-weight:500;}
 
 /* 経歴（文章＋スキルタグ） */
-.bio{margin-top:38px;padding-top:34px;border-top:1px solid var(--line);}
-.bio p{font-size:14.5px;color:var(--gray);line-height:2.15;}
+.bio{margin-top:40px;padding-top:34px;border-top:1px solid var(--line);}
+.bio-lb{font-size:11.5px;font-weight:700;letter-spacing:.14em;
+  color:var(--gray);margin-bottom:16px;}
+.bio p{font-size:14px;color:var(--gray);line-height:2.15;}
 .bio p + p{margin-top:22px;}
 .skills{display:flex;flex-wrap:wrap;gap:9px;margin-top:30px;}
 .skills li{background:#fff;border:1px solid var(--line);padding:7px 15px;font-size:12.5px;color:var(--gray);letter-spacing:.02em;}
@@ -394,7 +399,7 @@ body.nav-open{overflow:hidden;}
   .svc{grid-template-columns:1fr;gap:0;}
   .flow,.ba{grid-template-columns:1fr;}
   .founder{grid-template-columns:1fr;gap:36px;}
-  .f-photo{max-width:200px;}
+  .f-photo{max-width:250px;}
   .ft-top{grid-template-columns:1fr;}
 }
 @media(max-width:760px){
