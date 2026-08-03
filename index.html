@@ -450,9 +450,10 @@
         </div>
 
         <!-- ボット除け。人には見えません -->
+        <!-- name とラベルは、ブラウザの自動入力に拾われない語にすること。
+             ここが勝手に埋まると、送信が全件ボット判定で破棄される -->
         <div class="hp" aria-hidden="true">
-          <label for="f7">ご住所</label>
-          <input type="text" id="f7" name="address" tabindex="-1" autocomplete="off">
+          <input type="text" id="f7" name="hp_ref" tabindex="-1" autocomplete="off">
         </div>
 
         <button type="submit" class="btn btn-blue" id="fsubmit">送信する</button>

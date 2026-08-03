@@ -116,7 +116,7 @@ var FALLBACK_MAIL = 'takayuda@hashigo-logi.com';   // 送信失敗時に案内�
       phone:      fieldEl('phone').value.trim(),
       email:      fieldEl('email').value.trim(),
       body:       fieldEl('body').value.trim(),
-      address:    fieldEl('address').value.trim(),   // ハニーポット
+      address:    fieldEl('hp_ref').value.trim(),   // ハニーポット（GAS側は address で判定）
       page:       location.href,
       referrer:   document.referrer
     };
