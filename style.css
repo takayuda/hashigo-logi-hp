@@ -428,3 +428,36 @@ body.nav-open{overflow:hidden;}
   .spec th{display:block;width:100%;padding:20px 0 4px;}
   .spec td{display:block;padding:0 0 20px;}
 }
+
+/* ---------- 下層ページ（プライバシーポリシー等） ---------- */
+.page-doc{padding-top:88px;}
+.doc{padding:76px 0 104px;}
+.doc-head{margin-bottom:44px;padding-bottom:34px;border-bottom:1px solid var(--line);}
+.doc-head .h2{max-width:none;}
+.doc-lead{margin-top:20px;color:var(--gray);font-size:14.5px;line-height:2.1;max-width:720px;}
+.doc-body{max-width:780px;}
+.doc-body section{margin-top:44px;}
+.doc-body section:first-child{margin-top:0;}
+.doc-body h2{font-size:18px;padding-bottom:12px;border-bottom:1px solid var(--line);}
+.doc-body h3{font-size:15.5px;margin-top:26px;}
+.doc-body p{margin-top:16px;font-size:14.5px;color:var(--gray);line-height:2.1;}
+.doc-body ul,.doc-body ol{margin-top:16px;padding-left:1.5em;font-size:14.5px;color:var(--gray);line-height:2.1;}
+.doc-body ul{list-style:disc;}
+.doc-body ol{list-style:decimal;}
+.doc-body li{margin:6px 0;}
+.doc-body a{color:var(--blue);border-bottom:1px solid rgba(11,99,197,.3);}
+.doc-body a:hover{border-bottom-color:var(--blue);}
+.doc-meta{margin-top:56px;padding-top:26px;border-top:1px solid var(--line);
+  font-size:13px;color:var(--gray-l);line-height:2;}
+.doc-back{display:inline-flex;align-items:center;gap:10px;margin-top:44px;
+  font-size:14px;font-weight:700;color:var(--blue);}
+.doc-back::before{content:"";width:16px;height:1px;background:currentColor;transition:width .3s var(--ease);}
+.doc-back:hover::before{width:24px;}
+@media(max-width:760px){
+  .page-doc{padding-top:72px;}
+  .doc{padding:48px 0 66px;}
+  .doc-head{margin-bottom:32px;padding-bottom:26px;}
+  .doc-body section{margin-top:36px;}
+}
+.form-note a{color:var(--gray);border-bottom:1px solid var(--line);}
+.form-note a:hover{color:var(--blue);border-bottom-color:var(--blue);}

@@ -1,21 +1,27 @@
 // ヘッダー：スクロールで白背景に、下方向スクロールで隠す
 var hd = document.getElementById('hd');
+// 下層ページ（page-doc）は白背景なのでヘッダーを常に solid のままにする
+var alwaysSolid = document.body.classList.contains('page-doc');
 var lastY = window.scrollY, ticking = false;
 function headerUpdate(){
+  if(!hd) return;
   var y = window.scrollY;
-  hd.classList.toggle('solid', y > 40);
+  if(!alwaysSolid){ hd.classList.toggle('solid', y > 40); }
   if(!document.body.classList.contains('nav-open')){
     hd.classList.toggle('hide', y > 400 && y > lastY + 4);
   }
   lastY = y; ticking = false;
 }
-window.addEventListener('scroll', function(){
-  if(!ticking){ window.requestAnimationFrame(headerUpdate); ticking = true; }
-}, {passive:true});
-headerUpdate();
+if(hd){
+  window.addEventListener('scroll', function(){
+    if(!ticking){ window.requestAnimationFrame(headerUpdate); ticking = true; }
+  }, {passive:true});
+  headerUpdate();
+}
 
 // フルスクリーンメニュー
 var btn = document.getElementById('navBtn'), ovl = document.getElementById('ovl');
+if(btn && ovl){
 function setMenu(open){
   ovl.classList.toggle('open', open);
   document.body.classList.toggle('nav-open', open);
@@ -31,6 +37,7 @@ ovl.querySelectorAll('a').forEach(function(a){
 document.addEventListener('keydown', function(e){
   if(e.key === 'Escape' && ovl.classList.contains('open')){ setMenu(false); }
 });
+}
 
 // スクロール表示
 var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
