@@ -32,6 +32,14 @@ var SHEET_NAME = 'お問い合わせ';
  */
 var SPREADSHEET_ID = '';
 
+/**
+ * メール送信に GmailApp を使うか。
+ *   true  … 自分のGmailアカウントから送信。送信済みフォルダに残るため
+ *           「本当に送られたか」を目視で確認できる。到達率も高い。
+ *   false … MailApp を使用。送信済みには残らない。
+ */
+var USE_GMAIL_APP = true;
+
 /** 送信者本人にも自動返信を送る場合は true */
 var SEND_AUTOREPLY = false;
 
@@ -123,15 +131,42 @@ function doGet() {
  * 通知先の設定とメール送信を実際に試します。実行ログに結果が出ます。
  */
 function selfTest() {
+  console.log('実行アカウント = ' + (Session.getEffectiveUser().getEmail() || '(取得できず)'));
   console.log('NOTIFY_TO = ' + (NOTIFY_TO || '(未設定)'));
+  console.log('送信方式 = ' + (USE_GMAIL_APP ? 'GmailApp（送信済みに残る）' : 'MailApp'));
   console.log('残りのメール送信可能数 = ' + MailApp.getRemainingDailyQuota());
+
   if (!NOTIFY_TO) { console.error('NOTIFY_TO が空です'); return; }
-  MailApp.sendEmail({
+
+  var subject = '【テスト】ハシゴロジ お問い合わせフォーム '
+    + Utilities.formatDate(new Date(), 'Asia/Tokyo', 'HH:mm:ss');
+
+  sendMail({
     to: NOTIFY_TO,
-    subject: '【テスト】ハシゴロジ お問い合わせフォーム',
-    body: 'この文面が届いていれば、メール通知の設定は正常です。'
+    subject: subject,
+    body: 'この文面が届いていれば、メール通知の設定は正常です。\n\n件名: ' + subject
   });
-  console.log('テストメールを送信しました → ' + NOTIFY_TO);
+
+  console.log('送信しました → ' + NOTIFY_TO);
+  console.log('件名「' + subject + '」で Gmail を検索してください。');
+  if (USE_GMAIL_APP) {
+    console.log('GmailApp で送信したので、送信済みフォルダにも残っているはずです。');
+  }
+}
+
+/**
+ * メール送信の共通処理。USE_GMAIL_APP に応じて送信方式を切り替える。
+ * GmailApp は送信済みフォルダに残るぶん、送信の有無を確認しやすい。
+ */
+function sendMail(options) {
+  if (USE_GMAIL_APP) {
+    GmailApp.sendEmail(options.to, options.subject, options.body, {
+      replyTo: options.replyTo,
+      name: options.name
+    });
+  } else {
+    MailApp.sendEmail(options);
+  }
 }
 
 function appendRow(row) {
@@ -184,7 +219,7 @@ function notify(row, suspect) {
     row[5]
   ].join('\n');
 
-  MailApp.sendEmail({ to: NOTIFY_TO, subject: subject, body: body, replyTo: row[5] });
+  sendMail({ to: NOTIFY_TO, subject: subject, body: body, replyTo: row[5] });
 }
 
 function autoReply(email, name, company) {
@@ -199,7 +234,7 @@ function autoReply(email, name, company) {
     '3PL事業／産業廃棄物業者向けDX事業／物流コンサルティング・受託システム開発'
   ].join('\n');
 
-  MailApp.sendEmail({
+  sendMail({
     to: email,
     subject: 'お問い合わせを受け付けました｜株式会社ハシゴロジ',
     body: body,
