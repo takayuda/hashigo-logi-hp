@@ -25,7 +25,8 @@ founder.jpg
 
 # 旧デザインで使っていた画像。現在は未参照
 logistics.png
-logo.png
+
+# logo.png は構造化データ（Organization.logo）から参照するため除外しない
 
 # サーバー側スクリプトとドキュメント。公開する必要がない
 gas/

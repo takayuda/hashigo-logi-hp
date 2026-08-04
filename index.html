@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>株式会社ハシゴロジ | 3PL・産廃業者向けDX・物流コンサルティング</title>
 <meta name="description" content="株式会社ハシゴロジは、3PL（倉庫運営受託）、産業廃棄物業者向けDX、物流コンサルティング・受託システム開発を通じて、倉庫業・運送業の現場課題の解決を支援します。">
+<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1">
 
 <link rel="icon" href="favicon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="favicon.png">
@@ -23,6 +24,79 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+
+<!-- LCP要素であるメインビジュアルの背景画像を先読みする。
+     写真を差し替えたら style.css の --img-hero と揃えること -->
+<link rel="preload" as="image" fetchpriority="high"
+      href="https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&amp;fit=crop&amp;w=1920&amp;q=80">
+
+<!-- 構造化データ。画面に表示している内容とのみ一致させること -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://hashigologi.com/#organization",
+      "name": "株式会社ハシゴロジ",
+      "alternateName": "Hashigologi Inc.",
+      "url": "https://hashigologi.com/",
+      "logo": "https://hashigologi.com/logo.png",
+      "image": "https://hashigologi.com/ogp.jpg",
+      "email": "takayuda@hashigo-logi.com",
+      "foundingDate": "2026-06",
+      "description": "3PL（倉庫運営受託）、産業廃棄物業者向けDX、物流コンサルティング・受託システム開発を通じて、倉庫業・運送業の現場課題の解決を支援する会社です。",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "JP",
+        "addressRegion": "東京都",
+        "addressLocality": "目黒区",
+        "streetAddress": "八雲2-20-12"
+      },
+      "founder": {
+        "@type": "Person",
+        "name": "髙橋 優大",
+        "jobTitle": "代表取締役"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://hashigologi.com/#website",
+      "url": "https://hashigologi.com/",
+      "name": "株式会社ハシゴロジ",
+      "inLanguage": "ja",
+      "publisher": { "@id": "https://hashigologi.com/#organization" }
+    },
+    {
+      "@type": "Service",
+      "name": "3PL事業",
+      "serviceType": "3PL（倉庫運営受託）",
+      "description": "荷主企業の物流業務を、庫内オペレーションごと受託します。保管・入出荷・流通加工・配送手配まで、必要な範囲を切り出して依頼できます。作業手順の設計と倉庫管理システムの整備をセットで行います。",
+      "url": "https://hashigologi.com/#3pl",
+      "provider": { "@id": "https://hashigologi.com/#organization" },
+      "areaServed": { "@type": "Country", "name": "Japan" }
+    },
+    {
+      "@type": "Service",
+      "name": "産廃業者向けDX事業",
+      "serviceType": "産業廃棄物処理業向けシステム開発",
+      "description": "産業廃棄物中間処理業の搬入予約・受入キャパシティ管理をシステム化します。電話やFAXに依存した受入業務の効率化を支援します。",
+      "url": "https://hashigologi.com/#sanpai",
+      "provider": { "@id": "https://hashigologi.com/#organization" },
+      "areaServed": { "@type": "Country", "name": "Japan" }
+    },
+    {
+      "@type": "Service",
+      "name": "物流コンサルティング事業",
+      "serviceType": "物流コンサルティング・受託システム開発",
+      "description": "業務可視化・課題整理から、要件定義、システム導入、受託開発、AI活用まで。現場に定着する形での改善を支援します。",
+      "url": "https://hashigologi.com/#consulting",
+      "provider": { "@id": "https://hashigologi.com/#organization" },
+      "areaServed": { "@type": "Country", "name": "Japan" }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 
@@ -67,7 +141,7 @@
       </nav>
 
       <div class="ovl-side">
-        <h5>COMPANY</h5>
+        <p class="ovl-lb">COMPANY</p>
         <p class="nm">株式会社ハシゴロジ</p>
         <p>東京都目黒区八雲２−２０−１２<br>3PL事業／産業廃棄物業者向けDX事業／<br>物流コンサルティング・受託システム開発</p>
         <a href="#contact" class="ovl-cta">お問い合わせはこちら</a>
@@ -100,10 +174,12 @@
 <!-- ========== 課題 ========== -->
 <section class="issue-sec" id="issue">
   <div class="issue rv">
-  <div class="issue-img" role="img" aria-label="物流センターの庫内。高層ラックの通路を作業者が行き交う様子"></div>
+  <div class="issue-img">
+    <img src="IMG-02.webp" alt="物流センターの庫内。高層ラックが並ぶ通路を、青い作業着の作業者が行き交う様子" width="1440" height="958" loading="lazy" decoding="async">
+  </div>
   <div class="issue-txt">
     <span class="eyebrow eyebrow-w">Issue</span>
-    <h3 class="h2" style="font-size:clamp(20px,2.6vw,27px);">システムを導入するだけでは、<br>現場の業務は変わりません。</h3>
+    <h2 class="h2" style="font-size:clamp(20px,2.6vw,27px);">システムを導入するだけでは、<br>現場の業務は変わりません。</h2>
     <p>倉庫・運送の現場では、人手不足、教育負荷、安全管理、品質のばらつき、紙やExcelによる管理、ベテラン依存の判断といった課題が同時に発生しています。</p>
     <p>私たちは、現場の流れを理解したうえで業務設計から見直し、課題の整理から実装・定着までを一貫して支援します。実際に現場を運営する立場と、システムをつくる立場の両方から、使われる仕組みをつくることを重視しています。</p>
     <ul class="issue-list">
@@ -134,29 +210,29 @@
         <div class="bizcard-b">
           <h3>3PL事業</h3>
           <p>荷主企業の物流業務を、庫内オペレーションごと受託します。作業設計からWMSの整備、立ち上げ、運用改善までを一貫してご支援します。</p>
-          <span class="txtlink">詳しく見る</span>
+          <span class="txtlink">3PL事業を詳しく見る</span>
         </div>
       </a>
       <a href="#sanpai" class="bizcard rv">
         <div class="bizcard-img">
           <span class="bizcard-no">02</span>
-          <i style="background-image:var(--img-sanpai);"></i>
+          <img src="IMG-05.webp" alt="産業廃棄物中間処理施設の選別ヤード。天窓から光が差すなか、グラップル付きの重機が分別された廃材を扱っている" width="1440" height="945" loading="lazy" decoding="async">
         </div>
         <div class="bizcard-b">
           <h3>産廃業者向けDX事業</h3>
           <p>産業廃棄物中間処理業の搬入予約・受入キャパシティ管理をシステム化します。電話やFAXに依存した受入業務の効率化を支援します。</p>
-          <span class="txtlink">詳しく見る</span>
+          <span class="txtlink">産廃業者向けDX事業を詳しく見る</span>
         </div>
       </a>
       <a href="#consulting" class="bizcard rv">
         <div class="bizcard-img">
           <span class="bizcard-no">03</span>
-          <i style="background-image:var(--img-consul);"></i>
+          <img src="IMG-07.webp" alt="倉庫の床で打ち合わせをする2人。スーツの担当者がラックを指し示し、作業着の担当者がタブレットを持って聞いている" width="1440" height="960" loading="lazy" decoding="async">
         </div>
         <div class="bizcard-b">
           <h3>物流コンサルティング事業</h3>
           <p>業務可視化・課題整理から、要件定義、システム導入、受託開発、AI活用まで。現場に定着する形での改善をご支援します。</p>
-          <span class="txtlink">詳しく見る</span>
+          <span class="txtlink">物流コンサルティング事業を詳しく見る</span>
         </div>
       </a>
     </div>
@@ -183,28 +259,28 @@
         <li>
           <span class="no">01</span>
           <div>
-            <h4>庫内オペレーション設計</h4>
+            <h3>庫内オペレーション設計</h3>
             <p>レイアウト、動線、人員配置、標準作業手順を設計します。作業のばらつきを減らし、教育しやすい現場づくりを支援します。</p>
           </div>
         </li>
         <li>
           <span class="no">02</span>
           <div>
-            <h4>入出荷・在庫管理の受託</h4>
+            <h3>入出荷・在庫管理の受託</h3>
             <p>入荷検品、保管、ピッキング、流通加工、出荷、返品処理までを担います。在庫精度と出荷リードタイムを指標に運用します。</p>
           </div>
         </li>
         <li>
           <span class="no">03</span>
           <div>
-            <h4>WMS導入とデータ整備</h4>
+            <h3>WMS導入とデータ整備</h3>
             <p>倉庫管理システムの選定・導入・カスタマイズに内製で対応します。マスタ整備やEC・基幹システムとの連携までを含めて整えます。</p>
           </div>
         </li>
         <li>
           <span class="no">04</span>
           <div>
-            <h4>立ち上げ・移管支援</h4>
+            <h3>立ち上げ・移管支援</h3>
             <p>他社倉庫からの移管、新拠点の立ち上げ、繁忙期のスポット対応に対応します。切り替え計画から現場教育までを支援します。</p>
           </div>
         </li>
@@ -213,17 +289,17 @@
       <ul class="flow">
         <li>
           <span class="st">STEP 01</span>
-          <h4>ヒアリング・現地確認</h4>
+          <h3>ヒアリング・現地確認</h3>
           <p>物量、SKU数、出荷波動、作業内容を確認し、対応可否と課題を整理します。</p>
         </li>
         <li>
           <span class="st">STEP 02</span>
-          <h4>オペレーション設計・お見積</h4>
+          <h3>オペレーション設計・お見積</h3>
           <p>作業手順と人員計画を設計し、保管料・作業料の内訳を明示してご提示します。</p>
         </li>
         <li>
           <span class="st">STEP 03</span>
-          <h4>立ち上げ・運用改善</h4>
+          <h3>立ち上げ・運用改善</h3>
           <p>移管計画に沿って稼働します。稼働後もKPIをもとに継続的な改善を行います。</p>
         </li>
       </ul>
@@ -236,7 +312,7 @@
   <div class="wrap">
     <div class="biz-head rev">
       <div class="biz-photo rv">
-        <i style="background-image:var(--img-sanpai-sub);"></i>
+        <img src="IMG-06.webp" alt="産業廃棄物処理施設のトラックスケール。計量台に乗ったトラックと、その脇の計量ブース" width="1440" height="958" loading="lazy" decoding="async">
         <span class="tag">02 &nbsp;SANPAI DX</span>
       </div>
       <div class="rv">
@@ -251,15 +327,15 @@
         <span class="ba-lb">BEFORE ─ これまでの受入業務</span>
         <ul>
           <li>
-            <h4>搬入予約を電話・FAXで受付</h4>
+            <h3>搬入予約を電話・FAXで受付</h3>
             <p>その都度、担当者が空き状況を確認して回答するため、担当者が不在だと対応が止まります。</p>
           </li>
           <li>
-            <h4>受入可能量が共有されない</h4>
+            <h3>受入可能量が共有されない</h3>
             <p>品目ごとの残キャパシティが担当者の頭の中にあり、当日になって受けきれないことがあります。</p>
           </li>
           <li>
-            <h4>計量記録と実績の二重入力</h4>
+            <h3>計量記録と実績の二重入力</h3>
             <p>紙の伝票を後から転記し、実績の集計は月末にまとめて手作業で行っています。</p>
           </li>
         </ul>
@@ -268,15 +344,15 @@
         <span class="ba-lb">AFTER ─ システム化後</span>
         <ul>
           <li>
-            <h4>Web予約を受け付け、一覧で管理</h4>
+            <h3>Web予約を受け付け、一覧で管理</h3>
             <p>排出事業者・収集運搬業者からの申込みをWebで受け付け、受付状況を社内で共有できます。</p>
           </li>
           <li>
-            <h4>品目別の受入枠をシステムで管理</h4>
+            <h3>品目別の受入枠をシステムで管理</h3>
             <p>処理能力と許可量にもとづいて受入可能量を判定し、無理な予約の発生を防ぎます。</p>
           </li>
           <li>
-            <h4>予約から計量・実績まで一気通貫</h4>
+            <h3>予約から計量・実績まで一気通貫</h3>
             <p>受付データがそのまま計量・実績につながり、集計や報告にかかる手作業を削減します。</p>
           </li>
         </ul>
@@ -290,7 +366,7 @@
   <div class="wrap">
     <div class="biz-head">
       <div class="biz-photo rv">
-        <i style="background-image:var(--img-consul);"></i>
+        <img src="IMG-07.webp" alt="倉庫の床で打ち合わせをする2人。スーツの担当者がラックを指し示し、作業着の担当者がタブレットを持って聞いている" width="1440" height="960" loading="lazy" decoding="async">
         <span class="tag">03 &nbsp;CONSULTING</span>
       </div>
       <div class="rv">
@@ -305,42 +381,42 @@
         <li>
           <span class="no">01</span>
           <div>
-            <h4>業務可視化・課題整理</h4>
+            <h3>業務可視化・課題整理</h3>
             <p>現場ヒアリング、業務フロー整理、ボトルネックの特定、改善テーマの優先順位づけを行います。</p>
           </div>
         </li>
         <li>
           <span class="no">02</span>
           <div>
-            <h4>要件定義</h4>
+            <h3>要件定義</h3>
             <p>WMS・TMS・基幹システムの要件定義を担当します。現場で運用できる粒度まで業務要件を整理します。</p>
           </div>
         </li>
         <li>
           <span class="no">03</span>
           <div>
-            <h4>システム選定・導入支援</h4>
+            <h3>システム選定・導入支援</h3>
             <p>SaaSの比較検討、ベンダー選定、導入プロジェクトの推進、既存システムとの連携設計を支援します。</p>
           </div>
         </li>
         <li>
           <span class="no">04</span>
           <div>
-            <h4>受託システム開発</h4>
+            <h3>受託システム開発</h3>
             <p>既製品では合わない領域は自社で開発します。小さく開発し、現場で検証しながら段階的に広げます。</p>
           </div>
         </li>
         <li>
           <span class="no">05</span>
           <div>
-            <h4>AI活用</h4>
+            <h3>AI活用</h3>
             <p>帳票・請求書の読み取り、社内ナレッジ検索、報告書の分類・傾向分析などを、現場に定着する形で導入します。</p>
           </div>
         </li>
         <li>
           <span class="no">06</span>
           <div>
-            <h4>データ活用・KPI設計</h4>
+            <h3>データ活用・KPI設計</h3>
             <p>KPI設計とダッシュボード構築を行い、日々の意思決定と改善につながる形にデータを整えます。</p>
           </div>
         </li>
@@ -360,7 +436,7 @@
     <div class="founder">
       <div class="rv">
         <div class="f-photo">
-          <img src="founder.webp" alt="代表取締役 髙橋 優大" width="687" height="859">
+          <img src="founder.webp" alt="代表取締役 髙橋 優大" width="687" height="859" loading="lazy" decoding="async">
         </div>
         <div class="f-name">
           <div class="role">代表取締役</div>
@@ -375,7 +451,7 @@
         </blockquote>
 
         <div class="bio">
-          <h4 class="bio-lb">経歴</h4>
+          <h3 class="bio-lb">経歴</h3>
           <p>大阪市立大学を卒業後、アマゾンジャパン合同会社に入社。フルフィルメントセンター事業本部で物流拠点の新規設立や生産管理に従事したのち、SCM本部で事業開発および倉庫管理システムの開発を担当。株式会社TRiCERAでは、事業部長として越境ECの物流オペレーション管理と新規事業立ち上げを統括。2024年に退社後、フリーランスとして事業開発コンサルタントとして、AIエージェント事業の新規立ち上げを支援。2026年に株式会社ハシゴロジを設立し、代表取締役に就任。</p>
         </div>
 
@@ -475,8 +551,11 @@
       <tbody>
         <tr><th>会社名</th><td>株式会社ハシゴロジ（Hashigologi Inc.）</td></tr>
         <tr><th>代表者</th><td>代表取締役　髙橋 優大</td></tr>
+        <tr><th>設立</th><td>2026年6月</td></tr>
+        <tr><th>資本金</th><td>200万円</td></tr>
         <tr><th>所在地</th><td>東京都目黒区八雲２−２０−１２</td></tr>
         <tr><th>事業内容</th><td>3PL事業<br>産業廃棄物業者向けDX事業<br>物流コンサルティング・受託システム開発</td></tr>
+        <tr><th>お問い合わせ</th><td><a href="mailto:takayuda@hashigo-logi.com">takayuda@hashigo-logi.com</a></td></tr>
       </tbody>
     </table>
   </div>
@@ -498,19 +577,19 @@
       </div>
       <div class="ft-nav">
         <div>
-          <h5>SERVICE</h5>
+          <p class="ft-lb">SERVICE</p>
           <a href="#3pl">3PL事業</a>
           <a href="#sanpai">産廃業者向けDX事業</a>
           <a href="#consulting">物流コンサルティング事業</a>
         </div>
         <div>
-          <h5>COMPANY</h5>
+          <p class="ovl-lb">COMPANY</p>
           <a href="#issue">私たちについて</a>
           <a href="#founder">代表紹介</a>
           <a href="#company">会社概要</a>
         </div>
         <div>
-          <h5>CONTACT</h5>
+          <p class="ft-lb">CONTACT</p>
           <a href="#contact">お問い合わせ</a>
         </div>
       </div>

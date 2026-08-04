@@ -1,4 +1,26 @@
 User-agent: *
 Allow: /
 
+# AI検索エンジンのクローラ。
+# OAI-SearchBot は ChatGPT の検索機能、GPTBot は学習利用。
+# 認知獲得を優先して両方を許可している。
+# 学習利用を避けたくなった場合は GPTBot 側を Disallow: / に変更する。
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
 Sitemap: https://hashigologi.com/sitemap.xml

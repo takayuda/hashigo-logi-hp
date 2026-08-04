@@ -1,18 +1,17 @@
 /* ==========================================================
    株式会社ハシゴロジ
    ---------------------------------------------------------
-   写真の差し替えは下の --img-* を書き換えてください。
+   写真の扱い:
+   - 内容を伝える写真は index.html の <img> で配置し、alt を付ける
+   - 見出しの背後に敷く装飾的な背景だけを下の --img-* で扱う
    未手配のスロットは暫定でフリー素材（Unsplash）を参照しています。
+   差し替え時は index.html の preload の href も合わせること。
    ========================================================== */
 :root{
-  /* 画像 */
+  /* 背景として敷く画像のみ。内容のある写真は <img> 側にある */
   --img-hero:url('https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=1920&q=80');
-  --img-issue:url('IMG-02.webp');
   --img-3pl:url('https://images.unsplash.com/photo-1644079446600-219068676743?auto=format&fit=crop&w=1200&q=80');
   --img-3pl-sub:url('https://images.unsplash.com/photo-1587293852726-70cdb56c2866?auto=format&fit=crop&w=1200&q=80');
-  --img-sanpai:url('IMG-05.webp');
-  --img-sanpai-sub:url('IMG-06.webp');
-  --img-consul:url('IMG-07.webp');
   --img-cta:url('https://images.unsplash.com/photo-1684695749267-233af13276d0?auto=format&fit=crop&w=1920&q=80');
 
   /* 色 */
@@ -187,7 +186,7 @@ body.nav-open .hd .mnav-btn i:nth-child(2){transform:translateY(-4px) rotate(-45
 }
 .ovl-sub a:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.5);color:#fff;}
 .ovl-side{color:rgba(255,255,255,.6);font-size:13px;line-height:2.1;}
-.ovl-side h5{font-family:"Barlow",sans-serif;font-size:11px;letter-spacing:.2em;color:rgba(255,255,255,.38);margin:0 0 14px;font-weight:600;}
+.ovl-lb{font-family:"Barlow",sans-serif;font-size:11px;letter-spacing:.2em;color:rgba(255,255,255,.38);margin:0 0 14px;font-weight:600;}
 .ovl-side .nm{color:#fff;font-size:16px;font-weight:700;letter-spacing:.04em;}
 .ovl-cta{
   display:inline-flex;align-items:center;gap:12px;margin-top:26px;padding:16px 30px;
@@ -229,8 +228,11 @@ body.nav-open{overflow:hidden;}
 .bizcard{display:block;background:#fff;border:1px solid var(--line);transition:box-shadow .35s var(--ease),transform .35s var(--ease);}
 .bizcard:hover{box-shadow:0 14px 34px rgba(11,43,77,.11);transform:translateY(-4px);}
 .bizcard-img{position:relative;height:208px;overflow:hidden;}
-.bizcard-img i{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform .6s var(--ease);}
-.bizcard:hover .bizcard-img i{transform:scale(1.07);}
+.bizcard-img i,
+.bizcard-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  background-size:cover;background-position:center;transition:transform .6s var(--ease);}
+.bizcard:hover .bizcard-img i,
+.bizcard:hover .bizcard-img img{transform:scale(1.07);}
 .bizcard-no{position:absolute;left:0;top:0;z-index:2;background:var(--navy);color:#fff;font-family:"Barlow",sans-serif;font-size:12px;letter-spacing:.16em;padding:8px 15px;font-weight:600;}
 .bizcard-b{padding:28px 26px 30px;}
 .bizcard-b h3{font-size:19px;}
@@ -240,7 +242,8 @@ body.nav-open{overflow:hidden;}
 /* ---------- 課題セクション ---------- */
 .issue-sec{padding-top:104px;}
 .issue{display:grid;grid-template-columns:1fr 1fr;gap:0;align-items:stretch;}
-.issue-img{background-image:var(--img-issue);background-size:cover;background-position:center;min-height:420px;}
+.issue-img{position:relative;min-height:420px;overflow:hidden;}
+.issue-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
 .issue-txt{background:var(--navy);color:#fff;padding:66px 56px;display:flex;flex-direction:column;justify-content:center;}
 .issue-txt .h2{color:#fff;}
 .issue-txt p{margin-top:24px;color:rgba(255,255,255,.78);font-size:14.5px;line-height:2.15;}
@@ -254,7 +257,9 @@ body.nav-open{overflow:hidden;}
 /* 2カラム内は行長が短いため、見出しを一段小さく（「受託しま/す。」の分断を防ぐ） */
 .biz-head .h2{font-size:clamp(21px,2.4vw,29px);}
 .biz-photo{position:relative;height:390px;overflow:hidden;}
-.biz-photo i{position:absolute;inset:0;background-size:cover;background-position:center;}
+.biz-photo i,
+.biz-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  background-size:cover;background-position:center;}
 .biz-photo .tag{position:absolute;left:0;bottom:0;background:var(--blue);color:#fff;font-family:"Barlow",sans-serif;font-size:12px;letter-spacing:.18em;padding:11px 20px;font-weight:600;}
 .biz-body{margin-top:56px;}
 
@@ -369,7 +374,7 @@ body.nav-open{overflow:hidden;}
 .ft .logo-mk{color:#fff;}
 .ft-adr{margin-top:18px;font-size:13px;color:rgba(255,255,255,.6);line-height:2;}
 .ft-nav{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;}
-.ft-nav h5{font-family:"Barlow",sans-serif;font-size:11px;letter-spacing:.18em;color:rgba(255,255,255,.45);margin:0 0 14px;font-weight:600;}
+.ft-lb{font-family:"Barlow",sans-serif;font-size:11px;letter-spacing:.18em;color:rgba(255,255,255,.45);margin:0 0 14px;font-weight:600;}
 .ft-nav a{display:block;font-size:13.5px;color:rgba(255,255,255,.82);padding:6px 0;transition:color .2s;}
 .ft-nav a:hover{color:#8fc4f5;}
 .ft-bt{padding-top:22px;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:11.5px;color:rgba(255,255,255,.45);letter-spacing:.04em;}
