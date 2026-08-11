@@ -476,42 +476,60 @@ body.nav-open{overflow:hidden;}
 /* ==========================================================
    事業詳細ページ（3pl/ ほか）
    ---------------------------------------------------------
-   トップページの部品（.sec / .biz-photo / .svc / .flow / .cta 等）を
-   そのまま流用し、下層ページ固有の部品だけをここに追加している。
+   トップページの部品（.sec / .cta / .flow / .svc 等）を流用し、
+   下層ページ固有の部品だけをここに追加している。
    産廃DX・物流コンサルのページでも共用する前提で、
-   クラス名は事業名を含めず lp- / feat / ops のように汎用にしている。
+   クラス名は事業名を含めず汎用にしている。
+
+   写真の差し替え:
+   まだ手配できていない写真は .ph（プレースホルダ）を置いている。
+   実写を用意したら、その <div class="ph">…</div> を
+   <img src="../xxx.webp" alt="…" width="" height="" loading="lazy" decoding="async">
+   に置き換えるだけでよい（親側で object-fit:cover を効かせている）。
    ========================================================== */
 
+/* ---------- 写真プレースホルダ ---------- */
+.ph{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;
+  text-align:center;padding:24px;background-color:#e9edf2;
+  background-image:repeating-linear-gradient(45deg,rgba(11,43,77,.05) 0 11px,transparent 11px 22px);
+  border:1px dashed #c2ccd9;
+}
+.ph b{font-family:"Barlow",sans-serif;font-size:11px;letter-spacing:.2em;font-weight:600;color:#95a1b2;}
+.ph span{font-size:12.5px;color:#7c8898;line-height:1.85;max-width:250px;}
+
 /* ---------- 下層ページのメインビジュアル ---------- */
-.lp-mv{position:relative;display:flex;align-items:center;overflow:hidden;padding:172px 0 96px;}
+.lp-mv{position:relative;display:flex;align-items:center;overflow:hidden;padding:168px 0 90px;}
 .lp-mv-bg{position:absolute;inset:0;background-image:var(--img-lp-3pl);background-size:cover;background-position:center;}
-.lp-mv-ov{position:absolute;inset:0;background:linear-gradient(100deg,rgba(7,32,58,.94) 0%,rgba(7,32,58,.8) 54%,rgba(7,32,58,.52) 100%);}
+.lp-mv-ov{position:absolute;inset:0;background:linear-gradient(100deg,rgba(7,32,58,.93) 0%,rgba(7,32,58,.78) 55%,rgba(7,32,58,.5) 100%);}
 .lp-mv-in{position:relative;z-index:2;width:100%;color:#fff;}
-.lp-mv-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:56px;align-items:center;}
-.lp-mv h1{font-size:clamp(26px,4.2vw,43px);font-weight:900;line-height:1.5;}
-.lp-mv .lp-lead{margin-top:26px;font-size:15.5px;line-height:2.15;color:rgba(255,255,255,.86);max-width:600px;}
-.lp-mv-btns{display:flex;flex-wrap:wrap;gap:14px;margin-top:38px;}
+.lp-mv h1{font-size:clamp(30px,5.4vw,56px);font-weight:900;line-height:1.42;}
+.lp-mv h1 .yen{font-family:"Barlow",sans-serif;font-size:1.34em;letter-spacing:-.01em;margin-right:2px;}
+.lp-mv .lp-lead{margin-top:24px;font-size:16px;line-height:2.05;color:rgba(255,255,255,.88);max-width:560px;}
+.lp-mv-btns{display:flex;flex-wrap:wrap;gap:14px;margin-top:36px;}
+.lp-tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;}
+.lp-tags li{border:1px solid rgba(255,255,255,.4);padding:8px 16px;font-size:13px;font-weight:700;color:#fff;letter-spacing:.03em;}
 
 /* パンくず */
-.crumb{display:flex;flex-wrap:wrap;align-items:center;gap:9px;list-style:none;margin:0 0 20px;padding:0;
+.crumb{display:flex;flex-wrap:wrap;align-items:center;gap:9px;list-style:none;margin:0 0 22px;padding:0;
   font-size:12px;letter-spacing:.05em;color:rgba(255,255,255,.55);}
 .crumb li{display:flex;align-items:center;gap:9px;}
 .crumb li + li::before{content:"／";color:rgba(255,255,255,.3);}
 .crumb a{color:rgba(255,255,255,.72);transition:color .3s;}
 .crumb a:hover{color:#fff;}
 
-/* ヒーロー内の価格パネル */
-.lp-price{border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.07);padding:32px 30px 26px;}
-.lp-price .lb{font-family:"Barlow",sans-serif;font-size:11px;letter-spacing:.2em;font-weight:600;color:#8fc4f5;display:block;}
-.lp-price .num{display:flex;align-items:baseline;gap:7px;margin-top:14px;}
-.lp-price .num b{font-family:"Barlow",sans-serif;font-size:clamp(56px,7.4vw,76px);font-weight:700;line-height:.95;letter-spacing:-.01em;}
-.lp-price .num .u{font-size:17px;font-weight:700;letter-spacing:.04em;}
-.lp-price .cap{margin-top:10px;font-size:12.5px;color:rgba(255,255,255,.72);line-height:1.9;}
-.lp-price ul{margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,.22);}
-.lp-price li{font-size:12.5px;color:rgba(255,255,255,.85);padding:5px 0 5px 16px;position:relative;line-height:1.85;}
-.lp-price li::before{content:"";position:absolute;left:0;top:14px;width:7px;height:1px;background:#8fc4f5;}
+/* ---------- 数字の帯 ---------- */
+.numstrip{background:var(--navy);color:#fff;}
+.numstrip ul{display:grid;grid-template-columns:repeat(3,1fr);}
+.numstrip li{padding:40px 22px;text-align:center;border-left:1px solid rgba(255,255,255,.15);}
+.numstrip li:first-child{border-left:0;}
+.numstrip .k{display:block;font-size:12.5px;letter-spacing:.1em;color:#8fc4f5;font-weight:700;}
+.numstrip .n{margin-top:12px;display:flex;align-items:baseline;justify-content:center;gap:5px;}
+.numstrip .n b{font-family:"Barlow",sans-serif;font-size:clamp(46px,6.2vw,66px);font-weight:700;line-height:.95;letter-spacing:-.01em;}
+.numstrip .n .u{font-size:16px;font-weight:700;letter-spacing:.02em;}
+.numstrip .d{display:block;margin-top:12px;font-size:12.5px;color:rgba(255,255,255,.66);line-height:1.8;}
 
-/* ページ内アンカー */
+/* ---------- ページ内アンカー ---------- */
 .lp-anchor{background:#fff;border-bottom:1px solid var(--line);}
 .lp-anchor ul{display:flex;flex-wrap:wrap;}
 .lp-anchor li{flex:1 1 0;min-width:150px;}
@@ -522,54 +540,64 @@ body.nav-open{overflow:hidden;}
   transform:translateY(-2px) rotate(45deg);}
 .lp-anchor a:hover{background:var(--bg-g);color:var(--blue);}
 
-/* ---------- 料金 ---------- */
+/* ---------- お悩み ---------- */
 .sec-head.ctr{text-align:center;}
 .sec-head.ctr .h2,.sec-head.ctr .lead{margin-left:auto;margin-right:auto;}
-.price-hero{display:grid;grid-template-columns:.95fr 1.05fr;gap:56px;align-items:center;}
-.price-big .lb{font-family:"Barlow",sans-serif;font-size:12px;letter-spacing:.2em;font-weight:600;color:var(--blue);display:block;}
-.price-big .num{display:flex;align-items:baseline;gap:8px;margin-top:14px;color:var(--navy);}
-.price-big .num b{font-family:"Barlow",sans-serif;font-size:clamp(78px,13vw,140px);font-weight:700;line-height:.86;letter-spacing:-.02em;}
-.price-big .num .u{font-size:clamp(18px,2.4vw,24px);font-weight:700;letter-spacing:.02em;}
-.price-big .cap{margin-top:16px;font-size:14.5px;color:var(--gray);line-height:2;}
-.price-pts li{padding:20px 0;border-top:1px solid var(--line);display:flex;gap:18px;}
-.price-pts li:last-child{border-bottom:1px solid var(--line);}
-.price-pts .no{font-family:"Barlow",sans-serif;font-size:13px;font-weight:600;color:var(--blue);padding-top:3px;}
-.price-pts h3{font-size:16px;}
-.price-pts p{margin-top:7px;font-size:13.5px;color:var(--gray);line-height:1.95;}
+.worry{display:grid;grid-template-columns:.82fr 1.18fr;gap:44px;align-items:center;}
+.worry-img{position:relative;height:352px;overflow:hidden;}
+.worry-img img,.worry-img .ph{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.worry-list{display:grid;grid-template-columns:1fr 1fr;gap:0 30px;}
+.worry-list li{display:flex;align-items:flex-start;gap:14px;padding:17px 0;border-bottom:1px solid var(--line);
+  font-size:14.5px;font-weight:700;line-height:1.75;}
+.worry-list li::before{
+  content:"";flex:none;width:8px;height:15px;margin-top:5px;
+  border-right:2px solid var(--blue);border-bottom:2px solid var(--blue);transform:rotate(42deg);
+}
+.arw{width:0;height:0;margin:54px auto 0;border-left:27px solid transparent;border-right:27px solid transparent;border-top:22px solid var(--navy);}
 
-.tbl-scroll{overflow-x:auto;margin-top:48px;}
-.ptbl{width:100%;min-width:620px;border-collapse:collapse;background:#fff;}
+/* ---------- 選ばれる理由（写真＋見出しの交互） ---------- */
+.reason > li{display:grid;grid-template-columns:1fr 1fr;gap:54px;align-items:center;padding:56px 0;border-top:1px solid var(--line);}
+.reason > li:first-child{border-top:0;padding-top:0;}
+.reason > li:nth-child(even) .reason-img{order:2;}
+.reason-img{position:relative;height:326px;overflow:hidden;}
+.reason-img img,.reason-img .ph{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.reason-no{display:block;font-family:"Barlow",sans-serif;font-size:54px;font-weight:700;line-height:1;letter-spacing:-.01em;color:#d9e1ea;}
+.reason h3{font-size:clamp(20px,2.8vw,28px);margin-top:8px;}
+.reason h3 .hl{color:var(--blue);}
+.reason p{margin-top:18px;font-size:14.5px;color:var(--gray);line-height:2.05;}
+
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px;}
+.chips li{background:#fff;border:1px solid var(--line);padding:7px 14px;font-size:12.5px;color:var(--gray);letter-spacing:.02em;}
+
+/* ---------- 対応できる作業 ---------- */
+.opscard{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+.opscard > li{background:#fff;border:1px solid var(--line);}
+.opscard .im{position:relative;height:186px;overflow:hidden;}
+.opscard .im img,.opscard .im .ph{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border:0;}
+.opscard .bd{padding:22px 22px 24px;}
+.opscard h3{font-size:16.5px;}
+.opscard p{margin-top:9px;font-size:13.5px;color:var(--gray);line-height:1.9;}
+
+/* ---------- 料金 ---------- */
+.price-big{text-align:center;}
+.price-big .lb{font-family:"Barlow",sans-serif;font-size:12px;letter-spacing:.2em;font-weight:600;color:var(--blue);display:block;}
+.price-big .num{display:flex;align-items:baseline;justify-content:center;gap:8px;margin-top:12px;color:var(--navy);}
+.price-big .num b{font-family:"Barlow",sans-serif;font-size:clamp(78px,12vw,132px);font-weight:700;line-height:.86;letter-spacing:-.02em;}
+.price-big .num .u{font-size:clamp(18px,2.4vw,23px);font-weight:700;}
+.price-big .cap{margin-top:14px;font-size:14px;color:var(--gray);line-height:1.95;}
+
+.tbl-scroll{overflow-x:auto;max-width:860px;margin:46px auto 0;}
+.ptbl{width:100%;min-width:600px;border-collapse:collapse;background:#fff;}
 .ptbl th,.ptbl td{border:1px solid var(--line);padding:18px 20px;font-size:14px;text-align:left;vertical-align:top;line-height:1.9;}
 .ptbl thead th{background:var(--navy);color:#fff;border-color:var(--navy);font-size:12.5px;letter-spacing:.1em;font-weight:700;}
-.ptbl tbody th{width:220px;color:var(--navy);font-weight:700;background:#fbfcfd;}
+.ptbl tbody th{width:210px;color:var(--navy);font-weight:700;background:#fbfcfd;}
 .ptbl td{color:var(--gray);}
-.ptbl .yen{font-family:"Barlow",sans-serif;font-size:17px;font-weight:700;color:var(--blue);letter-spacing:.01em;}
+.ptbl tbody td:first-of-type{width:170px;white-space:nowrap;}
+.ptbl .yen{font-family:"Barlow",sans-serif;font-size:17px;font-weight:700;color:var(--blue);}
 .ptbl .yen small{font-family:"Noto Sans JP",sans-serif;font-size:12.5px;color:var(--ink);font-weight:700;margin-left:2px;}
 
-/* ---------- 4つの特長 ---------- */
-.feat{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;}
-.feat > li{background:#fff;border:1px solid var(--line);padding:34px 32px 32px;}
-.feat .no{font-family:"Barlow",sans-serif;font-size:12px;letter-spacing:.18em;font-weight:600;color:var(--blue);}
-.feat h3{font-size:19px;margin-top:11px;}
-.feat p{margin-top:13px;font-size:14px;color:var(--gray);line-height:2;}
-.feat .kw{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;}
-.feat .kw li{border:1px solid var(--line);padding:6px 13px;font-size:12px;color:var(--gray);letter-spacing:.02em;}
-
-/* ---------- 流通加工メニュー ---------- */
-.ops{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:8px;}
-.ops li{background:#fff;padding:24px 24px 26px;}
-.ops h3{font-size:14.5px;}
-.ops p{margin-top:7px;font-size:13px;color:var(--gray);line-height:1.9;}
-
-/* ---------- 対象となる荷主 ---------- */
-.target{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
-.target li{background:#fff;border:1px solid var(--line);border-top:3px solid var(--blue);padding:30px 28px;}
-.target .lb{font-family:"Barlow",sans-serif;font-size:11px;letter-spacing:.18em;font-weight:600;color:var(--gray-l);}
-.target h3{font-size:16.5px;margin-top:10px;}
-.target p{margin-top:11px;font-size:13.5px;color:var(--gray);line-height:1.95;}
-
 /* ---------- システム連携図 ---------- */
-.sysflow{display:grid;grid-template-columns:repeat(3,1fr);gap:46px;margin-top:8px;}
+.sysflow{display:grid;grid-template-columns:repeat(3,1fr);gap:46px;}
 .sysflow > li{position:relative;background:#fff;border:1px solid var(--line);padding:28px 26px 26px;}
 .sysflow > li + li::before{
   content:"";position:absolute;left:-31px;top:50%;width:15px;height:15px;
@@ -585,13 +613,17 @@ body.nav-open{overflow:hidden;}
 .sysflow > li.on .st{color:#8fc4f5;}
 .sysflow > li.on ul li{color:rgba(255,255,255,.78);border-top-color:rgba(255,255,255,.2);}
 
+/* ---------- 4ステップのフロー ---------- */
+.flow.f4{grid-template-columns:repeat(4,1fr);gap:18px;}
+.flow.f4 li{padding:26px 22px 28px;}
+.flow.f4 h3{font-size:15.5px;}
+
 /* ---------- FAQ ---------- */
 .faq{border-top:1px solid var(--line);max-width:860px;margin:0 auto;}
 .faq details{border-bottom:1px solid var(--line);}
 .faq summary{
   list-style:none;cursor:pointer;position:relative;display:flex;gap:16px;
-  padding:24px 46px 24px 0;font-size:15.5px;font-weight:700;line-height:1.8;
-  transition:color .3s;
+  padding:24px 46px 24px 0;font-size:15.5px;font-weight:700;line-height:1.8;transition:color .3s;
 }
 .faq summary::-webkit-details-marker{display:none;}
 .faq summary:hover{color:var(--blue);}
@@ -606,12 +638,6 @@ body.nav-open{overflow:hidden;}
 .faq .a .q{font-family:"Barlow",sans-serif;font-size:15px;font-weight:700;color:var(--gray-l);flex:none;line-height:2.05;}
 .faq .a p{font-size:14px;color:var(--gray);line-height:2.05;}
 
-/* ---------- 5ステップのフロー ---------- */
-.flow.f5{grid-template-columns:repeat(5,1fr);gap:14px;}
-.flow.f5 li{padding:24px 20px 26px;}
-.flow.f5 h3{font-size:15px;}
-.flow.f5 p{font-size:13px;line-height:1.9;}
-
 /* ---------- 関連事業への導線 ---------- */
 .rel{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;}
 .rel a{display:block;background:#fff;border:1px solid var(--line);padding:28px 28px 30px;transition:box-shadow .35s var(--ease),transform .35s var(--ease);}
@@ -622,34 +648,33 @@ body.nav-open{overflow:hidden;}
 .rel .txtlink{margin-top:16px;}
 
 /* ---------- 下層ページのレスポンシブ ---------- */
-@media(max-width:1140px){
-  /* 5列だと1枚あたりが狭くなりすぎるため、2列に折り返す */
-  .flow.f5{grid-template-columns:repeat(2,1fr);gap:20px;}
-  .flow.f5 li{padding:26px 24px;}
-}
 @media(max-width:1000px){
-  .lp-mv{padding:130px 0 70px;}
-  .lp-mv-grid{grid-template-columns:1fr;gap:38px;}
-  .price-hero{grid-template-columns:1fr;gap:38px;}
-  .feat,.ops,.target,.rel{grid-template-columns:1fr;}
-  .ops{gap:0;}
-  .ops li + li{border-top:1px solid var(--line);}
+  .lp-mv{padding:130px 0 68px;}
+  .lp-mv .lp-lead{max-width:none;}
+  .numstrip ul{grid-template-columns:1fr;}
+  .numstrip li{border-left:0;border-top:1px solid rgba(255,255,255,.15);padding:30px 22px;}
+  .numstrip li:first-child{border-top:0;}
+  .worry{grid-template-columns:1fr;gap:32px;}
+  .worry-img{height:250px;}
+  .reason > li{grid-template-columns:1fr;gap:28px;padding:44px 0;}
+  .reason > li:nth-child(even) .reason-img{order:0;}
+  .reason-img{height:250px;}
+  .opscard,.rel{grid-template-columns:1fr;}
+  .opscard .im{height:210px;}
   .sysflow{grid-template-columns:1fr;gap:40px;}
   .sysflow > li + li::before{left:50%;top:-28px;transform:translateX(-50%) rotate(135deg);}
-}
-@media(max-width:640px){
-  .flow.f5{grid-template-columns:1fr;}
+  .flow.f4{grid-template-columns:repeat(2,1fr);}
 }
 @media(max-width:760px){
-  .lp-mv{padding:112px 0 60px;}
+  .lp-mv{padding:110px 0 56px;}
   /* 2列で折り返すため、行間にも罫線を入れる */
   .lp-anchor ul{display:grid;grid-template-columns:1fr 1fr;}
   .lp-anchor a{padding:16px 12px;font-size:12.5px;border-bottom:1px solid var(--line);}
   .lp-anchor li:nth-child(odd) a{border-left:0;}
   .lp-anchor li:last-child a{border-right:0;}
   .lp-anchor li:nth-last-child(-n+2) a{border-bottom:0;}
-  .lp-price{padding:26px 22px 22px;}
-  .feat > li,.target li{padding:26px 22px;}
+  .worry-list{grid-template-columns:1fr;}
+  .flow.f4{grid-template-columns:1fr;}
   .ptbl th,.ptbl td{padding:14px 15px;}
   .faq summary{font-size:14.5px;padding:20px 34px 20px 0;}
   .faq summary::after{top:28px;right:4px;}
