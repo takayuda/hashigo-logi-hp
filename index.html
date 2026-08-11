@@ -69,10 +69,11 @@
     },
     {
       "@type": "Service",
+      "@id": "https://hashigologi.com/3pl/#service",
       "name": "3PL事業",
       "serviceType": "3PL（倉庫運営受託）",
-      "description": "荷主企業の物流業務を、庫内オペレーションごと受託します。保管・入出荷・流通加工・配送手配まで、必要な範囲を切り出して依頼できます。作業手順の設計と倉庫管理システムの整備をセットで行います。",
-      "url": "https://hashigologi.com/#3pl",
+      "description": "荷主企業の物流業務を、庫内オペレーションごと受託します。保管・入出荷・流通加工・配送手配まで、必要な範囲を切り出して依頼できます。出荷作業料は1点550円〜、月間出荷1,000件以下の小ロットから対応します。",
+      "url": "https://hashigologi.com/3pl/",
       "provider": { "@id": "https://hashigologi.com/#organization" },
       "areaServed": { "@type": "Country", "name": "Japan" }
     },
@@ -134,7 +135,7 @@
           <li class="ovl-it"><a href="#company"><span class="no">05</span><span class="ja">会社概要</span><span class="en">Company</span></a></li>
         </ul>
         <div class="ovl-sub ovl-it">
-          <a href="#3pl">3PL事業</a>
+          <a href="3pl/">3PL事業</a>
           <a href="#sanpai">産廃業者向けDX事業</a>
           <a href="#consulting">物流コンサルティング事業</a>
         </div>
@@ -202,14 +203,14 @@
     </div>
 
     <div class="bizcards">
-      <a href="#3pl" class="bizcard rv">
+      <a href="3pl/" class="bizcard rv">
         <div class="bizcard-img">
           <span class="bizcard-no">01</span>
           <i style="background-image:var(--img-3pl);"></i>
         </div>
         <div class="bizcard-b">
           <h3>3PL事業</h3>
-          <p>荷主企業の物流業務を、庫内オペレーションごと受託します。作業設計からWMSの整備、立ち上げ、運用改善までを一貫してご支援します。</p>
+          <p>荷主企業の物流業務を、庫内オペレーションごと受託します。出荷作業料は1点550円〜、月間出荷1,000件以下の小ロットから対応します。</p>
           <span class="txtlink">3PL事業を詳しく見る</span>
         </div>
       </a>
@@ -251,6 +252,14 @@
         <span class="eyebrow">Third Party Logistics</span>
         <h2 class="h2">荷主企業の物流業務を、<br>庫内オペレーションごと受託します。</h2>
         <p class="lead">保管・入出荷・流通加工・配送手配まで、必要な範囲を切り出してご依頼いただけます。作業手順の設計と倉庫管理システムの整備をセットで行うことで、誰が担当しても同じ品質で回る現場づくりを支援します。</p>
+
+        <!-- 詳細は 3pl/ に集約。ここは要点と導線だけを置く -->
+        <ul class="biz-pts">
+          <li><span class="k">出荷作業料</span><span class="v"><b>550</b>円〜 / 点</span></li>
+          <li><span class="k">対応規模</span><span class="v">月間出荷 <b>1,000</b>件以下から</span></li>
+          <li><span class="k">システム</span><span class="v">既存のカート・受注管理と連携可</span></li>
+        </ul>
+        <a href="3pl/" class="btn btn-blue biz-more">3PL事業の詳細・料金を見る</a>
       </div>
     </div>
 
@@ -285,24 +294,7 @@
           </div>
         </li>
       </ul>
-
-      <ul class="flow">
-        <li>
-          <span class="st">STEP 01</span>
-          <h3>ヒアリング・現地確認</h3>
-          <p>物量、SKU数、出荷波動、作業内容を確認し、対応可否と課題を整理します。</p>
-        </li>
-        <li>
-          <span class="st">STEP 02</span>
-          <h3>オペレーション設計・お見積</h3>
-          <p>作業手順と人員計画を設計し、保管料・作業料の内訳を明示してご提示します。</p>
-        </li>
-        <li>
-          <span class="st">STEP 03</span>
-          <h3>立ち上げ・運用改善</h3>
-          <p>移管計画に沿って稼働します。稼働後もKPIをもとに継続的な改善を行います。</p>
-        </li>
-      </ul>
+      <!-- 導入の流れ（STEP 01〜05）と料金の詳細は 3pl/ に移設 -->
     </div>
   </div>
 </section>
@@ -579,7 +571,7 @@
       <div class="ft-nav">
         <div>
           <p class="ft-lb">SERVICE</p>
-          <a href="#3pl">3PL事業</a>
+          <a href="3pl/">3PL事業</a>
           <a href="#sanpai">産廃業者向けDX事業</a>
           <a href="#consulting">物流コンサルティング事業</a>
         </div>
