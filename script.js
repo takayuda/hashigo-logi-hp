@@ -2,12 +2,15 @@
 var hd = document.getElementById('hd');
 // 下層ページ（page-doc）は白背景なのでヘッダーを常に solid のままにする
 var alwaysSolid = document.body.classList.contains('page-doc');
+// 事業詳細ページ（page-lp）は追従アンカーがヘッダー直下に貼り付くため、
+// ヘッダーを隠すと目次だけが浮いてしまう。隠す挙動を無効にする
+var neverHide = document.body.classList.contains('page-lp');
 var lastY = window.scrollY, ticking = false;
 function headerUpdate(){
   if(!hd) return;
   var y = window.scrollY;
   if(!alwaysSolid){ hd.classList.toggle('solid', y > 40); }
-  if(!document.body.classList.contains('nav-open')){
+  if(!neverHide && !document.body.classList.contains('nav-open')){
     hd.classList.toggle('hide', y > 400 && y > lastY + 4);
   }
   lastY = y; ticking = false;
@@ -50,6 +53,43 @@ if(reduce || !('IntersectionObserver' in window)){
   }, {threshold:.08, rootMargin:'0px 0px -6% 0px'});
   items.forEach(function(el,i){ el.style.transitionDelay = (Math.min(i%3,2)*90)+'ms'; io.observe(el); });
 }
+
+/* ==========================================================
+   事業詳細ページ（page-lp）専用
+   ---------------------------------------------------------
+   該当する要素がないページでは何も起きない
+   ========================================================== */
+
+// 追従アンカー：いま見ているセクションに下線を出す
+(function(){
+  var links = Array.prototype.slice.call(document.querySelectorAll('.lp-anchor a'));
+  if(!links.length || !('IntersectionObserver' in window)) return;
+  var secs = links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
+  var so = new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      var i = secs.indexOf(e.target);
+      if(i < 0 || !e.isIntersecting) return;
+      links.forEach(function(l){ l.classList.remove('on'); });
+      links[i].classList.add('on');
+    });
+  }, {rootMargin:'-45% 0px -50% 0px'});
+  secs.forEach(function(s){ if(s) so.observe(s); });
+})();
+
+// SP用 追従CTA：メインビジュアルを過ぎたら出し、最後のCTAが見えたら引っ込める
+(function(){
+  var bar = document.getElementById('fixcta');
+  if(!bar) return;
+  var cta = document.querySelector('.cta');
+  function upd(){
+    var passedHero = window.scrollY > 520;
+    var atCta = cta && cta.getBoundingClientRect().top < window.innerHeight - 60;
+    bar.classList.toggle('on', passedHero && !atCta);
+  }
+  window.addEventListener('scroll', upd, {passive:true});
+  window.addEventListener('resize', upd);
+  upd();
+})();
 
 /* ==========================================================
    お問い合わせフォーム
