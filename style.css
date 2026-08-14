@@ -360,7 +360,17 @@ body.nav-open{overflow:hidden;}
   font-family:inherit;font-size:15px;color:var(--ink);transition:border-color .2s,box-shadow .2s;
 }
 .fld textarea{min-height:140px;resize:vertical;line-height:1.9;}
-.fld input:focus,.fld textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(11,99,197,.12);}
+/* プルダウン。OS標準の見た目を消し、サイト側の角なし・細罫に合わせる */
+.fld select{
+  width:100%;padding:15px 42px 15px 16px;border:1px solid var(--line);background-color:#fff;
+  font-family:inherit;font-size:15px;color:var(--ink);line-height:1.6;cursor:pointer;
+  -webkit-appearance:none;-moz-appearance:none;appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath fill='%235b636e' d='M0 0h10L5 6z'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 16px center;background-size:10px 6px;
+  transition:border-color .2s,box-shadow .2s;
+}
+.fld select:invalid,.fld select option[value=""]{color:var(--gray-l);}
+.fld input:focus,.fld textarea:focus,.fld select:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(11,99,197,.12);}
 .fld input[aria-invalid="true"],.fld textarea[aria-invalid="true"]{border-color:#c0392b;background:#fffafa;}
 .fld .err{display:none;margin-top:7px;font-size:12px;color:#c0392b;line-height:1.7;}
 .fld.bad .err{display:block;}
@@ -668,6 +678,9 @@ body.nav-open{overflow:hidden;}
   font-size:clamp(72px,10vw,116px);line-height:.84;letter-spacing:-.03em;}
 .page-lp .price-big .v .u{font-size:clamp(17px,2.2vw,22px);font-weight:700;}
 .page-lp .price-big .cap{margin-top:18px;font-size:14px;color:var(--gray);line-height:1.95;}
+/* 60サイズ・全国一律・税抜など、金額の前提条件 */
+.page-lp .price-big .cond{display:inline-block;margin-top:6px;font-size:13.5px;font-weight:700;color:var(--navy);}
+.page-lp .ptbl tbody th .sub{font-size:12px;font-weight:500;color:var(--gray);}
 
 .page-lp .tbl-scroll{overflow-x:auto;margin-top:26px;}
 .page-lp .ptbl{width:100%;min-width:620px;border-collapse:collapse;background:#fff;}

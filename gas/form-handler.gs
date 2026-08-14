@@ -48,13 +48,26 @@ var AUTOREPLY_NAME = '株式会社ハシゴロジ';
 
 // ---------- 本体 ----------
 
+/**
+ * 記録する列。
+ *
+ * 列を増やすときは必ず「末尾に追加」してください。
+ * 途中に挿入すると、既に記録済みの行が見出しとずれて読めなくなります。
+ * そのため3PLフォーム用の項目は、管理用の「判定」「メール通知」より後ろに置いています。
+ */
 var HEADERS = [
   '受信日時', '会社名', '部署・役職', 'お名前',
   '電話番号', 'メールアドレス', 'お問い合わせ内容', '送信元ページ', '参照元',
-  '判定', 'メール通知'
+  '判定', 'メール通知',
+  'フォーム種別', '月間出荷件数', '地域', '現在の倉庫坪数', '商材の種類'
 ];
 var COL_JUDGE = 10;   // 判定
 var COL_MAIL  = 11;   // メール通知
+
+/** 通知メールに載せる列（0始まりのインデックス）。値が空の項目は行ごと省く */
+var MAIL_COLS_BASE  = [1, 2, 3, 4, 5];        // 会社名〜メールアドレス
+var MAIL_COLS_EXTRA = [11, 12, 13, 14, 15];   // フォーム種別〜商材の種類
+var MAIL_COLS_TAIL  = [6, 7, 8];              // お問い合わせ内容・送信元ページ・参照元
 
 function doPost(e) {
   try {
@@ -81,7 +94,10 @@ function doPost(e) {
       new Date(), company, trim(d.department), name,
       trim(d.phone), email, trim(d.body), trim(d.page), trim(d.referrer),
       suspect ? '自動入力の疑い' : '通常',
-      ''
+      '',
+      // 3PLフォーム専用の項目。共通フォームからの送信では空になる
+      trim(d.formType) || '共通', trim(d.shipments), trim(d.area),
+      trim(d.warehouse), trim(d.goods)
     ];
 
     // 1. まず記録する。何があってもデータを失わない
@@ -197,12 +213,21 @@ function appendRow(row) {
 }
 
 function notify(row, suspect) {
-  var subject = (suspect ? '【要確認】' : '【お問い合わせ】') + row[1] + '　' + row[3] + ' 様';
+  // 件名にフォーム種別を入れておくと、受信箱で3PLの引き合いを拾いやすい
+  var kind = (row[11] && row[11] !== '共通') ? '【' + row[11] + '】' : '';
+  var subject = (suspect ? '【要確認】' : '【お問い合わせ】') + kind + row[1] + '　' + row[3] + ' 様';
 
   var lines = [];
-  for (var i = 1; i <= 8; i++) {
+  MAIL_COLS_BASE.forEach(function (i) {
     lines.push(HEADERS[i] + '：' + (row[i] || '（未入力）'));
-  }
+  });
+  // 3PL専用項目は、入力があったものだけ載せる（共通フォームでは1行も出ない）
+  MAIL_COLS_EXTRA.forEach(function (i) {
+    if (row[i]) lines.push(HEADERS[i] + '：' + row[i]);
+  });
+  MAIL_COLS_TAIL.forEach(function (i) {
+    lines.push(HEADERS[i] + '：' + (row[i] || '（未入力）'));
+  });
 
   var head = suspect
     ? 'サイトのお問い合わせフォームから送信がありました。\n'

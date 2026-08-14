@@ -114,6 +114,9 @@ var FALLBACK_MAIL = 'takayuda@hashigo-logi.com';   // 送信失敗時に案内�
     msg.innerHTML = html;
   }
   function fieldEl(name){ return form.elements[name]; }
+  // ページによって項目が異なるため、無い項目は空文字として扱う
+  // （トップページの共通フォームには3PL専用の項目がない）
+  function optVal(name){ var el = form.elements[name]; return el ? String(el.value).trim() : ''; }
   function markBad(el, bad){
     el.setAttribute('aria-invalid', bad ? 'true' : 'false');
     var box = el.closest('.fld');
@@ -163,6 +166,12 @@ var FALLBACK_MAIL = 'takayuda@hashigo-logi.com';   // 送信失敗時に案内�
       phone:      fieldEl('phone').value.trim(),
       email:      fieldEl('email').value.trim(),
       body:       fieldEl('body').value.trim(),
+      // 以下は3PLページのフォームにのみある項目
+      formType:   optVal('form_type'),
+      shipments:  optVal('shipments'),
+      area:       optVal('area'),
+      warehouse:  optVal('warehouse'),
+      goods:      optVal('goods'),
       address:    fieldEl('hp_ref').value.trim(),   // ハニーポット（GAS側は address で判定）
       page:       location.href,
       referrer:   document.referrer
