@@ -169,6 +169,7 @@ var FALLBACK_MAIL = 'takayuda@hashigo-logi.com';   // 送信失敗時に案内�
       // 以下は3PLページのフォームにのみある項目
       formType:   optVal('form_type'),
       shipments:  optVal('shipments'),
+      timing:     optVal('timing'),
       area:       optVal('area'),
       warehouse:  optVal('warehouse'),
       goods:      optVal('goods'),

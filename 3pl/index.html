@@ -76,7 +76,7 @@
       "isPartOf": { "@id": "https://hashigologi.com/3pl/#webpage" },
       "mainEntity": [
         { "@type": "Question", "name": "最低出荷件数の条件はありますか。",
-          "acceptedAnswer": { "@type": "Answer", "text": "ありません。月間出荷1,000件以下からご相談いただけます。出荷件数が少ないことを理由にお断りすることはありません。" } },
+          "acceptedAnswer": { "@type": "Answer", "text": "ありません。1個からでも受付可能です。出荷件数が少ないことを理由にお断りすることはありません。" } },
         { "@type": "Question", "name": "料金はいくらからですか。",
           "acceptedAnswer": { "@type": "Answer", "text": "出荷作業料は1個550円（税抜）からです。入荷、ピッキング、検品、梱包、配送にかかる費用が含まれます。60サイズ・全国一律（沖縄県・離島地域を除く）の場合の金額です。保管料と流通加工費は別途で、保管料はパレット単位・坪単位でのお見積りが可能です。" } },
         { "@type": "Question", "name": "ネコポスやゆうパケットにも対応していますか。",
@@ -187,8 +187,8 @@
         <span class="d">入荷・ピッキング・検品・梱包・配送まで込み<br>60サイズ・全国一律／税抜<br>（沖縄県・離島地域を除く）</span>
       </li>
       <li>
-        <span class="k">月間出荷</span>
-        <p class="v"><b>1,000</b><span class="u">件以下でもOK</span></p>
+        <span class="k">受付ロット</span>
+        <p class="v"><b>1</b><span class="u">個からでも受付可能</span></p>
         <span class="d">立ち上げ期の物量からお受けします</span>
       </li>
       <li>
@@ -396,7 +396,7 @@
           <tr>
             <th scope="row">出荷作業料<br><span class="sub">（配送料含む）</span></th>
             <td><span class="amt">550<small>円〜 / 個</small></span></td>
-            <td class="memo">60サイズ・全国一律（沖縄県・離島地域を除く）。<br>サイズ・作業内容・物量などにより変動</td>
+            <td class="memo">60サイズ〜260サイズに対応。全国一律（沖縄県・離島地域を除く）。<br>サイズ・作業内容・物量などにより変動</td>
           </tr>
           <tr>
             <th scope="row">保管料</th>
@@ -482,7 +482,7 @@
     <div class="faq rv">
       <details>
         <summary><span class="q">Q</span>最低出荷件数の条件はありますか。</summary>
-        <div class="a"><span class="q">A</span><p>ありません。月間出荷1,000件以下からご相談いただけます。出荷件数が少ないことを理由にお断りすることはありません。</p></div>
+        <div class="a"><span class="q">A</span><p>ありません。1個からでも受付可能です。出荷件数が少ないことを理由にお断りすることはありません。</p></div>
       </details>
       <details>
         <summary><span class="q">Q</span>料金はいくらからですか。</summary>
@@ -541,7 +541,7 @@
   <div class="wrap">
     <div class="sec-head ctr rv">
       <span class="eyebrow">Inquiry</span>
-      <h2 class="h2">3PLのお問い合わせ</h2>
+      <h2 class="h2">お問い合わせ</h2>
       <p class="lead">商材と月間出荷件数だけでも構いません。対応可否と概算をお伝えします。</p>
     </div>
 
@@ -589,8 +589,21 @@
             </select>
           </div>
           <div class="fld">
-            <label for="f7">地域<span class="opt">任意</span></label>
-            <select id="f7" name="area">
+            <label for="f7">想定開始時期<span class="opt">任意</span></label>
+            <select id="f7" name="timing">
+              <option value="">選択してください</option>
+              <option>すぐにでも</option>
+              <option>1〜3か月以内</option>
+              <option>3〜6か月以内</option>
+              <option>6か月以降</option>
+              <option>時期は未定・情報収集中</option>
+            </select>
+          </div>
+        </div>
+        <div class="fld-row">
+          <div class="fld">
+            <label for="f8">地域<span class="opt">任意</span></label>
+            <select id="f8" name="area">
               <option value="">選択してください</option>
               <option>北海道</option>
               <option>東北</option>
@@ -603,11 +616,9 @@
               <option>沖縄</option>
             </select>
           </div>
-        </div>
-        <div class="fld-row">
           <div class="fld">
-            <label for="f8">現在の倉庫坪数<span class="opt">任意</span></label>
-            <select id="f8" name="warehouse">
+            <label for="f9">現在の倉庫坪数<span class="opt">任意</span></label>
+            <select id="f9" name="warehouse">
               <option value="">選択してください</option>
               <option>倉庫はない</option>
               <option>1〜100坪</option>
@@ -617,15 +628,15 @@
               <option>1,000坪以上</option>
             </select>
           </div>
-          <div class="fld">
-            <label for="f9">商材の種類<span class="opt">任意</span></label>
-            <input type="text" id="f9" name="goods" placeholder="例：化粧品、アパレル、雑貨">
-          </div>
+        </div>
+        <div class="fld">
+          <label for="f10">商材の種類<span class="opt">任意</span></label>
+          <input type="text" id="f10" name="goods" placeholder="例：化粧品、アパレル、雑貨">
         </div>
 
         <div class="fld">
-          <label for="f10">お問い合わせ内容<span class="opt">任意</span></label>
-          <textarea id="f10" name="body" placeholder="現在の状況やお困りごとをご記入ください。"></textarea>
+          <label for="f11">お問い合わせ内容<span class="opt">任意</span></label>
+          <textarea id="f11" name="body" placeholder="現在の状況やお困りごとをご記入ください。"></textarea>
         </div>
 
         <!-- どのフォームからの送信かを記録用に渡す -->
@@ -635,7 +646,7 @@
         <!-- name とラベルは、ブラウザの自動入力に拾われない語にすること。
              ここが勝手に埋まると、送信が全件ボット判定で破棄される -->
         <div class="hp" aria-hidden="true">
-          <input type="text" id="f11" name="hp_ref" tabindex="-1" autocomplete="off">
+          <input type="text" id="f12" name="hp_ref" tabindex="-1" autocomplete="off">
         </div>
 
         <button type="submit" class="btn btn-acc" id="fsubmit">送信する</button>

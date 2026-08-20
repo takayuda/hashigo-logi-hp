@@ -39,7 +39,7 @@ node tests/form.test.js
 curl -sS -X POST "$(grep -oE 'https://script\.google\.com/macros/s/[^'"'"']+' script.js | head -1)" \
   -H 'Content-Type: text/plain;charset=utf-8' \
   -d '{"company":"【テスト】疎通確認","name":"テスト","email":"test@example.com",
-       "formType":"3PL","shipments":"〜100件","area":"関東",
+       "formType":"3PL","shipments":"〜100件","timing":"1〜3か月以内","area":"関東",
        "warehouse":"1〜100坪","goods":"テスト商材","body":"疎通テストです",
        "page":"https://hashigologi.com/3pl/","referrer":""}'
 ```

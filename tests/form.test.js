@@ -29,13 +29,14 @@ const stub = (p, opts={}) => {
   await p.goto(BASE + '/3pl/', { waitUntil:'load' });
   const names = await p.evaluate(() => Array.from(document.querySelectorAll('#cform [name]')).map(e => e.name));
   ok('必要な項目が揃っている',
-     ['company','department','name','phone','email','shipments','area','warehouse','goods','body','form_type','hp_ref']
+     ['company','department','name','phone','email','shipments','timing','area','warehouse','goods','body','form_type','hp_ref']
        .every(n => names.includes(n)), names.join(','));
   const opts = await p.evaluate(() => {
     const g = id => Array.from(document.getElementById(id).options).map(o => o.value).filter(Boolean);
-    return { shipments:g('f6'), area:g('f7'), warehouse:g('f8') };
+    return { shipments:g('f6'), timing:g('f7'), area:g('f8'), warehouse:g('f9') };
   });
   ok('月間出荷件数の選択肢が6件', opts.shipments.length === 6, opts.shipments.join(' / '));
+  ok('想定開始時期の選択肢が5件', opts.timing.length === 5, opts.timing.join(' / '));
   ok('地域の選択肢が9件', opts.area.length === 9, opts.area.join(' / '));
   ok('倉庫坪数の選択肢がご指定の6件',
      JSON.stringify(opts.warehouse) === JSON.stringify(['倉庫はない','1〜100坪','100〜300坪','300〜500坪','500〜1,000坪','1,000坪以上']),
@@ -67,13 +68,15 @@ const stub = (p, opts={}) => {
   await p.fill('#f1','株式会社テスト'); await p.fill('#f2','物流部 部長');
   await p.fill('#f3','山田 太郎');   await p.fill('#f4','03-1234-5678');
   await p.fill('#f5','test@example.com');
-  await p.selectOption('#f6','1,000〜5,000件'); await p.selectOption('#f7','近畿');
-  await p.selectOption('#f8','500〜1,000坪');   await p.fill('#f9','化粧品・雑貨');
-  await p.fill('#f10','他社倉庫からの移管を検討しています。');
+  await p.selectOption('#f6','1,000〜5,000件'); await p.selectOption('#f7','1〜3か月以内');
+  await p.selectOption('#f8','近畿');           await p.selectOption('#f9','500〜1,000坪');
+  await p.fill('#f10','化粧品・雑貨');
+  await p.fill('#f11','他社倉庫からの移管を検討しています。');
   await p.click('#fsubmit'); await p.waitForTimeout(600);
   const exp = { company:'株式会社テスト', department:'物流部 部長', name:'山田 太郎', phone:'03-1234-5678',
     email:'test@example.com', body:'他社倉庫からの移管を検討しています。', formType:'3PL',
-    shipments:'1,000〜5,000件', area:'近畿', warehouse:'500〜1,000坪', goods:'化粧品・雑貨', address:'' };
+    shipments:'1,000〜5,000件', timing:'1〜3か月以内', area:'近畿', warehouse:'500〜1,000坪',
+    goods:'化粧品・雑貨', address:'' };
   for (const k of Object.keys(exp)) ok(`  ${k}`, s.payload[k] === exp[k], JSON.stringify(s.payload[k]));
   ok('  送信元ページが3PL', s.payload.page.includes('/3pl/'), s.payload.page);
   ok('送信後に入力欄が消え完了メッセージが残る', await p.evaluate(() => {
@@ -89,7 +92,7 @@ const stub = (p, opts={}) => {
   await p.click('#fsubmit'); await p.waitForTimeout(600);
   ok('従来どおり送信できる', s.calls === 1);
   ok('3PL項目は空で送られる',
-     ['formType','shipments','area','warehouse','goods'].every(k => s.payload[k] === ''));
+     ['formType','shipments','timing','area','warehouse','goods'].every(k => s.payload[k] === ''));
   ok('既存項目は従来どおり', s.payload.company === '株式会社サンプル' && s.payload.email === 's@example.com');
   await p.close();
 

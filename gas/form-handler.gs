@@ -59,14 +59,14 @@ var HEADERS = [
   '受信日時', '会社名', '部署・役職', 'お名前',
   '電話番号', 'メールアドレス', 'お問い合わせ内容', '送信元ページ', '参照元',
   '判定', 'メール通知',
-  'フォーム種別', '月間出荷件数', '地域', '現在の倉庫坪数', '商材の種類'
+  'フォーム種別', '月間出荷件数', '地域', '現在の倉庫坪数', '商材の種類', '想定開始時期'
 ];
 var COL_JUDGE = 10;   // 判定
 var COL_MAIL  = 11;   // メール通知
 
 /** 通知メールに載せる列（0始まりのインデックス）。値が空の項目は行ごと省く */
 var MAIL_COLS_BASE  = [1, 2, 3, 4, 5];        // 会社名〜メールアドレス
-var MAIL_COLS_EXTRA = [11, 12, 13, 14, 15];   // フォーム種別〜商材の種類
+var MAIL_COLS_EXTRA = [11, 12, 13, 14, 15, 16];   // フォーム種別〜想定開始時期
 var MAIL_COLS_TAIL  = [6, 7, 8];              // お問い合わせ内容・送信元ページ・参照元
 
 function doPost(e) {
@@ -97,7 +97,7 @@ function doPost(e) {
       '',
       // 3PLフォーム専用の項目。共通フォームからの送信では空になる
       trim(d.formType) || '共通', trim(d.shipments), trim(d.area),
-      trim(d.warehouse), trim(d.goods)
+      trim(d.warehouse), trim(d.goods), trim(d.timing)
     ];
 
     // 1. まず記録する。何があってもデータを失わない
