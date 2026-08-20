@@ -195,8 +195,20 @@ function appendRow(row) {
   var sheet = ss.getSheetByName(SHEET_NAME);
   if (!sheet) sheet = ss.insertSheet(SHEET_NAME);
 
-  // 見出し行が無い、または列が足りない場合は書き直す
-  if (sheet.getLastRow() === 0 || sheet.getLastColumn() < HEADERS.length) {
+  // 見出し行を HEADERS と突き合わせ、違っていれば書き直す。
+  //
+  // 列数の比較だけだと、シートに手作業で列を足してあった場合に
+  // 「列数は足りているが見出しは古い」状態を見逃し、
+  // 新しい項目が無関係な列へ書き込まれてしまう。そのため中身まで比較する。
+  // これにより、項目を増やしたあとは次の送信で見出しが自動更新される。
+  var needHead = sheet.getLastRow() === 0;
+  if (!needHead) {
+    var cur = sheet.getRange(1, 1, 1, HEADERS.length).getValues()[0];
+    for (var i = 0; i < HEADERS.length; i++) {
+      if (String(cur[i]).trim() !== HEADERS[i]) { needHead = true; break; }
+    }
+  }
+  if (needHead) {
     var head = sheet.getRange(1, 1, 1, HEADERS.length);
     head.setValues([HEADERS]).setFontWeight('bold')
         .setBackground('#0b2b4d').setFontColor('#ffffff');
