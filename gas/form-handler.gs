@@ -17,7 +17,7 @@
 // ---------- 設定 ----------
 
 /** 通知先メールアドレス。カンマ区切りで複数指定できます。 */
-var NOTIFY_TO = '';
+var NOTIFY_TO = 'takayuda@hashigo-logi.com';
 
 /** ボットの疑いがある送信でもメール通知するか（falseにすると記録のみ） */
 var NOTIFY_ON_SUSPECT = true;

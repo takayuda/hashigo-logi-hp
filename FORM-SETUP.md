@@ -23,12 +23,13 @@
 
 1. そのスプレッドシートで **拡張機能 → Apps Script** を開く
 2. エディタの `コード.gs` の中身をすべて消し、`gas/form-handler.gs` の内容を貼り付ける
-3. ファイル上部の設定を書き換える
+3. ファイル上部の設定を確認する
 
    ```js
-   var NOTIFY_TO = 'you@example.com';   // ← 通知を受け取るアドレス
+   var NOTIFY_TO = 'takayuda@hashigo-logi.com';   // ← 通知を受け取るアドレス
    ```
 
+   - 既定値が入っているので、このアドレスで良ければ書き換え不要
    - 複数に送る場合はカンマ区切り（`'a@example.com,b@example.com'`）
    - 送信者本人にも自動返信を送りたい場合は `SEND_AUTOREPLY` を `true` に
    - スプレッドシートから作った場合、`SPREADSHEET_ID` は空のままでOK
