@@ -37,3 +37,6 @@ tests/
 wrangler.jsonc
 .gitignore
 .assetsignore
+
+# リニューアル用の素材の元データ（配信には renewal/assets/ の変換済み画像を使用）
+hashigo-logi-assets 2/
