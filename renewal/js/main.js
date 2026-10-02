@@ -30,10 +30,7 @@
   /* ---------- FVスライドショー ---------- */
   const INTERVAL = 6000;
   const slides = Array.from(document.querySelectorAll(".fv-slide"));
-  const bar = document.getElementById("fvBar");
   if (slides.length > 1) {
-    bar.style.setProperty("--fv-interval", INTERVAL + "ms");
-    const ticks = slides.map(() => bar.appendChild(document.createElement("i")));
     let current = 0;
 
     // 2枚目以降は1枚目の表示後に読み込み、初期表示を軽くする
@@ -47,12 +44,6 @@
       load(slides[next]);
       slides[current].classList.remove("is-active");
       slides[next].classList.add("is-active");
-      ticks.forEach((t, i) => {
-        t.classList.toggle("is-done", i < next);
-        t.classList.remove("is-active");
-      });
-      void ticks[next].offsetWidth; // アニメーションを先頭から再生させる
-      ticks[next].classList.add("is-active");
       current = next;
     };
     show(0);
@@ -63,7 +54,6 @@
       document.addEventListener("visibilitychange", () => {
         clearInterval(timer);
         if (!document.hidden) {
-          show(current);
           timer = setInterval(() => show((current + 1) % slides.length), INTERVAL);
         }
       });
