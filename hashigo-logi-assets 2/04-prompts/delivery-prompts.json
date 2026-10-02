@@ -1,0 +1,21 @@
+{
+  "jobs": [
+    {
+      "name": "fv-warehouse",
+      "refs": [
+        "/Users/takayuda/Documents/Codex/2026-10-02/new-chat-2/outputs/fv-warehouse.png",
+        "/Users/takayuda/Documents/Codex/2026-10-02/new-chat-2/outputs/hashigo-logi-logo-bookman-v6.png"
+      ],
+      "prompt": "Edit image 1 (website first-view mockup) with two precise updates. 1: Replace the entire navy-blue overlay with NEUTRAL DARK CHARCOAL GRAY translucent overlay, #292929 approx 60-65 percent opacity, fine subtle film grain. Remove blue/navy cast entirely; subdued almost monochrome neutral gray background photo remains clearly recognizable, not solid fill. Also change blue contact button to WHITE fill with dark charcoal text and arrow, all other navigation white. 2: Replace top-left Japanese text logo with the EXACT ladder + 'Hashigo-Logi' logo in image 2, rendered WHITE directly over background with no white bounding box. Retain its slanted rounded small ladder and Bookman-inspired serif wordmark shapes and proportions; header logo approx 270px wide on 1672px canvas, legible. Preserve all other layout, background composition, sizes, spacing, central single-line headline EXACTLY '社会を繋ぐ”ハシゴ”をかける' in large white Japanese sans serif centered both axes. Header links 'サービス' 'ニュース' 'ブログ' '会社概要' then outline '資料請求' and white filled 'お問い合わせ' with arrow. Full-bleed 16:9 single desktop first-view screenshot, no browser frame, no extra copy, no footer, no extra logo or decorative content. Premium restrained Japanese corporate website. Image 2 only a logo reference; do not use its white background."
+    },
+    {
+      "name": "fv-ship",
+      "refs": [
+        "/Users/takayuda/Documents/Codex/2026-10-02/new-chat-2/outputs/fv-ship.png",
+        "/Users/takayuda/Documents/Codex/2026-10-02/new-chat-2/outputs/hashigo-logi-logo-bookman-v6.png"
+      ],
+      "prompt": "Edit image 1 (website first-view mockup) with two precise updates. 1: Replace the entire navy-blue overlay with NEUTRAL DARK CHARCOAL GRAY translucent overlay, #292929 approx 60-65 percent opacity, fine subtle film grain. Remove blue/navy cast entirely; subdued almost monochrome neutral gray background photo remains clearly recognizable, not solid fill. Also change blue contact button to WHITE fill with dark charcoal text and arrow, all other navigation white. 2: Replace top-left Japanese text logo with the EXACT ladder + 'Hashigo-Logi' logo in image 2, rendered WHITE directly over background with no white bounding box. Retain its slanted rounded small ladder and Bookman-inspired serif wordmark shapes and proportions; header logo approx 270px wide on 1672px canvas, legible. Preserve all other layout, background composition, sizes, spacing, central single-line headline EXACTLY '社会を繋ぐ”ハシゴ”をかける' in large white Japanese sans serif centered both axes. Header links 'サービス' 'ニュース' 'ブログ' '会社概要' then outline '資料請求' and white filled 'お問い合わせ' with arrow. Full-bleed 16:9 single desktop first-view screenshot, no browser frame, no extra copy, no footer, no extra logo or decorative content. Premium restrained Japanese corporate website. Image 2 only a logo reference; do not use its white background."
+    }
+  ],
+  "whiteLogo": "Take the supplied black logo and produce a WHITE logo on a uniform solid DARK CHARCOAL #303030 background. Exact same icon and wordmark shapes 'Hashigo-Logi', small diagonal rounded ladder, Bookman-style serif text. Clean uninterrupted white letters and icon with sharp edges, NO distress, NO grunge, no speckles. Preserve exact layout and proportions. OPAQUE dark gray background, do not make transparent. Single horizontal logo only, 3:1 wide."
+}
