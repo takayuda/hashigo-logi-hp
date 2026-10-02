@@ -3,6 +3,25 @@
 
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  /* ---------- ページを開いたときの表示位置 ----------
+     前のページのスクロール位置が引き継がれて途中から表示されることがあるため、
+     ブラウザの位置復元を止め、#付きのリンク以外は必ず先頭から表示する */
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+  const resetScroll = () => {
+    const root = document.documentElement;
+    const prev = root.style.scrollBehavior;
+    root.style.scrollBehavior = "auto"; // スムーズスクロールで先頭まで流れて見えないように
+    const target = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    if (target) target.scrollIntoView();
+    else window.scrollTo(0, 0);
+    root.style.scrollBehavior = prev;
+  };
+  resetScroll();
+  // 画像の読み込みでレイアウトが動いたあとにもう一度合わせる
+  window.addEventListener("load", resetScroll, { once: true });
+  // 戻る・進むでキャッシュから表示されたときも同じ扱いにする
+  window.addEventListener("pageshow", (e) => { if (e.persisted) resetScroll(); });
+
   /* ---------- ヘッダー：FVを過ぎたら白背景に切り替える ---------- */
   const hd = document.getElementById("hd");
   // トップはFV、下層ページは data-hero を付けたヒーローを過ぎたら切り替える
