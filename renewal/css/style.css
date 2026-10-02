@@ -199,9 +199,11 @@ body.is-menu-open .hd .logo-b { opacity: 0; }
   /* 写真をグレートーンに寄せる */
   filter: grayscale(.85) contrast(.95) brightness(.9);
   transform: scale(1.08);
+  will-change: transform;
+  backface-visibility: hidden;
 }
 /* 表示中の1枚だけゆっくり寄る */
-.fv-slide.is-active img, .fv-slide.is-leaving img { animation: fv-zoom 8s linear forwards; }
+.fv-slide.is-active img, .fv-slide.is-leaving img { animation: fv-zoom 9s linear forwards; }
 @keyframes fv-zoom { from { transform: scale(1.08); } to { transform: scale(1); } }
 
 /* グレーの半透明レイヤー。上下を少し濃くしてヘッダーと文字を読みやすくする */

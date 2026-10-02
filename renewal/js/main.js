@@ -29,44 +29,54 @@
 
   /* ---------- FVスライドショー ---------- */
   const INTERVAL = 6000;
+  const FADE = 1600; // CSSの .fv-slide の transition と揃える
   const slides = Array.from(document.querySelectorAll(".fv-slide"));
   if (slides.length > 1) {
     let current = 0;
+    let timer = null;
+    let leaveTimer = null;
 
     // 2枚目以降は1枚目の表示後に読み込み、初期表示を軽くする
     const load = (slide) => {
       const img = slide.querySelector("img[data-src]");
       if (img) { img.src = img.dataset.src; img.removeAttribute("data-src"); }
+      return slide.querySelector("img");
     };
     window.addEventListener("load", () => slides.forEach(load));
 
-    // 次の画像の読み込み・デコードが済んでから切り替える（途中で描画が止まるのを防ぐ）
-    let leavingTimer;
+    // 画像のデコードが終わってから切り替える（読み込み途中の画像が一瞬映るのを防ぐ）
+    const ready = (img) =>
+      img.decode ? img.decode().catch(() => {}) : Promise.resolve();
+
     const show = (next) => {
-      if (next === current) return;
-      load(slides[next]);
-      const img = slides[next].querySelector("img");
-      const swap = () => {
-        const prev = slides[current];
-        slides.forEach((s) => s.classList.remove("is-leaving"));
+      const prev = slides[current];
+      const incoming = slides[next];
+      return ready(load(incoming)).then(() => {
+        clearTimeout(leaveTimer);
+        slides.forEach((s) => { if (s !== prev) s.classList.remove("is-leaving"); });
         prev.classList.remove("is-active");
         prev.classList.add("is-leaving");
-        slides[next].classList.add("is-active");
+        incoming.classList.add("is-active");
         current = next;
-        clearTimeout(leavingTimer);
-        leavingTimer = setTimeout(() => prev.classList.remove("is-leaving"), 1700);
-      };
-      (img.decode ? img.decode() : Promise.resolve()).then(swap, swap);
+        // フェードが終わってから前の1枚を外す
+        leaveTimer = setTimeout(() => prev.classList.remove("is-leaving"), FADE + 100);
+      });
+    };
+
+    // 切り替えが終わってから次を予約する（デコード待ちで切り替えが重ならないように）
+    const schedule = () => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        show((current + 1) % slides.length).then(schedule);
+      }, INTERVAL);
     };
 
     if (!reduceMotion) {
-      let timer = setInterval(() => show((current + 1) % slides.length), INTERVAL);
+      schedule();
       // タブが非表示の間は止める
       document.addEventListener("visibilitychange", () => {
-        clearInterval(timer);
-        if (!document.hidden) {
-          timer = setInterval(() => show((current + 1) % slides.length), INTERVAL);
-        }
+        clearTimeout(timer);
+        if (!document.hidden) schedule();
       });
     }
   }
