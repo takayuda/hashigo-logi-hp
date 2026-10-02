@@ -86,7 +86,9 @@ h1, h2, h3, p, figure { margin: 0; }
    ========================================================= */
 .hd {
   position: fixed; inset: 0 0 auto 0; z-index: 50;
-  height: var(--hd-h);
+  /* ノッチや上部のステータスバーと重ならないよう、安全領域の分だけ下げる */
+  height: calc(var(--hd-h) + env(safe-area-inset-top, 0px));
+  padding-top: env(safe-area-inset-top, 0px);
   color: #fff;
   transition: background-color .35s, color .35s, box-shadow .35s;
 }
@@ -144,7 +146,7 @@ h1, h2, h3, p, figure { margin: 0; }
 
 .drawer {
   position: fixed; inset: 0; z-index: 40;
-  padding: calc(var(--hd-h) + 24px) var(--gutter) 40px;
+  padding: calc(var(--hd-h) + env(safe-area-inset-top, 0px) + 24px) var(--gutter) 40px;
   background: var(--navy); color: #fff;
 }
 .drawer nav { display: flex; flex-direction: column; }
@@ -163,6 +165,12 @@ body.is-menu-open .hd .logo-b { opacity: 0; }
   .hd-nav, .hd-cta { display: none; }
   .hd-menu { display: block; }
   .hd-logo { width: 160px; }
+  /* スマホではFVの上でもヘッダーの帯が分かるよう、半透明の濃い背景を敷く */
+  .hd:not(.is-solid) {
+    background: rgba(28, 28, 28, .45);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
 }
 
 /* =========================================================
