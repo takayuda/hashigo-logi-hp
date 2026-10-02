@@ -185,6 +185,8 @@ body.is-menu-open .hd .logo-b { opacity: 0; }
   color: #fff;
 }
 .fv-slides, .fv-slide, .fv-tint, .fv-grain { position: absolute; inset: 0; }
+/* スライドの重なり順（z-index）をこの箱の中に閉じ込め、透過レイヤーとコピーより下に置く */
+.fv-slides { z-index: 0; }
 /* 切り替え：次の画像を前の画像の上に重ねてフェードインさせる。
    前の画像（.is-leaving）は不透明のまま下に残し、ズームも止めないので、途中で揺れたり暗くなったりしない */
 .fv-slide {
