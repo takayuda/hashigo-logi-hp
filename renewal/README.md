@@ -11,7 +11,7 @@
 - `index.html` … トップページ
 - `css/style.css` / `js/main.js` … 全ページ共通
 - `assets/` … `hashigo-logi-assets 2/` から変換した配信用画像
-  - `fv/` FVスライド（1672px幅 WebP）、`img/` セクション用の縮小版（960px幅）
+  - `fv/` FVスライド（1672px幅 WebP）、`img/` サービス・代表写真（WebP）
   - `logo-white.webp` / `logo-black.webp` … 背景付きロゴPNGから生成した透過版
   - `grain.png` … FVとCTAに重ねる粒子テクスチャ
 

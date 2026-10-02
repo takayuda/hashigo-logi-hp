@@ -40,13 +40,24 @@
     };
     window.addEventListener("load", () => slides.forEach(load));
 
+    // 次の画像の読み込み・デコードが済んでから切り替える（途中で描画が止まるのを防ぐ）
+    let leavingTimer;
     const show = (next) => {
+      if (next === current) return;
       load(slides[next]);
-      slides[current].classList.remove("is-active");
-      slides[next].classList.add("is-active");
-      current = next;
+      const img = slides[next].querySelector("img");
+      const swap = () => {
+        const prev = slides[current];
+        slides.forEach((s) => s.classList.remove("is-leaving"));
+        prev.classList.remove("is-active");
+        prev.classList.add("is-leaving");
+        slides[next].classList.add("is-active");
+        current = next;
+        clearTimeout(leavingTimer);
+        leavingTimer = setTimeout(() => prev.classList.remove("is-leaving"), 1700);
+      };
+      (img.decode ? img.decode() : Promise.resolve()).then(swap, swap);
     };
-    show(0);
 
     if (!reduceMotion) {
       let timer = setInterval(() => show((current + 1) % slides.length), INTERVAL);
