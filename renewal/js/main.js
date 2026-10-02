@@ -5,13 +5,21 @@
 
   /* ---------- ヘッダー：FVを過ぎたら白背景に切り替える ---------- */
   const hd = document.getElementById("hd");
-  const fv = document.querySelector(".fv");
+  // トップはFV、下層ページは data-hero を付けたヒーローを過ぎたら切り替える
+  const fv = document.querySelector(".fv, [data-hero]");
   const updateHeader = () => {
     const limit = fv ? fv.offsetHeight - hd.offsetHeight : 0;
     hd.classList.toggle("is-solid", window.scrollY > limit);
   };
-  updateHeader();
-  window.addEventListener("scroll", updateHeader, { passive: true });
+  // スマホ用の追従CTA（下層LPのみ）は、ヒーローを過ぎたら出す
+  const fixcta = document.getElementById("fixcta");
+  const updateFixCta = () => {
+    if (!fixcta || !fv) return;
+    fixcta.classList.toggle("is-show", window.scrollY > fv.offsetHeight * 0.6);
+  };
+  const onScroll = () => { updateHeader(); updateFixCta(); };
+  onScroll();
+  window.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("resize", updateHeader);
 
   /* ---------- スマホ用メニュー ---------- */
