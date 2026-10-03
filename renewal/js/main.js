@@ -8,8 +8,7 @@
      #付きのリンク以外は必ず先頭から表示する。
      ・ブラウザの位置復元を止める
      ・読み込み直後から約1.5秒間は、利用者が自分でスクロールするまで先頭に合わせ続ける
-       （表示環境が読み込み後に位置を戻してくる場合にも負けないように）
-     ・サイト内リンクを押したら、移動する前に先頭へ戻しておく */
+       （表示環境が読み込み後に位置を戻してくる場合にも負けないように） */
   if ("scrollRestoration" in history) history.scrollRestoration = "manual";
   const root = document.documentElement;
   const toTop = () => {
@@ -38,17 +37,6 @@
   window.addEventListener("load", () => holdTop(1500), { once: true });
   // 戻る・進むでキャッシュから表示されたときも同じ扱いにする
   window.addEventListener("pageshow", (e) => { if (e.persisted) { userScrolled = false; holdTop(1500); } });
-  // サイト内リンク：移動前に先頭へ戻す（ページ内の#リンクと新しいタブで開く操作は除く）
-  document.addEventListener("click", (e) => {
-    const a = e.target.closest("a[href]");
-    if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-    const href = a.getAttribute("href");
-    if (!href || href.startsWith("#") || /^(https?:|mailto:|tel:)/.test(href) || a.target === "_blank") return;
-    const prev = root.style.scrollBehavior;
-    root.style.scrollBehavior = "auto";
-    window.scrollTo(0, 0);
-    root.style.scrollBehavior = prev;
-  });
 
   /* ---------- ヘッダー：FVを過ぎたら白背景に切り替える ---------- */
   const hd = document.getElementById("hd");
