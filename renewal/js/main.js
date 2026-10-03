@@ -5,22 +5,50 @@
 
   /* ---------- ページを開いたときの表示位置 ----------
      前のページのスクロール位置が引き継がれて途中から表示されることがあるため、
-     ブラウザの位置復元を止め、#付きのリンク以外は必ず先頭から表示する */
+     #付きのリンク以外は必ず先頭から表示する。
+     ・ブラウザの位置復元を止める
+     ・読み込み直後から約1.5秒間は、利用者が自分でスクロールするまで先頭に合わせ続ける
+       （表示環境が読み込み後に位置を戻してくる場合にも負けないように）
+     ・サイト内リンクを押したら、移動する前に先頭へ戻しておく */
   if ("scrollRestoration" in history) history.scrollRestoration = "manual";
-  const resetScroll = () => {
-    const root = document.documentElement;
+  const root = document.documentElement;
+  const toTop = () => {
     const prev = root.style.scrollBehavior;
-    root.style.scrollBehavior = "auto"; // スムーズスクロールで先頭まで流れて見えないように
+    root.style.scrollBehavior = "auto"; // スムーズスクロールで流れて見えないように
     const target = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
     if (target) target.scrollIntoView();
-    else window.scrollTo(0, 0);
+    else { window.scrollTo(0, 0); root.scrollTop = 0; document.body.scrollTop = 0; }
     root.style.scrollBehavior = prev;
   };
-  resetScroll();
-  // 画像の読み込みでレイアウトが動いたあとにもう一度合わせる
-  window.addEventListener("load", resetScroll, { once: true });
+  let userScrolled = false;
+  const markUser = () => { userScrolled = true; };
+  ["wheel", "touchstart", "keydown", "mousedown"].forEach((ev) =>
+    window.addEventListener(ev, markUser, { passive: true, once: true }));
+  const holdTop = (ms) => {
+    const until = performance.now() + ms;
+    const tick = () => {
+      if (userScrolled) return;
+      toTop();
+      if (performance.now() < until) requestAnimationFrame(tick);
+    };
+    tick();
+  };
+  toTop();
+  document.addEventListener("DOMContentLoaded", toTop, { once: true });
+  window.addEventListener("load", () => holdTop(1500), { once: true });
   // 戻る・進むでキャッシュから表示されたときも同じ扱いにする
-  window.addEventListener("pageshow", (e) => { if (e.persisted) resetScroll(); });
+  window.addEventListener("pageshow", (e) => { if (e.persisted) { userScrolled = false; holdTop(1500); } });
+  // サイト内リンク：移動前に先頭へ戻す（ページ内の#リンクと新しいタブで開く操作は除く）
+  document.addEventListener("click", (e) => {
+    const a = e.target.closest("a[href]");
+    if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    const href = a.getAttribute("href");
+    if (!href || href.startsWith("#") || /^(https?:|mailto:|tel:)/.test(href) || a.target === "_blank") return;
+    const prev = root.style.scrollBehavior;
+    root.style.scrollBehavior = "auto";
+    window.scrollTo(0, 0);
+    root.style.scrollBehavior = prev;
+  });
 
   /* ---------- ヘッダー：FVを過ぎたら白背景に切り替える ---------- */
   const hd = document.getElementById("hd");
