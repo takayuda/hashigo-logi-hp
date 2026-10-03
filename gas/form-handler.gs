@@ -46,6 +46,14 @@ var SEND_AUTOREPLY = false;
 /** 自動返信の差出人名 */
 var AUTOREPLY_NAME = '株式会社ハシゴロジ';
 
+/**
+ * Slack通知。Incoming Webhook の URL を「スクリプト プロパティ」に
+ * SLACK_WEBHOOK_URL という名前で登録すると、受信のたびにSlackへも通知します。
+ * URL は秘密情報なので、このファイルには直接書かないこと（手順は FORM-SETUP.md）。
+ * 未登録のあいだは何もしません。
+ */
+var SLACK_PROP = 'SLACK_WEBHOOK_URL';
+
 // ---------- 本体 ----------
 
 /**
@@ -122,6 +130,18 @@ function doPost(e) {
       mailStatus = '送信失敗: ' + mailErr.message;
       console.error('mail failed', mailErr);
     }
+
+    // 3. Slackにも通知する。失敗しても記録とメールには影響しない
+    var slackUrl = PropertiesService.getScriptProperties().getProperty(SLACK_PROP);
+    if (slackUrl) {
+      try {
+        notifySlack(slackUrl, row, suspect);
+        mailStatus += '／Slack 送信済み';
+      } catch (slackErr) {
+        mailStatus += '／Slack 失敗: ' + slackErr.message;
+        console.error('slack failed', slackErr);
+      }
+    }
     pos.sheet.getRange(pos.rowIndex, COL_MAIL).setValue(mailStatus);
 
     if (SEND_AUTOREPLY && !suspect) {
@@ -172,6 +192,60 @@ function selfTest() {
   if (USE_GMAIL_APP) {
     console.log('GmailApp で送信したので、送信済みフォルダにも残っているはずです。');
   }
+}
+
+/**
+ * Slackへの通知。お問い合わせ内容は長すぎると読みにくいので途中で切り、
+ * 全文はスプレッドシートとメールで確認する。
+ */
+function notifySlack(url, row, suspect) {
+  var kind = (row[11] && row[11] !== '共通') ? '【' + row[11] + '】' : '';
+  var title = (suspect ? ':warning: 要確認 ' : ':incoming_envelope: ') + 'お問い合わせ' + kind + '　' + row[1] + '　' + row[3] + ' 様';
+  var body = String(row[6] || '（未入力）');
+  if (body.length > 1500) body = body.slice(0, 1500) + '…（続きはスプレッドシート）';
+
+  var fields = [
+    ['会社名', row[1]], ['お名前', row[3]], ['部署・役職', row[2]],
+    ['メール', row[5]], ['電話番号', row[4]], ['フォーム種別', row[11]],
+    ['きっかけのページ', row[17]], ['流入元', row[19]]
+  ].filter(function (f) { return f[1]; })
+   .map(function (f) { return { type: 'mrkdwn', text: '*' + f[0] + '*\n' + slackEsc(f[1]) }; });
+
+  var blocks = [
+    { type: 'section', text: { type: 'mrkdwn', text: '*' + slackEsc(title) + '*' } },
+    { type: 'section', fields: fields.slice(0, 10) },
+    { type: 'section', text: { type: 'mrkdwn', text: '*お問い合わせ内容*\n' + slackEsc(body) } },
+    { type: 'context', elements: [{ type: 'mrkdwn', text: '受信 ' + Utilities.formatDate(row[0], 'Asia/Tokyo', 'yyyy/MM/dd HH:mm') + '　送信元 ' + slackEsc(row[7] || '') }] }
+  ];
+
+  var res = UrlFetchApp.fetch(url, {
+    method: 'post',
+    contentType: 'application/json',
+    payload: JSON.stringify({ text: slackEsc(title), blocks: blocks }),
+    muteHttpExceptions: true
+  });
+  if (res.getResponseCode() !== 200) {
+    throw new Error('HTTP ' + res.getResponseCode() + ' ' + res.getContentText());
+  }
+}
+
+/** Slackで特別な意味を持つ記号を無害化する */
+function slackEsc(v) {
+  return String(v == null ? '' : v).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+/**
+ * Slack通知の確認用。エディタで selfTestSlack を選んで実行すると、
+ * テストの通知をSlackへ送ります。
+ */
+function selfTestSlack() {
+  var url = PropertiesService.getScriptProperties().getProperty(SLACK_PROP);
+  if (!url) { console.error('スクリプト プロパティに ' + SLACK_PROP + ' が登録されていません'); return; }
+  var row = [new Date(), 'テスト株式会社', '物流部', 'テスト 太郎', '03-0000-0000', 'test@example.com',
+    'これはSlack通知のテストです。', 'https://hashigologi.com/contact/', '', '通常', '',
+    '共通', '', '', '', '', '', '/services/3pl/', '/ → /services/3pl/ → /contact/', '直接・不明'];
+  notifySlack(url, row, false);
+  console.log('Slackへテスト通知を送りました');
 }
 
 /**
