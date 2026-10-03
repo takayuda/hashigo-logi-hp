@@ -28,7 +28,7 @@
   実行すると次を作り直す:
     - news/index.html, blog/index.html（一覧）
     - news/<スラッグ>/index.html, blog/<スラッグ>/index.html（記事）
-    - トップページ（index.html）のニュース・ブログ最新5件
+    - トップページ（index.html）のニュース・ブログ最新3件
   Markdown を消した記事は、ページも削除する。
 """
 import os, re, sys, shutil, html, json
@@ -42,7 +42,7 @@ AUTHOR = dict(name='髙橋 優大', role='株式会社ハシゴロジ 代表取�
 
 CONTENT = ROOT + 'content/'
 MARK = '<!-- generated:post（tools/build_posts.py が書き出したページ。直接編集しない） -->'
-TOP_COUNT = 5
+TOP_COUNT = 3
 SECTIONS = {
     'news': dict(label='ニュース', en='News', img='svc/news.webp',
                  desc='株式会社ハシゴロジのニュース。会社からのお知らせ、サービスの開始、メディア掲載などをお伝えします。',
