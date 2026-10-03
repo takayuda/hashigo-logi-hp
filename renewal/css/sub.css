@@ -6,19 +6,20 @@
 /* ---------- ページ見出し（写真なしのヒーロー） ---------- */
 .ph {
   position: relative;
-  padding: calc(var(--hd-h) + env(safe-area-inset-top, 0px) + clamp(40px, 6vw, 80px)) 0 clamp(48px, 6vw, 80px);
+  padding: calc(var(--hd-h) + env(safe-area-inset-top, 0px) + clamp(16px, 2.4vw, 32px)) 0 clamp(28px, 3.2vw, 44px);
   color: #fff;
   background: var(--brand-grad);
   overflow: hidden;
 }
 .ph .fv-grain { opacity: .14; }
 .ph > .wrap { position: relative; }
+.ph .crumb { margin-bottom: clamp(16px, 2vw, 24px); }
 .ph-en {
   font-family: var(--font-en); font-size: clamp(14px, 1.4vw, 16px); letter-spacing: .16em;
   color: var(--mint);
 }
-.ph-h1 { margin-top: 8px; font-size: clamp(28px, 4vw, 48px); font-weight: 700; line-height: 1.4; letter-spacing: .06em; }
-.ph-lead { margin-top: 16px; max-width: 760px; font-size: clamp(14px, 1.4vw, 16px); color: rgba(255, 255, 255, .85); }
+.ph-h1 { margin-top: 4px; font-size: clamp(26px, 3.2vw, 38px); font-weight: 700; line-height: 1.4; letter-spacing: .06em; }
+.ph-lead { margin-top: 10px; max-width: 760px; font-size: clamp(14px, 1.4vw, 16px); color: rgba(255, 255, 255, .85); }
 /* 写真付きのページ見出し */
 .ph.has-img { background: #2f2f2f; }
 .ph.has-img .lp-hero-bg img { filter: grayscale(.85) contrast(.95) brightness(.85); }
