@@ -513,3 +513,47 @@ body.is-menu-open .hd .logo-b { opacity: 0; }
   .ft-top { flex-direction: column; }
   .ft-nav { flex-wrap: wrap; gap: 32px 48px; }
 }
+
+/* ---------- ヘッダー：サービスのドロップダウン ---------- */
+.nav-dd { position: relative; display: flex; align-items: center; }
+.nav-dd-panel {
+  position: absolute; top: 100%; left: 50%;
+  padding-top: 18px; /* マウスがパネルへ移る間に閉じないよう、上に余白を取る */
+  transform: translate(-50%, 8px);
+  opacity: 0; visibility: hidden;
+  transition: opacity .25s, transform .25s var(--ease), visibility .25s;
+}
+.nav-dd:hover .nav-dd-panel, .nav-dd:focus-within .nav-dd-panel {
+  opacity: 1; visibility: visible; transform: translate(-50%, 0);
+}
+.nav-dd-in {
+  display: grid; grid-template-columns: repeat(3, minmax(180px, 1fr)); gap: 8px 28px;
+  padding: 26px 28px 20px;
+  background: #fff; color: var(--ink);
+  border-radius: 4px; border-top: 3px solid var(--teal);
+  box-shadow: 0 16px 40px rgba(10, 33, 64, .18);
+}
+.nav-dd-h { margin-bottom: 8px; font-size: 13px; font-weight: 700; color: var(--navy); white-space: nowrap; }
+.nav-dd-h span { display: block; font-family: var(--font-en); font-size: 11px; font-weight: 400; letter-spacing: .14em; color: var(--teal); }
+.hd-nav .nav-dd-panel a { padding: 0; }
+.hd-nav .nav-dd-panel a::after { display: none; }
+.nav-dd-col li a {
+  display: block; padding: 7px 0 !important;
+  font-size: 14px; font-weight: 500; white-space: nowrap;
+  border-bottom: 1px solid var(--line);
+  transition: color .2s, padding-left .2s;
+}
+.nav-dd-col li a:hover { color: var(--teal); padding-left: 4px !important; }
+.nav-dd-all {
+  grid-column: 1 / -1; justify-self: end;
+  display: inline-flex !important; align-items: center; gap: 10px;
+  margin-top: 8px; font-size: 13px; color: var(--teal);
+}
+.nav-dd-all:hover .arw { transform: translateX(4px); }
+
+/* スマホメニュー：サービスの下の6サービス */
+.drawer-sub { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; padding: 4px 0 12px; border-bottom: 1px solid rgba(255, 255, 255, .15); }
+.drawer .drawer-sub a { padding: 10px 0 10px 14px; font-size: 14px; font-weight: 400; border-bottom: 0; color: rgba(255, 255, 255, .8); position: relative; }
+.drawer .drawer-sub a::before { content: ""; position: absolute; left: 0; top: 50%; width: 6px; height: 1px; background: var(--mint); }
+.drawer nav > a:first-child { border-bottom: 0; }
+.drawer { overflow-y: auto; }
