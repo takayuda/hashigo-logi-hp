@@ -317,8 +317,7 @@
 
 /* 右カラム：サービスへの導線とカテゴリ */
 .side-cta { padding: 24px 22px; color: #fff; background: var(--brand-grad); border-radius: 4px; display: flex; flex-direction: column; gap: 10px; }
-.side-cta-en { font-family: var(--font-en); font-size: 12px; letter-spacing: .1em; color: var(--mint); }
-.side-cta-ttl { font-size: 17px; font-weight: 700; margin-bottom: 6px; }
+.side-cta-ttl { font-size: 17px; font-weight: 700; line-height: 1.6; margin-bottom: 6px; }
 .side-cta .btn-solid { justify-content: center; background: #fff; color: var(--navy); border-color: #fff; }
 .side-cta .btn-solid:hover { background: var(--mint-l); }
 .side-cta-sub { font-size: 12px; text-align: center; text-decoration: underline; text-underline-offset: 3px; opacity: .85; }

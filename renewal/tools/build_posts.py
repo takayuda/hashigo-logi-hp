@@ -361,8 +361,7 @@ def build_article(section, p, posts):
       </div>'''
         side_cta = f'''
         <div class="side-cta">
-          <p class="side-cta-en">Service</p>
-          <p class="side-cta-ttl">{svc['name']}</p>
+          <p class="side-cta-ttl">ハシゴロジの<br>{svc['name']}</p>
           <a href="{R}services/{svc['slug']}/contact/" class="btn btn-solid">{svc['contact_title'].replace(svc['name'] + 'の', '')}</a>
           <a href="{R}download/" class="side-cta-sub">サービス紹介資料をダウンロード</a>
         </div>'''
@@ -412,7 +411,7 @@ def build_article(section, p, posts):
       <div class="post-share"><span>この記事を共有する</span>{share(url, p['title'])}</div>{rel}{author_box(R)}{foot}
     </div>
     <aside class="post-side">
-      <div class="post-side-in">{toc_side}{side_cta}
+      <div class="post-side-in">{side_cta}{toc_side}
       </div>
     </aside>
   </div>
