@@ -14,7 +14,7 @@
     title: 小ロットEC事業者が3PLを選ぶときの5つの視点
     date: 2026-09-28
     category: 物流
-    image: 3pl/reason-custom.webp     # 任意。renewal/assets/img/ からのパス
+    image: blog/<スラッグ>.webp        # 任意。renewal/assets/img/ からのパス。一覧のサムネイルに使う（記事ページには出さない）
     description: 一覧や検索結果に出す説明文  # 任意。省略すると本文の最初の段落
     updated: 2026-10-10               # 任意。更新日（構造化データの dateModified）
     placeholder: true                 # 任意。仮の記事として「（仮）」を付ける
@@ -270,7 +270,7 @@ def build_article(section, p, posts):
     <h1 class="ph-h1">{html.escape(title_of(p))}</h1>
   </div>
 </section>'''
-    eye = f'\n    <figure class="article-eye"><img src="{R}assets/img/{p["image"]}" alt="" decoding="async"></figure>' if p.get('image') else ''
+    eye = ''  # 記事ページにはサムネイルを出さない（image は一覧のサムネイルと構造化データに使う）
     note = '<p class="draft-note">この記事は仮の内容です。公開前に差し替えてください。</p>\n' if p['placeholder'] else ''
     rel = ''
     if section == 'blog' and RELATED.get(p['category']):
