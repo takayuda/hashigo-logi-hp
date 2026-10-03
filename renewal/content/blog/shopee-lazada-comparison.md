@@ -114,4 +114,4 @@ ShopeeとLazadaのどちらを選ぶかと同じくらい大切なのが、ど�
 - 日本の倉庫から出荷したまま試すなら、モールが用意する越境物流の仕組みを使えるかが重要
 - 出店前に、売る国と商品、利益の計算、商品ページの言語、出荷の担当を決めておく
 
-韓国市場も検討している場合は、[日本からCoupangで売る方法](/blog/coupang-cross-border-guide/)もあわせてご覧ください。ハシゴロジの[海外EC運用代行](/services/global-ec/)では、Shopee・Lazadaの出品から現地語の商品ページ、広告、日本の倉庫からの出荷までを月額固定でお引き受けします。どの国・どのモールから始めるかのご相談は[こちら](/services/global-ec/contact/)からどうぞ。
+韓国市場も検討している場合は、[日本からCoupangで売る方法](/blog/coupang-cross-border-guide/)もあわせてご覧ください。ハシゴロジの[海外EC運用代行](/services/global-ec/)では、Shopee・Lazadaの出品から現地語の商品ページ、広告、日本の倉庫からの出荷までをまとめてお引き受けします。どの国・どのモールから始めるかのご相談は[こちら](/services/global-ec/contact/)からどうぞ。
