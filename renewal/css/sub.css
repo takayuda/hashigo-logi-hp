@@ -323,7 +323,6 @@
 .side-cta-sub { font-size: 12px; text-align: center; text-decoration: underline; text-underline-offset: 3px; opacity: .85; }
 /* 末尾：サービスへの導線、書いた人、関連記事 */
 .related-cta { margin-top: 40px; }
-.related-cta-en { font-family: var(--font-en); font-size: 12px !important; font-weight: 400 !important; letter-spacing: .1em; color: var(--mint); }
 .related-cta-btns { display: flex; flex-wrap: wrap; gap: 10px; }
 .related-cta .btn-ghost { color: #fff; }
 .related-cta .btn-ghost:hover { background: rgba(255, 255, 255, .12); }

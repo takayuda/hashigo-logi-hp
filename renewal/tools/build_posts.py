@@ -350,10 +350,7 @@ def build_article(section, p, posts):
     if svc:
         rel = f'''
       <div class="related-cta">
-        <div>
-          <p class="related-cta-en">Service</p>
-          <p class="related-cta-ttl">{svc['name']}について、詳しくはこちら</p>
-        </div>
+        <p class="related-cta-ttl">{svc['name']}について、詳しくはこちら</p>
         <div class="related-cta-btns">
           <a href="{R}services/{svc['slug']}/" class="btn btn-solid">サービスを見る{ARW}</a>
           <a href="{R}services/{svc['slug']}/contact/" class="btn btn-ghost">{svc['contact_title'].replace(svc['name'] + 'の', '')}{ARW}</a>
