@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>産廃予約NAVIのお問い合わせ｜株式会社ハシゴロジ</title>
+<meta name="description" content="株式会社ハシゴロジ「産廃予約NAVI」のお問い合わせフォームです。">
+<!-- リニューアル試験用ページ。本番切り替えまでは検索エンジンに載せない -->
+<meta name="robots" content="noindex,nofollow">
+
+<link rel="icon" href="../../../../favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="../../../../favicon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../css/style.css">
+<link rel="stylesheet" href="../../../css/lp.css">
+<link rel="stylesheet" href="../../../css/sub.css">
+</head>
+<body class="lp">
+
+<!-- ========== ヘッダー（全ページ共通） ========== -->
+<header class="hd" id="hd">
+  <div class="hd-in">
+    <a href="../../../" class="hd-logo" aria-label="株式会社ハシゴロジ トップページ">
+      <img class="logo-w" src="../../../assets/logo-white.webp" alt="Hashigo-Logi" width="1140" height="160">
+      <img class="logo-b" src="../../../assets/logo-black.webp" alt="" width="1151" height="160" aria-hidden="true">
+    </a>
+    <nav class="hd-nav" aria-label="グローバルナビゲーション">
+      <a href="../../../services/" aria-current="true">サービス</a>
+      <a href="../../../news/">ニュース</a>
+      <a href="../../../blog/">ブログ</a>
+      <a href="../../../company/">会社概要</a>
+    </nav>
+    <div class="hd-cta">
+      <a href="../../../download/" class="btn btn-ghost">資料請求</a>
+      <a href="../../../contact/" class="btn btn-solid">お問い合わせ<span class="arw" aria-hidden="true"></span></a>
+    </div>
+    <button class="hd-menu" id="menuBtn" aria-label="メニューを開く" aria-expanded="false" aria-controls="drawer">
+      <span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<div class="drawer" id="drawer" hidden>
+  <nav aria-label="スマートフォン用メニュー">
+    <a href="../../../services/">サービス</a>
+    <a href="../../../news/">ニュース</a>
+    <a href="../../../blog/">ブログ</a>
+    <a href="../../../company/">会社概要</a>
+    <a href="../../../download/">資料請求</a>
+    <a href="../../../contact/">お問い合わせ</a>
+  </nav>
+</div>
+
+<main>
+<section class="ph" data-hero>
+  <div class="fv-grain" aria-hidden="true"></div>
+  <div class="wrap">
+    <ol class="crumb" aria-label="パンくずリスト">
+      <li><a href="../../../">ホーム</a></li>
+      <li><a href="../../">サービス</a></li>
+      <li><a href="../">産廃予約NAVI</a></li>
+      <li aria-current="page">お問い合わせ</li>
+    </ol>
+    <p class="ph-en">Contact</p>
+    <h1 class="ph-h1">産廃予約NAVIのお問い合わせ</h1>
+  </div>
+</section>
+<section class="sec sec-tight bg-2">
+  <div class="wrap">
+    <div class="form-wrap">
+      <div class="form-side">
+        <h2>デモのご依頼、資料・料金のお問い合わせ。</h2>
+        <p>現在の受付方法や拠点数を伺い、業務に合わせた使い方と概算をご案内します。</p>
+        <ul class="side-list"><li>オンラインでのデモに対応</li><li>一部の拠点からの試験導入も可</li><li>電話・FAXの予約は代行登録も可</li></ul>
+        <div class="side-contact"><b>メールでのお問い合わせ</b>takayuda@hashigo-logi.com</div>
+      </div>
+      <form id="cform" class="form" novalidate>
+        <div class="fld-row">
+        <div class="fld">
+            <label for="f-company">会社名<span class="rq">必須</span></label>
+            <input type="text" id="f-company" name="company" required autocomplete="organization">
+            <p class="err">会社名をご入力ください。</p>
+          </div>
+        <div class="fld">
+            <label for="f-department">部署・役職<span class="opt">任意</span></label>
+            <input type="text" id="f-department" name="department" autocomplete="organization-title">
+          </div>
+        </div>
+        <div class="fld-row">
+        <div class="fld">
+            <label for="f-name">お名前<span class="rq">必須</span></label>
+            <input type="text" id="f-name" name="name" required autocomplete="name">
+            <p class="err">お名前をご入力ください。</p>
+          </div>
+        <div class="fld">
+            <label for="f-phone">電話番号<span class="opt">任意</span></label>
+            <input type="tel" id="f-phone" name="phone" autocomplete="tel">
+          </div>
+        </div>
+        <div class="fld">
+          <label for="f-email">メールアドレス<span class="rq">必須</span></label>
+          <input type="email" id="f-email" name="email" required autocomplete="email">
+          <p class="err">メールアドレスをご確認ください。</p>
+        </div>
+        <div class="fld">
+          <p class="lb">お問い合わせの種類<span class="opt">任意</span></p>
+          <div class="checks" data-extra="お問い合わせの種類">
+            <label><input type="checkbox" value="デモを見たい">デモを見たい</label>
+            <label><input type="checkbox" value="資料がほしい">資料がほしい</label>
+            <label><input type="checkbox" value="料金を知りたい">料金を知りたい</label>
+            <label><input type="checkbox" value="その他">その他</label>
+          </div>
+        </div>
+        <div class="fld">
+          <label for="f-biz">業態<span class="opt">任意</span></label>
+          <select id="f-biz" data-extra="業態">
+            <option value="">選択してください</option>
+            <option>中間処理業</option>
+            <option>収集運搬業</option>
+            <option>中間処理業と収集運搬業</option>
+            <option>排出事業者</option>
+            <option>その他</option>
+          </select>
+        </div>
+        <div class="fld-row">
+        <div class="fld">
+            <label for="f-volume">月間の搬入件数<span class="opt">任意</span></label>
+            <select id="f-volume" data-extra="月間の搬入件数">
+              <option value="">選択してください</option>
+              <option>〜100件</option>
+              <option>100〜500件</option>
+              <option>500〜1,000件</option>
+              <option>1,000件以上</option>
+              <option>わからない</option>
+            </select>
+          </div>
+        <div class="fld">
+            <label for="f-sites">受入拠点の数<span class="opt">任意</span></label>
+            <select id="f-sites" data-extra="受入拠点の数">
+              <option value="">選択してください</option>
+              <option>1拠点</option>
+              <option>2〜3拠点</option>
+              <option>4拠点以上</option>
+            </select>
+          </div>
+        </div>
+        <div class="fld">
+          <p class="lb">現在の予約受付の方法<span class="opt">任意</span></p>
+          <div class="checks" data-extra="現在の予約受付の方法">
+            <label><input type="checkbox" value="電話">電話</label>
+            <label><input type="checkbox" value="FAX">FAX</label>
+            <label><input type="checkbox" value="メール">メール</label>
+            <label><input type="checkbox" value="Webフォーム">Webフォーム</label>
+            <label><input type="checkbox" value="予約は受けていない">予約は受けていない</label>
+          </div>
+        </div>
+        <div class="fld">
+          <label for="f-body">お問い合わせ内容<span class="opt">任意</span></label>
+          <textarea id="f-body" name="body" placeholder="現在の状況やお困りごとをご記入ください。"></textarea>
+        </div>
+        <!-- どのフォームからの送信かを記録用に渡す -->
+        <input type="hidden" name="form_type" value="産廃予約NAVI">
+        <!-- ボット除け。人には見えない。ブラウザの自動入力に拾われない name にすること -->
+        <div class="hp" aria-hidden="true"><input type="text" name="hp_ref" tabindex="-1" autocomplete="off"></div>
+        <button type="submit" class="btn btn-submit" id="fsubmit">送信する</button>
+        <p class="form-note">通常2営業日以内にご返信いたします。<br>送信をもって<a href="../../../privacy/">プライバシーポリシー</a>に同意いただいたものとみなします。</p>
+        <p class="form-msg" id="fmsg" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ========== フッター（全ページ共通） ========== -->
+<footer class="ft">
+  <div class="wrap">
+    <div class="ft-top">
+      <a href="../../../" class="ft-logo"><img src="../../../assets/logo-white.webp" alt="Hashigo-Logi" width="1140" height="160" loading="lazy"></a>
+      <nav class="ft-nav" aria-label="フッターナビゲーション">
+        <div class="ft-col">
+          <a href="../../../services/" class="ft-h">サービス</a>
+          <a href="../../../services/3pl/">3PL（物流代行）</a>
+          <a href="../../../services/consulting/">物流コンサルティング</a>
+          <a href="../../../services/global-ec/">海外EC運用代行</a>
+          <a href="../../../services/product-development/">商品開発支援</a>
+          <a href="../../../services/sanpai-navi/">産廃予約NAVI</a>
+          <a href="../../../services/system-development/">システム開発受託</a>
+        </div>
+        <div class="ft-col">
+          <a href="../../../news/" class="ft-h">ニュース</a>
+          <a href="../../../blog/" class="ft-h">ブログ</a>
+          <a href="../../../company/" class="ft-h">会社概要</a>
+        </div>
+        <div class="ft-col">
+          <a href="../../../download/" class="ft-h">資料請求</a>
+          <a href="../../../contact/" class="ft-h">お問い合わせ</a>
+          <a href="../../../privacy/" class="ft-h">プライバシーポリシー</a>
+        </div>
+      </nav>
+    </div>
+    <p class="ft-copy">© 2026 Hashigo-Logi Inc.</p>
+  </div>
+</footer>
+
+<script src="../../../js/main.js" defer></script>
+<script src="../../../js/form.js" defer></script>
+</body>
+</html>
