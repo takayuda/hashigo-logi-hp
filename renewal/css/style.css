@@ -291,7 +291,7 @@ body.is-menu-open .hd .logo-b { opacity: 0; }
 .h3 { font-size: 20px; font-weight: 700; letter-spacing: .06em; }
 
 /* スクロールで表示 */
-.rv { opacity: 0; transform: translateY(24px); transition: opacity 1s var(--ease), transform 1s var(--ease); }
+.rv { opacity: 0; transform: translateY(16px); transition: opacity .5s var(--ease), transform .5s var(--ease); }
 .rv.is-in { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) { .rv { opacity: 1; transform: none; transition: none; } }
 
