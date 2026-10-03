@@ -37,6 +37,11 @@
 - `js/form.js` … フォーム送信。送信先は現行と同じ GAS（`gas/form-handler.gs`）。
   GAS に列がない項目（`data-extra`）は「項目名：値」としてお問い合わせ内容の先頭にまとめて送る
 
+## 送信完了後の面談予約
+
+どのフォームも、送信が完了するとその下に Googleカレンダーの予約ページ（オンライン面談の日程予約）を表示する。
+予約ページの URL は `js/form.js` の `BOOKING_URL`。空にすると表示しない。
+
 ## 資料請求のPDF
 
 資料請求フォームを送信すると、`assets/docs/hashigo-logi-service-guide.pdf` のダウンロードボタンが出る。

@@ -12,6 +12,8 @@
   const FORM_ENDPOINT = "https://script.google.com/macros/s/AKfycbwCpNkAScTmRC7dt12FPsYJV5GHjl8hHf79odBZk_8ig0gvTX92zV5mi5M5GXpL4EtZ/exec";
   const FALLBACK_MAIL = "takayuda@hashigo-logi.com";
   const GAS_FIELDS = ["shipments", "timing", "area", "warehouse", "goods"];
+  // 送信完了後に出す、Googleカレンダーの予約ページ（オンライン面談の日程予約）
+  const BOOKING_URL = "https://calendar.google.com/calendar/appointments/schedules/AcZssZ0fn-fzi5bvRf1T6FZ0hOYL7RDdftkltV5hj54MosoYjQkP2jvzulfavIX4SD3J1TSro0zoHZA6?gv=true";
 
   const form = document.getElementById("cform");
   if (!form) return;
@@ -108,7 +110,16 @@
             + "資料をダウンロード（PDF）</a>";
         }
         showMsg("ok", done);
-        msg.scrollIntoView({ block: "center" });
+        // 予約ページは送信が済んでから読み込む（フォーム入力中は通信しない）
+        if (BOOKING_URL && !form.querySelector(".booking")) {
+          const box = document.createElement("div");
+          box.className = "booking";
+          box.innerHTML = '<p class="booking-h">オンライン面談のご予約</p>'
+            + '<p class="booking-lead">お話を直接お聞きしたい場合は、ご都合のよい日時をこちらからお選びください。担当者からのご連絡を待たずに、そのままご予約いただけます。</p>'
+            + '<iframe src="' + BOOKING_URL + '" title="オンライン面談の予約" loading="lazy"></iframe>';
+          form.appendChild(box);
+        }
+        msg.scrollIntoView({ block: "start" });
       })
       .catch(() => {
         btn.disabled = false;
