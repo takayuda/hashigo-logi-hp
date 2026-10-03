@@ -216,16 +216,21 @@ def describe(p):
     return first[:110]
 
 
-def li(p, href):
-    return (f'          <li><a href="{href}"><time datetime="{p["date"]}">{fmt(p["date"])}</time>'
+def li(p, href, cat=False):
+    attr = f' data-cat="{html.escape(p["category"])}"' if cat else ''
+    return (f'          <li{attr}><a href="{href}"><time datetime="{p["date"]}">{fmt(p["date"])}</time>'
             f'<span class="tag">{html.escape(p["category"])}</span><span class="ttl">{html.escape(title_of(p))}</span></a></li>')
 
 
 def filters(section, posts):
     used = [c for c in SECTIONS[section]['cats'] if any(p['category'] == c for p in posts)]
     used += sorted({p['category'] for p in posts} - set(used))
-    tags = ['すべて'] + used
-    return ''.join(('<span class="is-on">' if i == 0 else '<span>') + html.escape(t) + '</span>' for i, t in enumerate(tags))
+    tags = [('すべて', '')] + [(c, c) for c in used]
+    # 押すとカテゴリで絞り込む（js/main.js）。「すべて」は data-filter が空
+    on = ' class="is-on" aria-pressed="true"'
+    off = ' aria-pressed="false"'
+    return ''.join(f'<button type="button" data-filter="{html.escape(v)}"{on if i == 0 else off}>{html.escape(t)}</button>'
+                   for i, (t, v) in enumerate(tags))
 
 
 def build_list(section, posts):
@@ -235,9 +240,9 @@ def build_list(section, posts):
     if not posts:
         body = '    <p>まだ記事はありません。</p>'
     elif section == 'news':
-        body = '    <ul class="post-list">\n' + '\n'.join(li(p, p['slug'] + '/') for p in posts) + '\n    </ul>'
+        body = '    <ul class="post-list">\n' + '\n'.join(li(p, p['slug'] + '/', cat=True) for p in posts) + '\n    </ul>'
     else:
-        body = '    <div class="blog-cards">\n' + '\n'.join(f'''      <a href="{p['slug']}/" class="blog-card rv">
+        body = '    <div class="blog-cards">\n' + '\n'.join(f'''      <a href="{p['slug']}/" class="blog-card rv" data-cat="{html.escape(p['category'])}">
         <div class="thumb">{f'<img src="{R}assets/img/{p["image"]}" alt="" loading="lazy" decoding="async">' if p.get('image') else ''}</div>
         <div class="body">
           <div class="meta"><time datetime="{p['date']}">{fmt(p['date'])}</time><span class="tag">{html.escape(p['category'])}</span></div>
@@ -249,8 +254,7 @@ def build_list(section, posts):
     main = head + f'''
 <section class="{sec_cls}">
   <div class="{wrap_cls}">
-    <!-- カテゴリの絞り込みは記事が増えたら有効にする（現在は表示のみ） -->
-    <div class="list-filter">{filters(section, posts)}</div>
+    <div class="list-filter" role="group" aria-label="カテゴリで絞り込む">{filters(section, posts)}</div>
 {body}
   </div>
 </section>'''

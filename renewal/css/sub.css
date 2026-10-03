@@ -114,8 +114,11 @@
 
 /* ---------- 一覧（ニュース・ブログ） ---------- */
 .list-filter { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
-.list-filter span { padding: 6px 14px; font-size: 13px; border: 1px solid var(--line); border-radius: 999px; color: var(--ink-2); }
-.list-filter span.is-on { color: #fff; background: var(--teal); border-color: var(--teal); }
+.list-filter button { padding: 6px 14px; font: inherit; font-size: 13px; line-height: 1.6; border: 1px solid var(--line); border-radius: 999px; color: var(--ink-2); background: #fff; cursor: pointer; transition: color .25s, background .25s, border-color .25s; }
+.list-filter button:hover { color: var(--teal); border-color: var(--teal); }
+.list-filter button.is-on { color: #fff; background: var(--teal); border-color: var(--teal); }
+.list-filter button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+[data-cat].is-hidden { display: none; }
 .list-big .post-list a { grid-template-columns: 120px auto 1fr; padding: 26px 0; }
 .list-big .post-list .ttl { grid-column: 3; font-size: 16px; }
 @media (max-width: 767px) {
@@ -231,13 +234,13 @@
 @media (max-width: 600px) { .route-cards { grid-template-columns: 1fr; } }
 
 /* 資料一覧（資料請求ページ） */
-.docs { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-.docs label { display: flex; gap: 12px; align-items: flex-start; padding: 16px; border: 1px solid #cfcfca; border-radius: 4px; cursor: pointer; background: #fafaf8; }
-.docs label:has(input:checked) { border-color: var(--teal); background: var(--mint-l); }
-.docs input { margin-top: 4px; width: 18px; height: 18px; accent-color: var(--teal); flex-shrink: 0; }
-.docs b { display: block; font-size: 14px; }
-.docs span { font-size: 12px; color: var(--ink-2); }
-@media (max-width: 600px) { .docs { grid-template-columns: 1fr; } }
+.doc-one { display: flex; gap: 16px; align-items: center; padding: 18px 20px; border: 1px solid var(--teal); border-radius: 4px; background: var(--mint-l); }
+.doc-one-ic { flex-shrink: 0; display: grid; place-items: center; width: 44px; height: 54px; font-family: "Libre Baskerville", serif; font-size: 11px; letter-spacing: .08em; color: #fff; background: var(--teal); border-radius: 3px; }
+.doc-one b { display: block; font-size: 15px; }
+.doc-one span { display: block; margin-top: 2px; font-size: 12px; color: var(--ink-2); }
+.form-msg .dl-btn { display: inline-flex; align-items: center; gap: 10px; margin-top: 16px; padding: 14px 28px; font-weight: 700; color: #fff; background: var(--teal); border-radius: 999px; text-decoration: none; transition: background .3s; }
+.form-msg .dl-btn:hover { background: var(--navy); }
+.form-msg .dl-btn svg { width: 16px; height: 16px; }
 
 /* ---------- 規約文書（プライバシーポリシー） ---------- */
 .doc { max-width: 860px; }

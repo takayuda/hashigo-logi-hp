@@ -100,7 +100,14 @@
       .then((data) => {
         if (!data || !data.ok) throw new Error((data && data.error) || "unknown");
         [...form.children].forEach((el) => { if (el !== msg) el.style.display = "none"; });
-        showMsg("ok", form.dataset.done || "送信しました。内容を確認のうえ、通常2営業日以内にご連絡いたします。");
+        let done = form.dataset.done || "送信しました。内容を確認のうえ、通常2営業日以内にご連絡いたします。";
+        // 資料請求：送信できたらダウンロードボタンを出す（data-download に PDF のパス）
+        if (form.dataset.download) {
+          done += '<br><a class="dl-btn" href="' + form.dataset.download + '" download target="_blank" rel="noopener">'
+            + '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1v9m0 0L4.5 6.5M8 10l3.5-3.5M2 13.5h12" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>'
+            + "資料をダウンロード（PDF）</a>";
+        }
+        showMsg("ok", done);
         msg.scrollIntoView({ block: "center" });
       })
       .catch(() => {

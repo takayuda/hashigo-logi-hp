@@ -124,6 +124,34 @@
     }
   }
 
+  /* ---------- ニュース・ブログ一覧のカテゴリ絞り込み ---------- */
+  // ボタンの data-filter と、記事の data-cat が一致するものだけを表示する（空なら全件）。
+  // 選んだカテゴリは URL の #cat=… に残し、共有や戻る操作でも同じ表示にする。
+  document.querySelectorAll(".list-filter").forEach((bar) => {
+    const btns = [...bar.querySelectorAll("button[data-filter]")];
+    const items = bar.parentElement.querySelectorAll("[data-cat]");
+    const apply = (cat, push) => {
+      if (!btns.some((b) => b.dataset.filter === cat)) cat = "";
+      btns.forEach((b) => {
+        const on = b.dataset.filter === cat;
+        b.classList.toggle("is-on", on);
+        b.setAttribute("aria-pressed", on ? "true" : "false");
+      });
+      items.forEach((el) => el.classList.toggle("is-hidden", cat !== "" && el.dataset.cat !== cat));
+      if (push) {
+        const url = location.pathname + location.search + (cat ? "#cat=" + encodeURIComponent(cat) : "");
+        history.replaceState(null, "", url);
+      }
+    };
+    const fromHash = () => {
+      const m = location.hash.match(/^#cat=(.+)$/);
+      return m ? decodeURIComponent(m[1]) : "";
+    };
+    btns.forEach((b) => b.addEventListener("click", () => apply(b.dataset.filter, true)));
+    window.addEventListener("hashchange", () => apply(fromHash(), false));
+    apply(fromHash(), false);
+  });
+
   /* ---------- スクロールで要素を表示 ---------- */
   const targets = document.querySelectorAll(".rv");
   if ("IntersectionObserver" in window && !reduceMotion) {

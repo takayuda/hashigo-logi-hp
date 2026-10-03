@@ -236,7 +236,7 @@ def faq_jsonld(url, items):
 def lp_cta(R, h, lead, primary, secondary=None):
     """締めのCTA。primary/secondary = (href, en, title, desc)"""
     cards = []
-    for c in [primary, secondary or (f'{R}download/', 'Download', '資料請求', 'サービスの紹介資料をお送りします。')]:
+    for c in [primary, secondary or (f'{R}download/', 'Download', '資料請求', 'サービス紹介資料をダウンロードいただけます。')]:
         cards.append(f'''      <a href="{c[0]}" class="cta-card">
         <span class="cta-en">{c[1]}</span>
         <span class="cta-ttl">{c[2]}</span>

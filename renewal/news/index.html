@@ -72,10 +72,9 @@
 </section>
 <section class="sec sec-tight">
   <div class="wrap list-big">
-    <!-- カテゴリの絞り込みは記事が増えたら有効にする（現在は表示のみ） -->
-    <div class="list-filter"><span class="is-on">すべて</span><span>お知らせ</span></div>
+    <div class="list-filter" role="group" aria-label="カテゴリで絞り込む"><button type="button" data-filter="" class="is-on" aria-pressed="true">すべて</button><button type="button" data-filter="お知らせ" aria-pressed="false">お知らせ</button></div>
     <ul class="post-list">
-          <li><a href="site-renewal/"><time datetime="2026-10-03">2026.10.03</time><span class="tag">お知らせ</span><span class="ttl">コーポレートサイトをリニューアルしました</span></a></li>
+          <li data-cat="お知らせ"><a href="site-renewal/"><time datetime="2026-10-03">2026.10.03</time><span class="tag">お知らせ</span><span class="ttl">コーポレートサイトをリニューアルしました</span></a></li>
     </ul>
   </div>
 </section>
