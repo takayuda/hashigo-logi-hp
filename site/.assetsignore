@@ -1,0 +1,11 @@
+# Cloudflare Workers の静的アセット配信から除外するもの（site/ からの相対パス）。
+# リポジトリには残るが、サイトにはアップロードされない。
+
+# 記事の元データ（Markdown）と書き出し用スクリプト。配信には書き出し後のHTMLを使う
+content/
+tools/
+README.md
+
+.assetsignore
+.DS_Store
+**/.DS_Store

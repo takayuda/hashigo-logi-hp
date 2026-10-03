@@ -1,0 +1,4 @@
+# 旧サイトのURLから、リニューアル後のURLへ転送する（301＝恒久的な移転）
+/3pl /services/3pl/ 301
+/3pl/ /services/3pl/ 301
+/3pl/index.html /services/3pl/ 301
