@@ -40,3 +40,7 @@ wrangler.jsonc
 
 # リニューアル用の素材の元データ（配信には renewal/assets/ の変換済み画像を使用）
 hashigo-logi-assets 2/
+
+# リニューアル版の記事の元データ（Markdown）と書き出し用スクリプト。配信には書き出し後のHTMLを使う
+renewal/content/
+renewal/tools/
