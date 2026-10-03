@@ -152,6 +152,30 @@
     apply(fromHash(), false);
   });
 
+  /* ---------- ブログ記事：目次の現在位置、リンクのコピー ---------- */
+  const tocLinks = [...document.querySelectorAll(".toc-list a")];
+  if (tocLinks.length) {
+    const heads = [...new Set(tocLinks.map((a) => a.getAttribute("href")))]
+      .map((h) => document.getElementById(h.slice(1))).filter(Boolean);
+    const mark = () => {
+      const line = (parseInt(getComputedStyle(root).getPropertyValue("--hd-h"), 10) || 84) + 40;
+      let cur = null;
+      heads.forEach((h) => { if (h.getBoundingClientRect().top <= line) cur = h.id; });
+      tocLinks.forEach((a) => a.classList.toggle("is-current", a.getAttribute("href") === "#" + cur));
+    };
+    mark();
+    window.addEventListener("scroll", mark, { passive: true });
+    // スマホの折りたたみ目次は、項目を選んだら閉じる
+    document.querySelectorAll(".toc-inline a").forEach((a) =>
+      a.addEventListener("click", () => a.closest("details").removeAttribute("open")));
+  }
+  document.querySelectorAll("button[data-copy]").forEach((b) => {
+    b.addEventListener("click", () => {
+      const done = () => { b.classList.add("is-copied"); setTimeout(() => b.classList.remove("is-copied"), 1600); };
+      if (navigator.clipboard) navigator.clipboard.writeText(b.dataset.copy).then(done, () => {});
+    });
+  });
+
   /* ---------- スクロールで要素を表示 ---------- */
   const targets = document.querySelectorAll(".rv");
   if ("IntersectionObserver" in window && !reduceMotion) {

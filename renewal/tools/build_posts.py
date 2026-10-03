@@ -109,6 +109,7 @@ def ext(u):
 
 def markdown(md, R):
     out, para, lst, table = [], [], None, []
+    h2n = [0, 0]
 
     def flush_table():
         rows = [[c.strip() for c in r.strip('|').split('|')] for r in table if not re.fullmatch(r'\|?[\s:|-]+\|?', r)]
@@ -141,7 +142,13 @@ def markdown(md, R):
         if table: flush_table()
         m = re.match(r'(#{2,4})\s+(.*)', s)
         if m:
-            flush(); n = len(m.group(1)); out.append(f'<h{n}>{inline(m.group(2), R)}</h{n}>'); continue
+            flush(); n = len(m.group(1))
+            # 目次から飛べるよう、見出しに番号の id を付ける（h2: sec-1、h3: sec-1-1）
+            if n == 2:
+                h2n[0] += 1; h2n[1] = 0; hid = f'sec-{h2n[0]}'
+            else:
+                h2n[1] += 1; hid = f'sec-{h2n[0]}-{h2n[1]}'
+            out.append(f'<h{n} id="{hid}">{inline(m.group(2), R)}</h{n}>'); continue
         m = re.match(r'\s*[-*]\s+(.*)', s) or re.match(r'\s*\d+\.\s+(.*)', s)
         if m:
             tag = 'ol' if re.match(r'\s*\d+\.', s) else 'ul'
@@ -188,16 +195,49 @@ def jsonld(section, p):
     return ''.join('\n<script type="application/ld+json">\n' + json.dumps(b, ensure_ascii=False, indent=2) + '\n</script>' for b in blocks)
 
 
-def author_box(R):
+def author_top(R):
+    """記事の冒頭に出す、書いた人の短い紹介"""
     return f'''
-    <aside class="author">
-      <img src="{R}assets/img/{AUTHOR['photo']}" alt="{AUTHOR['name']}" width="80" height="80" loading="lazy">
-      <div>
-        <p class="author-role">この記事を書いた人</p>
-        <p class="author-name">{AUTHOR['name']}<span>{AUTHOR['role']}</span></p>
-        <p class="author-bio">{AUTHOR['bio']}</p>
-      </div>
-    </aside>'''
+      <div class="author-top">
+        <img src="{R}assets/img/{AUTHOR['photo']}" alt="" width="48" height="48">
+        <p><span class="author-role">この記事を書いた人</span><a href="#author" class="author-name">{AUTHOR['name']}</a><span class="author-sub">{AUTHOR['role']}</span></p>
+      </div>'''
+
+
+def author_box(R):
+    """記事の末尾に出す、書いた人の詳しい紹介"""
+    return f'''
+      <aside class="author" id="author">
+        <img src="{R}assets/img/{AUTHOR['photo']}" alt="{AUTHOR['name']}" width="96" height="96" loading="lazy">
+        <div>
+          <p class="author-role">この記事を書いた人</p>
+          <p class="author-name">{AUTHOR['name']}<span>{AUTHOR['role']}</span></p>
+          <p class="author-bio">{AUTHOR['bio']}</p>
+          <a href="{R}contact/" class="more">ハシゴロジに相談する{ARW}</a>
+        </div>
+      </aside>'''
+
+
+ICON_X = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>'
+ICON_FB = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.43c0-3 1.79-4.67 4.53-4.67 1.31 0 2.69.24 2.69.24v2.95h-1.51c-1.49 0-1.96.93-1.96 1.88v2.26h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07z"/></svg>'
+ICON_LINK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5M14 10a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>'
+
+
+def share(url, title):
+    """SNSで共有するボタン（外部のスクリプトは読み込まない）"""
+    from urllib.parse import quote
+    u, t = quote(url, safe=''), quote(title, safe='')
+    return f'''<div class="share" aria-label="この記事を共有">
+          <a href="https://twitter.com/intent/tweet?url={u}&amp;text={t}" target="_blank" rel="noopener" aria-label="Xで共有">{ICON_X}</a>
+          <a href="https://www.facebook.com/sharer/sharer.php?u={u}" target="_blank" rel="noopener" aria-label="Facebookで共有">{ICON_FB}</a>
+          <a href="https://social-plugins.line.me/lineit/share?url={u}" target="_blank" rel="noopener" aria-label="LINEで共有" class="share-line">LINE</a>
+          <button type="button" data-copy="{html.escape(url)}" aria-label="リンクをコピー">{ICON_LINK}</button>
+        </div>'''
+
+
+def toc_items(body_html):
+    """本文の h2 から目次を作る"""
+    return [(i, re.sub(r'<[^>]+>', '', t)) for i, t in re.findall(r'<h2 id="([^"]+)">(.*?)</h2>', body_html)]
 
 
 # ---------------------------------------------------------------- 書き出し
@@ -265,39 +305,118 @@ def build_list(section, posts):
 def build_article(section, p, posts):
     cfg = SECTIONS[section]
     R = '../../'
+    upd = p.get('updated')
+    dates = f'<time datetime="{p["date"]}">公開日 {fmt(p["date"])}</time>'
+    if upd and upd != p['date']:
+        dates += f'<time datetime="{upd}">更新日 {fmt(upd)}</time>'
     head = f'''{MARK}
 <section class="ph" data-hero>
   <div class="fv-grain" aria-hidden="true"></div>
   <div class="wrap">
     {crumbs([('ホーム', R), (cfg['label'], '../'), (html.escape(p['title']), None)])}
-    <div class="article-meta"><time datetime="{p['date']}">{fmt(p['date'])}</time><span class="tag">{html.escape(p['category'])}</span></div>
+    <div class="article-meta"><span class="tag">{html.escape(p['category'])}</span>{dates}</div>
     <h1 class="ph-h1">{html.escape(title_of(p))}</h1>
   </div>
 </section>'''
-    eye = ''  # 記事ページにはサムネイルを出さない（image は一覧のサムネイルと構造化データに使う）
     note = '<p class="draft-note">この記事は仮の内容です。公開前に差し替えてください。</p>\n' if p['placeholder'] else ''
-    rel = ''
-    if section == 'blog' and RELATED.get(p['category']):
-        s = SVC[RELATED[p['category']]]
-        rel = f'''
-    <div class="related-cta">
-      <p>{s['name']}について、詳しくはこちら</p>
-      <a href="{R}services/{s['slug']}/" class="btn btn-solid">サービスを見る{ARW}</a>
-    </div>'''
+    body = markdown(p['body_md'], R)
     i = posts.index(p)
     nav = f'<a href="../{posts[i + 1]["slug"]}/" class="more">前の記事{ARW}</a>' if i + 1 < len(posts) else ''
-    main = head + f'''
+    foot = f'''
+      <div class="article-foot">
+        <a href="../" class="more">{cfg['label']}一覧へ戻る{ARW}</a>
+        {nav}
+      </div>'''
+
+    if section != 'blog':
+        main = head + f'''
 <section class="sec sec-tight">
-  <div class="wrap">{eye}
+  <div class="wrap">
     <article class="article prose">
-{note}{markdown(p['body_md'], R)}
-    </article>{author_box(R) if section == 'blog' else ''}{rel}
-    <div class="article-foot">
-      <a href="../" class="more">{cfg['label']}一覧へ戻る{ARW}</a>
-      {nav}
-    </div>
+{note}{body}
+    </article>{foot}
   </div>
 </section>'''
+        page(f'{section}/{p["slug"]}/index.html', f'{title_of(p)}｜{cfg["label"]}｜株式会社ハシゴロジ', describe(p), main,
+             current=section, extra_head=jsonld(section, p))
+        return
+
+    # ブログ：本文＋右に目次（スクロールに追従）。スマホでは目次を本文の前に折りたたんで出す
+    url = f'{SITE}{section}/{p["slug"]}/'
+    toc = toc_items(body)
+    toc_li = '\n'.join(f'            <li><a href="#{i}"><span>{n:02d}</span>{html.escape(t)}</a></li>' for n, (i, t) in enumerate(toc, 1))
+    svc = SVC.get(RELATED.get(p['category'], ''))
+    rel = side_cta = ''
+    if svc:
+        rel = f'''
+      <div class="related-cta">
+        <div>
+          <p class="related-cta-en">Service</p>
+          <p class="related-cta-ttl">{svc['name']}について、詳しくはこちら</p>
+        </div>
+        <div class="related-cta-btns">
+          <a href="{R}services/{svc['slug']}/" class="btn btn-solid">サービスを見る{ARW}</a>
+          <a href="{R}services/{svc['slug']}/contact/" class="btn btn-ghost">{svc['contact_title'].replace(svc['name'] + 'の', '')}{ARW}</a>
+        </div>
+      </div>'''
+        side_cta = f'''
+        <div class="side-cta">
+          <p class="side-cta-en">Service</p>
+          <p class="side-cta-ttl">{svc['name']}</p>
+          <a href="{R}services/{svc['slug']}/contact/" class="btn btn-solid">{svc['contact_title'].replace(svc['name'] + 'の', '')}</a>
+          <a href="{R}download/" class="side-cta-sub">サービス紹介資料をダウンロード</a>
+        </div>'''
+    # 関連記事：同じカテゴリを優先して3件
+    others = [q for q in posts if q is not p]
+    related = ([q for q in others if q['category'] == p['category']] + [q for q in others if q['category'] != p['category']])[:3]
+    rel_cards = '\n'.join(f'''      <a href="../{q['slug']}/" class="blog-card">
+        <div class="thumb">{f'<img src="{R}assets/img/{q["image"]}" alt="" loading="lazy" decoding="async">' if q.get('image') else ''}</div>
+        <div class="body">
+          <div class="meta"><time datetime="{q['date']}">{fmt(q['date'])}</time><span class="tag">{html.escape(q['category'])}</span></div>
+          <h3>{html.escape(title_of(q))}</h3>
+        </div>
+      </a>''' for q in related)
+    rel_sec = f'''
+<section class="sec sec-tight bg-2">
+  <div class="wrap">
+    <h2 class="rel-h">関連記事</h2>
+    <div class="blog-cards">
+{rel_cards}
+    </div>
+  </div>
+</section>''' if related else ''
+    toc_inline = f'''
+      <details class="toc-inline">
+        <summary>目次</summary>
+        <ol class="toc-list">
+{toc_li}
+        </ol>
+      </details>''' if toc else ''
+    toc_side = f'''
+        <nav class="toc-side" aria-label="目次">
+          <p class="toc-h">目次</p>
+          <ol class="toc-list">
+{toc_li}
+          </ol>
+        </nav>''' if toc else ''
+    main = head + f'''
+<section class="sec sec-tight">
+  <div class="wrap post-layout">
+    <div class="post-main">
+      <div class="post-head">{author_top(R)}
+        {share(url, p['title'])}
+      </div>{toc_inline}
+      <article class="article prose">
+{note}{body}
+      </article>
+      <div class="post-share"><span>この記事を共有する</span>{share(url, p['title'])}</div>{rel}{author_box(R)}{foot}
+    </div>
+    <aside class="post-side">
+      <div class="post-side-in">{toc_side}{side_cta}
+      </div>
+    </aside>
+  </div>
+</section>{rel_sec}'''
     page(f'{section}/{p["slug"]}/index.html', f'{title_of(p)}｜{cfg["label"]}｜株式会社ハシゴロジ', describe(p), main, current=section,
          extra_head=jsonld(section, p))
 
