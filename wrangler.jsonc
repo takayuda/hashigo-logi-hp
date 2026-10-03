@@ -6,7 +6,10 @@
     "enabled": true
   },
   "assets": {
-    "directory": "."
+    // 公開するのは site/ 以下だけ。リポジトリ直下の旧サイトのファイルや資料、マスター画像は配信しない
+    "directory": "./site",
+    // 存在しないURLには site/404.html を返す
+    "not_found_handling": "404-page"
   },
   "compatibility_flags": [
     "nodejs_compat"
