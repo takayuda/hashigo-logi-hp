@@ -3,7 +3,8 @@
    ---------------------------------------------------------
    送信先は現行サイトと同じ Google Apps Script（gas/form-handler.gs）。
    GAS が列として受け取る項目（company / department / name / phone / email /
-   body / formType / shipments / timing / area / warehouse / goods）はそのまま送り、
+   body / formType / shipments / timing / area / warehouse / goods /
+   page / referrer / trigger / path / source）はそのまま送り、
    それ以外の項目（data-extra を付けたもの）は「項目名：値」の形で本文の先頭にまとめる。
    ========================================================= */
 (() => {
@@ -67,6 +68,21 @@
     return lines;
   };
 
+  // 閲覧経路（main.js が記録）から、きっかけのページ・経路・流入元をつくる
+  const isForm = (p) => /\/(contact|download)\/$/.test(p);
+  const trail = () => {
+    try {
+      const t = JSON.parse(sessionStorage.getItem("hl_trail") || "null");
+      if (!t || !t.path) return {};
+      const before = t.path.filter((p) => !isForm(p));
+      return {
+        trigger: before[before.length - 1] || "",
+        path: t.path.join(" → "),
+        source: t.src || "",
+      };
+    } catch (e) { return {}; }
+  };
+
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     const bad = validate();
@@ -84,6 +100,7 @@
       formType: val("form_type"),
       address: val("hp_ref"), // ハニーポット（GAS側は address で判定）
       page: location.href, referrer: document.referrer,
+      ...trail(),
     };
     GAS_FIELDS.forEach((k) => { payload[k] = val(k); });
 

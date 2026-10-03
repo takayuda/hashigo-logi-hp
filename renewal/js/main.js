@@ -38,6 +38,26 @@
   // 戻る・進むでキャッシュから表示されたときも同じ扱いにする
   window.addEventListener("pageshow", (e) => { if (e.persisted) { userScrolled = false; holdTop(1500); } });
 
+  /* ---------- 閲覧経路の記録（お問い合わせの「きっかけ」を知るため） ----------
+     同じタブで見たページを sessionStorage に残し、フォーム送信時に form.js が一緒に送る。
+     ・流入元：最初のページを開いたときの外部の参照元と、URL の utm_* パラメータ
+     ・閲覧経路：見たページのパス（新しい順に最大15件を保持） */
+  try {
+    const KEY = "hl_trail";
+    const t = JSON.parse(sessionStorage.getItem(KEY) || "null") || { src: "", path: [] };
+    if (!t.path.length) {
+      const q = new URLSearchParams(location.search);
+      const utm = ["utm_source", "utm_medium", "utm_campaign"].map((k) => q.get(k)).filter(Boolean).join(" / ");
+      let ref = "";
+      try { const r = new URL(document.referrer); if (r.host !== location.host) ref = r.host + r.pathname; } catch (e) { /* 参照元なし */ }
+      t.src = [ref || "直接・不明", utm && "utm: " + utm].filter(Boolean).join("｜");
+    }
+    const here = location.pathname;
+    if (t.path[t.path.length - 1] !== here) t.path.push(here);
+    t.path = t.path.slice(-15);
+    sessionStorage.setItem(KEY, JSON.stringify(t));
+  } catch (e) { /* 保存できない環境では記録しない */ }
+
   /* ---------- ヘッダー：FVを過ぎたら白背景に切り替える ---------- */
   const hd = document.getElementById("hd");
   // トップはFV、下層ページは data-hero を付けたヒーローを過ぎたら切り替える

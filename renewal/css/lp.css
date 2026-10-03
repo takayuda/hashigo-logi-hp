@@ -398,3 +398,7 @@
   .ptbl td:nth-child(2) { margin: 4px 0 6px; }
   .ptbl td:last-child { font-size: 13px; }
 }
+
+/* 海外EC運用代行：対応モールの補足と、3PLページへの導線 */
+.mp-note { margin-top: 20px; font-size: 14px; color: var(--ink-2); }
+.strength-link { margin-top: 28px; text-align: center; }
