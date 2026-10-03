@@ -56,6 +56,8 @@ def head(R, title, desc, css=('style', 'lp', 'sub'), preload=None, extra_head=''
 <meta name="description" content="{e(desc)}">
 
 <link rel="icon" href="/favicon-32.png" sizes="32x32">
+<link rel="icon" href="/favicon-48.png" sizes="48x48">
+<link rel="icon" href="/favicon-192.png" sizes="192x192">
 <link rel="apple-touch-icon" href="/favicon.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
