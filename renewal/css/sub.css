@@ -253,3 +253,18 @@
 .doc a { color: var(--teal); text-decoration: underline; }
 .doc-meta { margin-top: 48px; font-size: 13px; color: var(--ink-3); }
 .fld-row > .fld + .fld { margin-top: 0; }
+
+/* 記事内の表・著者紹介・記事0件 */
+.prose .tbl-scroll { overflow-x: auto; }
+.prose .tbl { width: 100%; min-width: 520px; border-collapse: collapse; font-size: 14px; line-height: 1.7; }
+.prose .tbl th, .prose .tbl td { padding: 12px 14px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); }
+.prose .tbl th { font-size: 13px; color: var(--teal); background: var(--mint-l); border-bottom: 2px solid var(--teal); white-space: nowrap; }
+.prose img { border-radius: 4px; }
+.author { max-width: 800px; margin: 56px auto 0; display: flex; gap: 20px; align-items: flex-start; padding: 24px; background: var(--bg-2); border-radius: 4px; }
+.author img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+.author-role { font-size: 12px; color: var(--teal); font-weight: 700; }
+.author-name { font-size: 17px; font-weight: 700; }
+.author-name span { margin-left: 10px; font-size: 12px; font-weight: 500; color: var(--ink-2); }
+.author-bio { margin-top: 6px; font-size: 13px; color: var(--ink-2); }
+.post-list li.empty { padding: 20px 0; font-size: 14px; color: var(--ink-3); }
+@media (max-width: 600px) { .author { flex-direction: column; } .author-name span { display: block; margin: 2px 0 0; } }

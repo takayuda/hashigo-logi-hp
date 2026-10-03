@@ -16,11 +16,13 @@
     category: 物流
     image: 3pl/reason-custom.webp     # 任意。renewal/assets/img/ からのパス
     description: 一覧や検索結果に出す説明文  # 任意。省略すると本文の最初の段落
+    updated: 2026-10-10               # 任意。更新日（構造化データの dateModified）
     placeholder: true                 # 任意。仮の記事として「（仮）」を付ける
     draft: true                       # 任意。下書き。サイトには書き出さない
     ---
   本文は Markdown（見出し ## / ###、段落、- 箇条書き、1. 番号付き、**太字**、
-  [リンク](/services/3pl/)、![画像の説明](3pl/reason-custom.webp)、> 引用）。
+  [リンク](/services/3pl/)、![画像の説明](3pl/reason-custom.webp)、> 補足、| 表 |）。
+  「## よくある質問」の下に「### 質問」と回答の段落を並べると、FAQの構造化データも出力する。
   「/」で始まるリンクはリニューアル版サイトの直下からのパスとして扱う。
 
   実行すると次を作り直す:
@@ -29,10 +31,14 @@
     - トップページ（index.html）のニュース・ブログ最新5件
   Markdown を消した記事は、ページも削除する。
 """
-import os, re, sys, shutil, html
+import os, re, sys, shutil, html, json
 
 sys.path.insert(0, os.path.dirname(__file__))
 from sitelib import ROOT, SVC, page, crumbs, ph, ARW  # noqa: E402
+
+SITE = 'https://hashigologi.com/'  # 本番の URL。構造化データに使う
+AUTHOR = dict(name='髙橋 優大', role='株式会社ハシゴロジ 代表取締役', photo='founder.webp',
+              bio='アマゾンジャパンで物流拠点の新規設立や生産管理、SCM本部で事業開発と新規システム開発に従事。株式会社TRiCERAで越境ECの物流オペレーション管理と新規事業構築を統括。2026年に株式会社ハシゴロジを設立。')
 
 CONTENT = ROOT + 'content/'
 MARK = '<!-- generated:post（tools/build_posts.py が書き出したページ。直接編集しない） -->'
@@ -102,7 +108,15 @@ def ext(u):
 
 
 def markdown(md, R):
-    out, para, lst = [], [], None
+    out, para, lst, table = [], [], None, []
+
+    def flush_table():
+        rows = [[c.strip() for c in r.strip('|').split('|')] for r in table if not re.fullmatch(r'\|?[\s:|-]+\|?', r)]
+        if rows:
+            head, body = rows[0], rows[1:]
+            out.append('<div class="tbl-scroll"><table class="tbl"><thead><tr>' + ''.join(f'<th>{inline(c, R)}</th>' for c in head) + '</tr></thead><tbody>'
+                       + ''.join('<tr>' + ''.join(f'<td>{inline(c, R)}</td>' for c in r) + '</tr>' for r in body) + '</tbody></table></div>')
+        table.clear()
 
     def flush():
         nonlocal para, lst
@@ -117,9 +131,14 @@ def markdown(md, R):
     for line in md.splitlines():
         s = line.rstrip()
         if not s.strip():
+            if table: flush_table()
             flush(); continue
         if s.lstrip().startswith('<'):          # HTMLはそのまま通す
             flush(); out.append(s); continue
+        if s.lstrip().startswith('|'):          # 表（1行目が見出し、2行目が区切り）
+            if lst or para: flush()
+            table.append(s.strip()); continue
+        if table: flush_table()
         m = re.match(r'(#{2,4})\s+(.*)', s)
         if m:
             flush(); n = len(m.group(1)); out.append(f'<h{n}>{inline(m.group(2), R)}</h{n}>'); continue
@@ -135,8 +154,50 @@ def markdown(md, R):
             flush(); out.append(f'<div class="box">{inline(m.group(1), R)}</div>'); continue
         if lst: flush()
         para.append(s.strip())
+    if table: flush_table()
     flush()
     return '\n'.join(out)
+
+
+def faq_items(md):
+    """「## よくある質問」の下の「### 質問」と回答を取り出す"""
+    m = re.search(r'^##\s+よくある(?:ご)?質問\s*$(.*?)(?=^##\s|\Z)', md, re.M | re.S)
+    if not m:
+        return []
+    items = []
+    for q, a in re.findall(r'^###\s+(.+?)\s*$(.*?)(?=^###\s|\Z)', m.group(1), re.M | re.S):
+        text = re.sub(r'\[([^\]]+)\]\([^)]+\)', r'\1', a).replace('**', '').strip()
+        items.append((q.strip(), re.sub(r'\s*\n\s*', ' ', text)))
+    return items
+
+
+def jsonld(section, p):
+    url = f'{SITE}{section}/{p["slug"]}/'
+    art = {'@context': 'https://schema.org', '@type': 'BlogPosting' if section == 'blog' else 'NewsArticle',
+           'headline': p['title'], 'description': describe(p), 'datePublished': p['date'],
+           'dateModified': p.get('updated') or p['date'], 'mainEntityOfPage': url, 'inLanguage': 'ja',
+           'author': {'@type': 'Person', 'name': AUTHOR['name'], 'jobTitle': '代表取締役', 'url': SITE + 'company/'},
+           'publisher': {'@type': 'Organization', 'name': '株式会社ハシゴロジ', 'url': SITE}}
+    if p.get('image'):
+        art['image'] = f'{SITE}assets/img/{p["image"]}'
+    blocks = [art]
+    faqs = faq_items(p['body_md'])
+    if faqs:
+        blocks.append({'@context': 'https://schema.org', '@type': 'FAQPage',
+                       'mainEntity': [{'@type': 'Question', 'name': q, 'acceptedAnswer': {'@type': 'Answer', 'text': a}} for q, a in faqs]})
+    return ''.join('\n<script type="application/ld+json">\n' + json.dumps(b, ensure_ascii=False, indent=2) + '\n</script>' for b in blocks)
+
+
+def author_box(R):
+    return f'''
+    <aside class="author">
+      <img src="{R}assets/img/{AUTHOR['photo']}" alt="{AUTHOR['name']}" width="80" height="80" loading="lazy">
+      <div>
+        <p class="author-role">この記事を書いた人</p>
+        <p class="author-name">{AUTHOR['name']}<span>{AUTHOR['role']}</span></p>
+        <p class="author-bio">{AUTHOR['bio']}</p>
+      </div>
+    </aside>'''
 
 
 # ---------------------------------------------------------------- 書き出し
@@ -226,14 +287,15 @@ def build_article(section, p, posts):
   <div class="wrap">{eye}
     <article class="article prose">
 {note}{markdown(p['body_md'], R)}
-    </article>{rel}
+    </article>{author_box(R) if section == 'blog' else ''}{rel}
     <div class="article-foot">
       <a href="../" class="more">{cfg['label']}一覧へ戻る{ARW}</a>
       {nav}
     </div>
   </div>
 </section>'''
-    page(f'{section}/{p["slug"]}/index.html', f'{title_of(p)}｜{cfg["label"]}｜株式会社ハシゴロジ', describe(p), main, current=section)
+    page(f'{section}/{p["slug"]}/index.html', f'{title_of(p)}｜{cfg["label"]}｜株式会社ハシゴロジ', describe(p), main, current=section,
+         extra_head=jsonld(section, p))
 
 
 def remove_stale(section, posts):
@@ -254,7 +316,7 @@ def update_top(section, posts):
     start, end = f'<!-- posts:{section} -->', f'<!-- /posts:{section} -->'
     if start not in h:
         sys.exit(f'index.html に {start} がありません')
-    items = '\n'.join(li(p, f'{section}/{p["slug"]}/') for p in posts[:TOP_COUNT])
+    items = '\n'.join(li(p, f'{section}/{p["slug"]}/') for p in posts[:TOP_COUNT]) or '          <li class="empty">準備中です。</li>'
     h = re.sub(re.escape(start) + r'.*?' + re.escape(end), lambda m: f'{start}\n{items}\n          {end}', h, flags=re.S)
     open(f, 'w', encoding='utf-8').write(h)
 
